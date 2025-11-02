@@ -64,12 +64,37 @@ EXPOSE 8080
 RUN echo '#!/bin/bash\n\
 set -e\n\
 echo "Starting DriveMond on port 8080..."\n\
+\n\
+# Set permissions\n\
 chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache\n\
 chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache\n\
+\n\
+# Generate APP_KEY if not set\n\
+if [ -z "$APP_KEY" ] || [ "$APP_KEY" = "base64:aj6UCF3URvpY7oC92LcoKuDKWJqP2u5LKgSOBTP8mFQ=" ]; then\n\
+    echo "Generating new APP_KEY..."\n\
+    php artisan key:generate --force --no-interaction\n\
+fi\n\
+\n\
+# Clear all caches\n\
 php artisan config:clear || true\n\
 php artisan cache:clear || true\n\
+php artisan route:clear || true\n\
+php artisan view:clear || true\n\
+\n\
+# Create storage link\n\
 php artisan storage:link || true\n\
+\n\
+# Cache config for production\n\
+if [ "$APP_ENV" = "production" ]; then\n\
+    php artisan config:cache || true\n\
+    php artisan route:cache || true\n\
+    php artisan view:cache || true\n\
+fi\n\
+\n\
 echo "Application ready on port 8080"\n\
+echo "APP_ENV: $APP_ENV"\n\
+echo "APP_DEBUG: $APP_DEBUG"\n\
+\n\
 exec apache2-foreground' > /usr/local/bin/start.sh \
     && chmod +x /usr/local/bin/start.sh
 

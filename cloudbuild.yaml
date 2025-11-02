@@ -42,7 +42,7 @@ steps:
       - '--max-instances'
       - '10'
       - '--set-env-vars'
-      - 'APP_ENV=production,APP_DEBUG=false,APP_KEY=base64:aj6UCF3URvpY7oC92LcoKuDKWJqP2u5LKgSOBTP8mFQ='
+      - 'APP_ENV=production,APP_DEBUG=true,LOG_CHANNEL=stderr'
 
 images:
   - 'gcr.io/$PROJECT_ID/drivemond-backend:$SHORT_SHA'
