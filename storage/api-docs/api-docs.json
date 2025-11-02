@@ -1,0 +1,164 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "DriveMond API",
+        "description": "OpenAPI documentation for DriveMond.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000",
+            "description": "Local Dev Server"
+        }
+    ],
+    "paths": {
+        "/api/v1/driver/payments/razorpay/create-order": {
+            "post": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Create Razorpay order for driver fare with unique receipt",
+                "operationId": "021d84718092691c9f6801c7c7957006",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "driver_id",
+                                    "amount"
+                                ],
+                                "properties": {
+                                    "driver_id": {
+                                        "type": "integer"
+                                    },
+                                    "amount": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 100
+                                    },
+                                    "currency": {
+                                        "type": "string",
+                                        "example": "INR"
+                                    },
+                                    "meta": {
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/driver/payments/razorpay/verify": {
+            "post": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Verify Razorpay payment for driver fare",
+                "operationId": "3416637bb5819ec8d0c486e8aeda7c14",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "order_id",
+                                    "payment_id",
+                                    "signature"
+                                ],
+                                "properties": {
+                                    "order_id": {
+                                        "type": "string"
+                                    },
+                                    "payment_id": {
+                                        "type": "string"
+                                    },
+                                    "signature": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/health": {
+            "get": {
+                "tags": [
+                    "System"
+                ],
+                "summary": "Health check",
+                "operationId": "38aa6c17cf2b865fbe23a49c9b7b1386",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token as: Bearer <token>",
+                "name": "Authorization",
+                "in": "header"
+            },
+            "passport": {
+                "type": "oauth2",
+                "description": "Laravel Passport password flow.",
+                "in": "header",
+                "scheme": "https",
+                "flows": {
+                    "password": {
+                        "authorizationUrl": "localhost/oauth/authorize",
+                        "tokenUrl": "localhost/oauth/token",
+                        "refreshUrl": "localhost/token/refresh",
+                        "scopes": []
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Payments",
+            "description": "Payments"
+        },
+        {
+            "name": "System",
+            "description": "System"
+        }
+    ],
+    "security": [
+        {
+            "sanctum": []
+        }
+    ]
+}
