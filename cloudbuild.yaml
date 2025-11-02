@@ -1,11 +1,21 @@
 steps:
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/drivemond-backend:$COMMIT_SHA', '.']
+    args: 
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/drivemond-backend:$SHORT_SHA'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/drivemond-backend:latest'
+      - '.'
+    timeout: 1800s
   
   # Push the container image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/drivemond-backend:$COMMIT_SHA']
+    args: ['push', 'gcr.io/$PROJECT_ID/drivemond-backend:$SHORT_SHA']
+  
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/drivemond-backend:latest']
   
   # Deploy container image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -13,21 +23,33 @@ steps:
     args:
       - 'run'
       - 'deploy'
-      - 'drivemond-backend'
+      - 'gauva'
       - '--image'
-      - 'gcr.io/$PROJECT_ID/drivemond-backend:$COMMIT_SHA'
+      - 'gcr.io/$PROJECT_ID/drivemond-backend:$SHORT_SHA'
       - '--region'
-      - 'us-central1'
+      - 'europe-west1'
       - '--platform'
       - 'managed'
       - '--allow-unauthenticated'
       - '--port'
       - '8080'
+      - '--memory'
+      - '512Mi'
+      - '--cpu'
+      - '1'
+      - '--timeout'
+      - '300'
+      - '--max-instances'
+      - '10'
       - '--set-env-vars'
-      - 'APP_ENV=production,APP_DEBUG=false'
+      - 'APP_ENV=production,APP_DEBUG=false,APP_KEY=base64:aj6UCF3URvpY7oC92LcoKuDKWJqP2u5LKgSOBTP8mFQ='
 
 images:
-  - 'gcr.io/$PROJECT_ID/drivemond-backend:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/drivemond-backend:$SHORT_SHA'
+  - 'gcr.io/$PROJECT_ID/drivemond-backend:latest'
+
+timeout: 2400s
 
 options:
   logging: CLOUD_LOGGING_ONLY
+  machineType: 'E2_HIGHCPU_8'
