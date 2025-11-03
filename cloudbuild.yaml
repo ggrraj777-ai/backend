@@ -32,7 +32,7 @@ steps:
       - '--cpu=1'
       - '--timeout=300'
       - '--max-instances=10'
-      - '--set-env-vars=APP_ENV=production,APP_DEBUG=true,LOG_CHANNEL=stderr'
+      - '--set-env-vars=APP_ENV=production,APP_DEBUG=true,LOG_CHANNEL=stderr,APP_URL=https://gauva-798219755346.europe-west1.run.app,ASSET_URL=https://gauva-798219755346.europe-west1.run.app'
 
 images:
   - 'gcr.io/$PROJECT_ID/drivemond-backend:$SHORT_SHA'

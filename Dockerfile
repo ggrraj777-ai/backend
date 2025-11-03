@@ -37,8 +37,17 @@ COPY . /var/www/html
 # Create .env file from .env.example
 RUN cp .env.example .env || echo "APP_NAME=DriveMond" > .env
 
+# Set APP_URL in .env for proper asset URLs
+RUN sed -i 's|APP_URL=.*|APP_URL=https://gauva-798219755346.europe-west1.run.app|g' .env || true
+
 # Run composer scripts
 RUN composer dump-autoload --optimize
+
+# Install Node dependencies and build assets
+RUN if [ -f "package.json" ]; then \
+    npm install && \
+    npm run prod; \
+    fi
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
