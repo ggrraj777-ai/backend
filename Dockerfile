@@ -43,11 +43,18 @@ RUN sed -i 's|APP_URL=.*|APP_URL=https://gauva-798219755346.europe-west1.run.app
 # Run composer scripts
 RUN composer dump-autoload --optimize
 
+# Install Node.js (required for asset compilation)
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
+
 # Install Node dependencies and build assets
 RUN if [ -f "package.json" ]; then \
     npm install && \
     npm run prod; \
     fi
+
+# Ensure public directory has correct permissions
+RUN chmod -R 755 /var/www/html/public
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
@@ -62,12 +69,17 @@ RUN sed -i 's/80/8080/g' /etc/apache2/sites-available/000-default.conf /etc/apac
 # Enable Apache modules
 RUN a2enmod rewrite headers
 
-# Add Apache configuration for Laravel
+# Add custom Apache configuration
 RUN echo '<Directory /var/www/html/public>\n\
     Options -Indexes +FollowSymLinks\n\
     AllowOverride All\n\
     Require all granted\n\
-</Directory>' >> /etc/apache2/sites-available/000-default.conf
+</Directory>\n\
+\n\
+# Enable serving static files\n\
+<FilesMatch "\.(css|js|jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot)$">\n\
+    Header set Cache-Control "max-age=31536000, public"\n\
+</FilesMatch>' >> /etc/apache2/sites-available/000-default.conf
 
 # Expose port 8080
 EXPOSE 8080
