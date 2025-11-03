@@ -210,7 +210,10 @@
 <script src="{{ secure_asset('assets/admin-module/js/main.js') }}"></script>
 <script src="{{ secure_asset('assets/admin-module/js/toastr.js') }}"></script>
 <script src="{{ secure_asset('assets/admin-module/js/login.js') }}"></script>
-<script src="https://www.google.com/recaptcha/api.js?render={{$recaptcha['site_key']}}" async defer></script>
+    @php($recaptchaScriptValue = businessConfig('recaptcha')?->value)
+    @if(isset($recaptchaScriptValue) && ($recaptchaScriptValue['status'] ?? 0) == 1)
+        <script src="https://www.google.com/recaptcha/api.js?render={{ $recaptchaScriptValue['site_key'] }}" async defer></script>
+    @endif
 
 <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
 
@@ -265,10 +268,36 @@
                 }
 
                 grecaptcha.ready(function () {
-                    grecaptcha.execute('{{$recaptcha['site_key']}}', {action: 'submit'}).then(function (token) {
-                        $('#g-recaptcha-response').val(token);
-                        $('#login-form').submit();
-                    });
+                    let didRespond = false;
+                    // safety timeout: fallback to default captcha if no token
+                    const fallbackTimer = setTimeout(function(){
+                        if(!didRespond){
+                            $('#reload-captcha').removeClass('d-none');
+                            $('#set_default_captcha_value').val('1');
+                            toastr.error('reCAPTCHA not available. Using fallback captcha.');
+                        }
+                    }, 3000);
+
+                    grecaptcha.execute('{{$recaptcha['site_key']}}', {action: 'submit'})
+                        .then(function (token) {
+                            didRespond = true;
+                            clearTimeout(fallbackTimer);
+                            if(token){
+                                $('#g-recaptcha-response').val(token);
+                                $('#login-form').submit();
+                            } else {
+                                $('#reload-captcha').removeClass('d-none');
+                                $('#set_default_captcha_value').val('1');
+                                toastr.error('reCAPTCHA failed. Please use the fallback captcha.');
+                            }
+                        })
+                        .catch(function(){
+                            didRespond = true;
+                            clearTimeout(fallbackTimer);
+                            $('#reload-captcha').removeClass('d-none');
+                            $('#set_default_captcha_value').val('1');
+                            toastr.error('reCAPTCHA verification failed. Using fallback captcha.');
+                        });
                 });
 
                 window.onerror = function (message) {
