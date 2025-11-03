@@ -18,31 +18,21 @@ steps:
     args: ['push', 'gcr.io/$PROJECT_ID/drivemond-backend:latest']
   
   # Deploy container image to Cloud Run
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: gcloud
+  - name: 'gcr.io/cloud-builders/gcloud'
     args:
       - 'run'
       - 'deploy'
       - 'gauva'
-      - '--image'
-      - 'gcr.io/$PROJECT_ID/drivemond-backend:$SHORT_SHA'
-      - '--region'
-      - 'europe-west1'
-      - '--platform'
-      - 'managed'
+      - '--image=gcr.io/$PROJECT_ID/drivemond-backend:$SHORT_SHA'
+      - '--region=europe-west1'
+      - '--platform=managed'
       - '--allow-unauthenticated'
-      - '--port'
-      - '8080'
-      - '--memory'
-      - '512Mi'
-      - '--cpu'
-      - '1'
-      - '--timeout'
-      - '300'
-      - '--max-instances'
-      - '10'
-      - '--set-env-vars'
-      - 'APP_ENV=production,APP_DEBUG=true,LOG_CHANNEL=stderr'
+      - '--port=8080'
+      - '--memory=512Mi'
+      - '--cpu=1'
+      - '--timeout=300'
+      - '--max-instances=10'
+      - '--set-env-vars=APP_ENV=production,APP_DEBUG=true,LOG_CHANNEL=stderr'
 
 images:
   - 'gcr.io/$PROJECT_ID/drivemond-backend:$SHORT_SHA'
