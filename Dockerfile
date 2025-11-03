@@ -34,6 +34,9 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 # Copy application files
 COPY . /var/www/html
 
+# Create .env file from .env.example
+RUN cp .env.example .env || echo "APP_NAME=DriveMond" > .env
+
 # Run composer scripts
 RUN composer dump-autoload --optimize
 
@@ -65,12 +68,19 @@ RUN echo '#!/bin/bash\n\
 set -e\n\
 echo "Starting DriveMond on port 8080..."\n\
 \n\
+# Ensure .env file exists\n\
+if [ ! -f /var/www/html/.env ]; then\n\
+    echo "Creating .env file..."\n\
+    cp /var/www/html/.env.example /var/www/html/.env || echo "APP_NAME=DriveMond" > /var/www/html/.env\n\
+fi\n\
+\n\
 # Set permissions\n\
-chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache\n\
+chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/.env\n\
 chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache\n\
+chmod 644 /var/www/html/.env\n\
 \n\
 # Generate APP_KEY if not set\n\
-if [ -z "$APP_KEY" ] || [ "$APP_KEY" = "base64:aj6UCF3URvpY7oC92LcoKuDKWJqP2u5LKgSOBTP8mFQ=" ]; then\n\
+if ! grep -q "APP_KEY=base64:" /var/www/html/.env; then\n\
     echo "Generating new APP_KEY..."\n\
     php artisan key:generate --force --no-interaction\n\
 fi\n\
@@ -84,7 +94,7 @@ php artisan view:clear || true\n\
 # Create storage link\n\
 php artisan storage:link || true\n\
 \n\
-# Cache config for production\n\
+# Optimize for production\n\
 if [ "$APP_ENV" = "production" ]; then\n\
     php artisan config:cache || true\n\
     php artisan route:cache || true\n\
@@ -94,6 +104,8 @@ fi\n\
 echo "Application ready on port 8080"\n\
 echo "APP_ENV: $APP_ENV"\n\
 echo "APP_DEBUG: $APP_DEBUG"\n\
+echo "Checking Apache..."\n\
+apache2ctl -t || echo "Apache config test failed but continuing..."\n\
 \n\
 exec apache2-foreground' > /usr/local/bin/start.sh \
     && chmod +x /usr/local/bin/start.sh
