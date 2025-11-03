@@ -19,19 +19,19 @@
 
     <!-- Web Fonts -->
     <!-- Web Fonts -->
-    <link href="{{ asset('assets/admin-module/css/fonts/google.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('assets/admin-module/css/fonts/google.css') }}" rel="stylesheet">
 
     <!-- ======= BEGIN GLOBAL MANDATORY STYLES ======= -->
-    <link rel="stylesheet" href="{{ asset('assets/admin-module/css/bootstrap.min.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/admin-module/css/bootstrap-icons.min.css') }}"/>
+    <link rel="stylesheet" href="{{ secure_asset('assets/admin-module/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{ secure_asset('assets/admin-module/css/bootstrap-icons.min.css') }}"/>
     <link rel="stylesheet"
-          href="{{ asset('assets/admin-module/plugins/perfect-scrollbar/perfect-scrollbar.min.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/admin-module/css/toastr.css') }}"/>
+          href="{{ secure_asset('assets/admin-module/plugins/perfect-scrollbar/perfect-scrollbar.min.css') }}"/>
+    <link rel="stylesheet" href="{{ secure_asset('assets/admin-module/css/toastr.css') }}"/>
     <!-- ======= END BEGIN GLOBAL MANDATORY STYLES ======= -->
 
     <!-- ======= MAIN STYLES ======= -->
-    <link rel="stylesheet" href="{{ asset('assets/admin-module/css/style.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/admin-module/css/custom.css') }}"/>
+    <link rel="stylesheet" href="{{ secure_asset('assets/admin-module/css/style.css') }}"/>
+    <link rel="stylesheet" href="{{ secure_asset('assets/admin-module/css/custom.css') }}"/>
     <!-- ======= END MAIN STYLES ======= -->
     @include('landing-page.layouts.css')
 
@@ -70,7 +70,7 @@
         @csrf
         <div class="login-wrap">
             <div class="login-left py-4 d-flex justify-content-center align-items-center bg-center bg-img"
-                 data-bg-img="{{asset('assets/admin-module/img/media/login-bg.png')}}">
+                 data-bg-img="{{ secure_asset('assets/admin-module/img/media/login-bg.png') }}">
                 <div
                     class="tf-box d-flex flex-column gap-3 align-items-center justify-content-center p-4 py-sm-5 p-md-5 mx-md-5 mx-4">
                     <img class="login-logo mb-2" src="{{ onErrorImage(
@@ -205,12 +205,12 @@
 <!-- End Login Form -->
 
 <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
-<script src="{{ asset('assets/admin-module/js/jquery-3.6.0.min.js') }}"></script>
-<script src="{{ asset('assets/admin-module/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('assets/admin-module/js/main.js') }}"></script>
-<script src="{{ asset('assets/admin-module/js/toastr.js') }}"></script>
-<script src="{{ asset('assets/admin-module/js/login.js') }}"></script>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="{{ secure_asset('assets/admin-module/js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ secure_asset('assets/admin-module/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ secure_asset('assets/admin-module/js/main.js') }}"></script>
+<script src="{{ secure_asset('assets/admin-module/js/toastr.js') }}"></script>
+<script src="{{ secure_asset('assets/admin-module/js/login.js') }}"></script>
+<script src="https://www.google.com/recaptcha/api.js?render={{$recaptcha['site_key']}}" async defer></script>
 
 <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
 
@@ -266,7 +266,7 @@
 
                 grecaptcha.ready(function () {
                     grecaptcha.execute('{{$recaptcha['site_key']}}', {action: 'submit'}).then(function (token) {
-                        $('#g-recaptcha-response').value = token;
+                        $('#g-recaptcha-response').val(token);
                         $('#login-form').submit();
                     });
                 });
