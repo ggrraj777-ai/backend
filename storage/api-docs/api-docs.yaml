@@ -1,0 +1,3221 @@
+openapi: 3.0.3
+info:
+  title: 'DriveMond API Documentation'
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: localhost
+tags:
+  -
+    name: Endpoints
+    description: ''
+paths:
+  /api/customer/auth/registration:
+    post:
+      summary: ''
+      operationId: postApiCustomerAuthRegistration
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                last_name:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: zbailey@example.net
+                  nullable: false
+                phone:
+                  type: string
+                  description: 'Must match the regex /^([0-9\s\-\+\(\)]*)$/. Must be at least 8 characters. Must not be greater than 17 characters.'
+                  example: iyvdljn
+                  nullable: false
+                password:
+                  type: string
+                  description: 'Must be at least 8 characters.'
+                  example: 'gxwmi/#iw/'
+                  nullable: false
+                profile_image:
+                  type: string
+                  format: binary
+                  description: 'Must be an image. Must not be greater than 10000 kilobytes.'
+                  nullable: false
+                identification_type:
+                  type: string
+                  description: ''
+                  example: nid
+                  nullable: false
+                  enum:
+                    - nid
+                    - passport
+                    - driving_license
+                identification_number:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+                identity_images:
+                  type: array
+                  description: 'Must be an image. Must not be greater than 10000 kilobytes.'
+                  items:
+                    type: string
+                    format: binary
+                fcm_token:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+                referral_code:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+                service:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+              required:
+                - first_name
+                - last_name
+                - phone
+                - password
+      security: []
+  /api/customer/auth/login:
+    post:
+      summary: ''
+      operationId: postApiCustomerAuthLogin
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_or_email:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                password:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - phone_or_email
+                - password
+      security: []
+  /api/customer/auth/social-login:
+    post:
+      summary: ''
+      operationId: postApiCustomerAuthSocialLogin
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                unique_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                email:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                medium:
+                  type: string
+                  description: ''
+                  example: facebook
+                  nullable: false
+                  enum:
+                    - google
+                    - facebook
+              required:
+                - token
+                - unique_id
+                - email
+                - medium
+      security: []
+  /api/customer/auth/firebase-login:
+    post:
+      summary: ''
+      operationId: postApiCustomerAuthFirebaseLogin
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_token:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                fcm_token:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+              required:
+                - id_token
+      security: []
+  /api/customer/auth/otp-login:
+    post:
+      summary: ''
+      operationId: postApiCustomerAuthOtpLogin
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_or_email:
+                  type: string
+                  description: 'Must be at least 8 characters. Must not be greater than 20 characters.'
+                  example: gbailey@example.net
+                  nullable: false
+              required:
+                - phone_or_email
+      security: []
+  /api/customer/auth/check:
+    post:
+      summary: ''
+      operationId: postApiCustomerAuthCheck
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_or_email:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - phone_or_email
+      security: []
+  /api/customer/auth/forget-password:
+    post:
+      summary: ''
+      operationId: postApiCustomerAuthForgetPassword
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_or_email:
+                  type: string
+                  description: 'Must be at least 8 characters. Must not be greater than 20 characters.'
+                  example: gbailey@example.net
+                  nullable: false
+              required:
+                - phone_or_email
+      security: []
+  /api/customer/auth/reset-password:
+    post:
+      summary: ''
+      operationId: postApiCustomerAuthResetPassword
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_or_email:
+                  type: string
+                  description: 'Must be at least 8 characters. Must not be greater than 20 characters.'
+                  example: gbailey@example.net
+                  nullable: false
+                password:
+                  type: string
+                  description: 'Must be at least 8 characters.'
+                  example: '+-0pBNvYgxwmi/#iw'
+                  nullable: false
+              required:
+                - phone_or_email
+                - password
+      security: []
+  /api/customer/auth/otp-verification:
+    post:
+      summary: ''
+      operationId: postApiCustomerAuthOtpVerification
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_or_email:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                otp:
+                  type: string
+                  description: 'Must be at least 6 characters. Must not be greater than 6 characters.'
+                  example: ngzm
+                  nullable: false
+              required:
+                - phone_or_email
+                - otp
+      security: []
+  /api/customer/auth/firebase-otp-verification:
+    post:
+      summary: ''
+      operationId: postApiCustomerAuthFirebaseOtpVerification
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_info:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                phone_or_email:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                code:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - session_info
+                - phone_or_email
+                - code
+      security: []
+  /api/customer/auth/send-otp:
+    post:
+      summary: ''
+      operationId: postApiCustomerAuthSendOtp
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_or_email:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - phone_or_email
+      security: []
+  /api/customer/auth/external-registration:
+    post:
+      summary: ''
+      operationId: postApiCustomerAuthExternalRegistration
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                last_name:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: zbailey@example.net
+                  nullable: false
+                phone:
+                  type: string
+                  description: 'Must match the regex /^([0-9\s\-\+\(\)]*)$/. Must be at least 8 characters. Must not be greater than 17 characters.'
+                  example: iyvdljn
+                  nullable: false
+                password:
+                  type: string
+                  description: 'Must be at least 8 characters.'
+                  example: 'gxwmi/#iw/'
+                  nullable: false
+              required:
+                - first_name
+                - last_name
+                - phone
+                - password
+      security: []
+  /api/customer/auth/external-login:
+    post:
+      summary: ''
+      operationId: postApiCustomerAuthExternalLogin
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_or_email:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                token:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - phone_or_email
+                - token
+      security: []
+  /api/customer/update/fcm-token:
+    put:
+      summary: ''
+      operationId: putApiCustomerUpdateFcmToken
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fcm_token:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - fcm_token
+      security: []
+  /api/driver/auth/registration:
+    post:
+      summary: ''
+      operationId: postApiDriverAuthRegistration
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                last_name:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: zbailey@example.net
+                  nullable: false
+                phone:
+                  type: string
+                  description: 'Must match the regex /^([0-9\s\-\+\(\)]*)$/. Must be at least 8 characters. Must not be greater than 17 characters.'
+                  example: iyvdljn
+                  nullable: false
+                password:
+                  type: string
+                  description: 'Must be at least 8 characters.'
+                  example: 'gxwmi/#iw/'
+                  nullable: false
+                profile_image:
+                  type: string
+                  format: binary
+                  description: 'Must be an image. Must not be greater than 10000 kilobytes.'
+                  nullable: false
+                identification_type:
+                  type: string
+                  description: ''
+                  example: nid
+                  nullable: false
+                  enum:
+                    - nid
+                    - passport
+                    - driving_license
+                identification_number:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+                identity_images:
+                  type: array
+                  description: 'Must be an image. Must not be greater than 10000 kilobytes.'
+                  items:
+                    type: string
+                    format: binary
+                fcm_token:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+                referral_code:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+                service:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+              required:
+                - first_name
+                - last_name
+                - phone
+                - password
+      security: []
+  /api/driver/auth/login:
+    post:
+      summary: ''
+      operationId: postApiDriverAuthLogin
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_or_email:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                password:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - phone_or_email
+                - password
+      security: []
+  /api/driver/auth/send-otp:
+    post:
+      summary: ''
+      operationId: postApiDriverAuthSendOtp
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_or_email:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - phone_or_email
+      security: []
+  /api/driver/auth/check:
+    post:
+      summary: ''
+      operationId: postApiDriverAuthCheck
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_or_email:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - phone_or_email
+      security: []
+  /api/driver/auth/forget-password:
+    post:
+      summary: ''
+      operationId: postApiDriverAuthForgetPassword
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_or_email:
+                  type: string
+                  description: 'Must be at least 8 characters. Must not be greater than 20 characters.'
+                  example: gbailey@example.net
+                  nullable: false
+              required:
+                - phone_or_email
+      security: []
+  /api/driver/auth/reset-password:
+    post:
+      summary: ''
+      operationId: postApiDriverAuthResetPassword
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_or_email:
+                  type: string
+                  description: 'Must be at least 8 characters. Must not be greater than 20 characters.'
+                  example: gbailey@example.net
+                  nullable: false
+                password:
+                  type: string
+                  description: 'Must be at least 8 characters.'
+                  example: '+-0pBNvYgxwmi/#iw'
+                  nullable: false
+              required:
+                - phone_or_email
+                - password
+      security: []
+  /api/driver/auth/otp-verification:
+    post:
+      summary: ''
+      operationId: postApiDriverAuthOtpVerification
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_or_email:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                otp:
+                  type: string
+                  description: 'Must be at least 6 characters. Must not be greater than 6 characters.'
+                  example: ngzm
+                  nullable: false
+              required:
+                - phone_or_email
+                - otp
+      security: []
+  /api/driver/auth/firebase-otp-verification:
+    post:
+      summary: ''
+      operationId: postApiDriverAuthFirebaseOtpVerification
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_info:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                phone_or_email:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                code:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - session_info
+                - phone_or_email
+                - code
+      security: []
+  /api/driver/update/fcm-token:
+    put:
+      summary: ''
+      operationId: putApiDriverUpdateFcmToken
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fcm_token:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - fcm_token
+      security: []
+  /api/user/logout:
+    post:
+      summary: ''
+      operationId: postApiUserLogout
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/user/delete:
+    post:
+      summary: ''
+      operationId: postApiUserDelete
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/user/change-password:
+    post:
+      summary: ''
+      operationId: postApiUserChangePassword
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                new_password:
+                  type: string
+                  description: 'The value and <code>password</code> must be different. Must be at least 8 characters.'
+                  example: ngzmiyvdljnikhwaykcmyuwpwl
+                  nullable: false
+              required:
+                - password
+                - new_password
+      security: []
+  /api/store-configurations:
+    post:
+      summary: ''
+      operationId: postApiStoreConfigurations
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/location/save:
+    post:
+      summary: ''
+      operationId: postApiLocationSave
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                latitude:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                longitude:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - latitude
+                - longitude
+      security: []
+  /api/customer/config/get-routes:
+    post:
+      summary: ''
+      operationId: postApiCustomerConfigGetRoutes
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trip_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - trip_request_id
+      security: []
+  /api/driver/get-routes:
+    post:
+      summary: ''
+      operationId: postApiDriverGetRoutes
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trip_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - trip_request_id
+      security: []
+  /api/customer/chat/create-channel:
+    put:
+      summary: ''
+      operationId: putApiCustomerChatCreateChannel
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/customer/chat/send-message:
+    put:
+      summary: ''
+      operationId: putApiCustomerChatSendMessage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/driver/chat/create-channel:
+    put:
+      summary: ''
+      operationId: putApiDriverChatCreateChannel
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/driver/chat/send-message:
+    put:
+      summary: ''
+      operationId: putApiDriverChatSendMessage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/driver/chat/create-channel-with-admin:
+    put:
+      summary: ''
+      operationId: putApiDriverChatCreateChannelWithAdmin
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/driver/chat/send-message-to-admin:
+    put:
+      summary: ''
+      operationId: putApiDriverChatSendMessageToAdmin
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/driver/chat/send-predefined-question-to-admin:
+    put:
+      summary: ''
+      operationId: putApiDriverChatSendPredefinedQuestionToAdmin
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/customer/parcel/create:
+    post:
+      summary: 'Store a newly created resource in storage.'
+      operationId: storeANewlyCreatedResourceInStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pickup_coordinates:
+                  type: string
+                  description: 'Coordinates and Address Information. This field is required when <code>trip_request_id</code> is <code>null</code>.'
+                  example: null
+                  nullable: false
+                destination_coordinates:
+                  type: string
+                  description: 'This field is required when <code>trip_request_id</code> is <code>null</code>.'
+                  example: null
+                  nullable: false
+                customer_coordinates:
+                  type: string
+                  description: 'This field is required when <code>trip_request_id</code> is <code>null</code>.'
+                  example: null
+                  nullable: false
+                customer_request_coordinates:
+                  type: string
+                  description: 'This field is required when <code>trip_request_id</code> is <code>null</code>.'
+                  example: null
+                  nullable: false
+                pickup_address:
+                  type: string
+                  description: 'This field is required when <code>trip_request_id</code> is <code>null</code>.'
+                  example: null
+                  nullable: false
+                destination_address:
+                  type: string
+                  description: 'This field is required when <code>trip_request_id</code> is <code>null</code>.'
+                  example: null
+                  nullable: false
+                estimated_distance:
+                  type: string
+                  description: 'Trip and Fare Information. This field is required when <code>trip_request_id</code> is <code>null</code>.'
+                  example: null
+                  nullable: false
+                estimated_time:
+                  type: string
+                  description: 'This field is required when <code>trip_request_id</code> is <code>null</code>.'
+                  example: null
+                  nullable: false
+                estimated_fare:
+                  type: number
+                  description: 'This field is required when <code>trip_request_id</code> is <code>null</code>.'
+                  example: 4326.41688
+                  nullable: false
+                bid:
+                  type: boolean
+                  description: ''
+                  example: true
+                  nullable: false
+                actual_fare:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                  nullable: true
+                return_fee:
+                  type: string
+                  description: 'Return and Cancellation Fees.'
+                  example: null
+                  nullable: false
+                cancellation_fee:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+                vehicle_category_id:
+                  type: string
+                  description: 'Vehicle Category. Must be a valid UUID.'
+                  example: 977e5426-8d13-3824-86aa-b092f8ae52c5
+                  nullable: true
+                note:
+                  type: string
+                  description: 'Other Fields.'
+                  example: null
+                  nullable: false
+                type:
+                  type: string
+                  description: ''
+                  example: parcel
+                  nullable: false
+                  enum:
+                    - parcel
+                    - ride_request
+                sender_name:
+                  type: string
+                  description: 'Sender and Receiver Information (required only for parcel type). This field is required when <code>type</code> is <code>parcel</code>.'
+                  example: null
+                  nullable: false
+                sender_phone:
+                  type: string
+                  description: 'This field is required when <code>type</code> is <code>parcel</code>.'
+                  example: null
+                  nullable: false
+                sender_address:
+                  type: string
+                  description: 'This field is required when <code>type</code> is <code>parcel</code>.'
+                  example: null
+                  nullable: false
+                receiver_name:
+                  type: string
+                  description: 'This field is required when <code>type</code> is <code>parcel</code>.'
+                  example: null
+                  nullable: false
+                receiver_phone:
+                  type: string
+                  description: 'This field is required when <code>type</code> is <code>parcel</code>.'
+                  example: null
+                  nullable: false
+                receiver_address:
+                  type: string
+                  description: 'This field is required when <code>type</code> is <code>parcel</code>.'
+                  example: null
+                  nullable: false
+                parcel_category_id:
+                  type: string
+                  description: 'Parcel Information (required for parcel type). This field is required when <code>type</code> is <code>parcel</code>.'
+                  example: null
+                  nullable: false
+                weight:
+                  type: string
+                  description: 'This field is required when <code>type</code> is <code>parcel</code>.'
+                  example: null
+                  nullable: false
+                payer:
+                  type: string
+                  description: 'This field is required when <code>type</code> is <code>parcel</code>.'
+                  example: null
+                  nullable: false
+                extra_estimated_fare:
+                  type: number
+                  description: 'Additional Fare Fields.'
+                  example: 4326.41688
+                  nullable: false
+                extra_discount_fare:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                  nullable: false
+                extra_discount_amount:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                  nullable: false
+                extra_return_fee:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                  nullable: false
+                extra_cancellation_fee:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                  nullable: false
+                extra_fare_amount:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                  nullable: false
+                extra_fare_fee:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                  nullable: false
+                encoded_polyline:
+                  type: string
+                  description: 'Encoded Polyline and Zone Information.'
+                  example: null
+                  nullable: false
+                zone_id:
+                  type: string
+                  description: 'Must be a valid UUID. The <code>id</code> of an existing record in the zones table.'
+                  example: 977e5426-8d13-3824-86aa-b092f8ae52c5
+                  nullable: false
+              required:
+                - bid
+                - type
+                - zone_id
+      security: []
+  /api/driver/parcel/update-status:
+    put:
+      summary: ''
+      operationId: putApiDriverParcelUpdateStatus
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: ''
+                  example: cancelled
+                  nullable: false
+                  enum:
+                    - completed
+                    - cancelled
+                trip_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - status
+                - trip_request_id
+      security: []
+  /api/customer/banner/update-redirection-count:
+    post:
+      summary: ''
+      operationId: postApiCustomerBannerUpdateRedirectionCount
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/customer/coupon/apply:
+    post:
+      summary: ''
+      operationId: postApiCustomerCouponApply
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/customer/review/store:
+    post:
+      summary: ''
+      operationId: postApiCustomerReviewStore
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ride_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                rating:
+                  type: number
+                  description: 'Must be at least 1. Must not be greater than 5.'
+                  example: 2
+                  nullable: false
+                feedback:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+              required:
+                - ride_request_id
+                - rating
+      security: []
+  /api/customer/review/check-submission:
+    put:
+      summary: ''
+      operationId: putApiCustomerReviewCheckSubmission
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trip_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - trip_request_id
+      security: []
+  /api/driver/review/store:
+    post:
+      summary: ''
+      operationId: postApiDriverReviewStore
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ride_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                rating:
+                  type: number
+                  description: 'Must be at least 1. Must not be greater than 5.'
+                  example: 2
+                  nullable: false
+                feedback:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+              required:
+                - ride_request_id
+                - rating
+      security: []
+  '/api/driver/review/save/{id}':
+    put:
+      summary: ''
+      operationId: putApiDriverReviewSaveId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the save.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  /api/customer/ride/get-estimated-fare:
+    post:
+      summary: 'Show estimate fare calculation trip and parcel.'
+      operationId: showEstimateFareCalculationTripAndParcel
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pickup_coordinates:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                destination_coordinates:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                pickup_address:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                destination_address:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                type:
+                  type: string
+                  description: ''
+                  example: ride_request
+                  nullable: false
+                  enum:
+                    - parcel
+                    - ride_request
+                parcel_weight:
+                  type: string
+                  description: 'This field is required when <code>type</code> is <code>parcel</code>.'
+                  example: null
+                  nullable: false
+              required:
+                - pickup_coordinates
+                - destination_coordinates
+                - pickup_address
+                - destination_address
+                - type
+      security: []
+  /api/customer/ride/create:
+    post:
+      summary: 'Store a newly created resource in storage.'
+      operationId: storeANewlyCreatedResourceInStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pickup_coordinates:
+                  type: string
+                  description: 'Coordinates and Address Information. This field is required when <code>trip_request_id</code> is <code>null</code>.'
+                  example: null
+                  nullable: false
+                destination_coordinates:
+                  type: string
+                  description: 'This field is required when <code>trip_request_id</code> is <code>null</code>.'
+                  example: null
+                  nullable: false
+                customer_coordinates:
+                  type: string
+                  description: 'This field is required when <code>trip_request_id</code> is <code>null</code>.'
+                  example: null
+                  nullable: false
+                customer_request_coordinates:
+                  type: string
+                  description: 'This field is required when <code>trip_request_id</code> is <code>null</code>.'
+                  example: null
+                  nullable: false
+                pickup_address:
+                  type: string
+                  description: 'This field is required when <code>trip_request_id</code> is <code>null</code>.'
+                  example: null
+                  nullable: false
+                destination_address:
+                  type: string
+                  description: 'This field is required when <code>trip_request_id</code> is <code>null</code>.'
+                  example: null
+                  nullable: false
+                estimated_distance:
+                  type: string
+                  description: 'Trip and Fare Information. This field is required when <code>trip_request_id</code> is <code>null</code>.'
+                  example: null
+                  nullable: false
+                estimated_time:
+                  type: string
+                  description: 'This field is required when <code>trip_request_id</code> is <code>null</code>.'
+                  example: null
+                  nullable: false
+                estimated_fare:
+                  type: number
+                  description: 'This field is required when <code>trip_request_id</code> is <code>null</code>.'
+                  example: 4326.41688
+                  nullable: false
+                bid:
+                  type: boolean
+                  description: ''
+                  example: true
+                  nullable: false
+                actual_fare:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                  nullable: true
+                return_fee:
+                  type: string
+                  description: 'Return and Cancellation Fees.'
+                  example: null
+                  nullable: false
+                cancellation_fee:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+                vehicle_category_id:
+                  type: string
+                  description: 'Vehicle Category. Must be a valid UUID.'
+                  example: 977e5426-8d13-3824-86aa-b092f8ae52c5
+                  nullable: true
+                note:
+                  type: string
+                  description: 'Other Fields.'
+                  example: null
+                  nullable: false
+                type:
+                  type: string
+                  description: ''
+                  example: parcel
+                  nullable: false
+                  enum:
+                    - parcel
+                    - ride_request
+                sender_name:
+                  type: string
+                  description: 'Sender and Receiver Information (required only for parcel type). This field is required when <code>type</code> is <code>parcel</code>.'
+                  example: null
+                  nullable: false
+                sender_phone:
+                  type: string
+                  description: 'This field is required when <code>type</code> is <code>parcel</code>.'
+                  example: null
+                  nullable: false
+                sender_address:
+                  type: string
+                  description: 'This field is required when <code>type</code> is <code>parcel</code>.'
+                  example: null
+                  nullable: false
+                receiver_name:
+                  type: string
+                  description: 'This field is required when <code>type</code> is <code>parcel</code>.'
+                  example: null
+                  nullable: false
+                receiver_phone:
+                  type: string
+                  description: 'This field is required when <code>type</code> is <code>parcel</code>.'
+                  example: null
+                  nullable: false
+                receiver_address:
+                  type: string
+                  description: 'This field is required when <code>type</code> is <code>parcel</code>.'
+                  example: null
+                  nullable: false
+                parcel_category_id:
+                  type: string
+                  description: 'Parcel Information (required for parcel type). This field is required when <code>type</code> is <code>parcel</code>.'
+                  example: null
+                  nullable: false
+                weight:
+                  type: string
+                  description: 'This field is required when <code>type</code> is <code>parcel</code>.'
+                  example: null
+                  nullable: false
+                payer:
+                  type: string
+                  description: 'This field is required when <code>type</code> is <code>parcel</code>.'
+                  example: null
+                  nullable: false
+                extra_estimated_fare:
+                  type: number
+                  description: 'Additional Fare Fields.'
+                  example: 4326.41688
+                  nullable: false
+                extra_discount_fare:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                  nullable: false
+                extra_discount_amount:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                  nullable: false
+                extra_return_fee:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                  nullable: false
+                extra_cancellation_fee:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                  nullable: false
+                extra_fare_amount:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                  nullable: false
+                extra_fare_fee:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                  nullable: false
+                encoded_polyline:
+                  type: string
+                  description: 'Encoded Polyline and Zone Information.'
+                  example: null
+                  nullable: false
+                zone_id:
+                  type: string
+                  description: 'Must be a valid UUID. The <code>id</code> of an existing record in the zones table.'
+                  example: 977e5426-8d13-3824-86aa-b092f8ae52c5
+                  nullable: false
+              required:
+                - bid
+                - type
+                - zone_id
+      security: []
+  /api/customer/ride/ignore-bidding:
+    put:
+      summary: ''
+      operationId: putApiCustomerRideIgnoreBidding
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bidding_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - bidding_id
+      security: []
+  '/api/customer/ride/update-status/{trip_request_id}':
+    put:
+      summary: ''
+      operationId: putApiCustomerRideUpdateStatusTrip_request_id
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - status
+      security: []
+    parameters:
+      -
+        in: path
+        name: trip_request_id
+        description: 'The ID of the trip request.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  /api/customer/ride/trip-action:
+    post:
+      summary: ''
+      operationId: postApiCustomerRideTripAction
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trip_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                driver_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                action:
+                  type: string
+                  description: ''
+                  example: rejected
+                  nullable: false
+                  enum:
+                    - accepted
+                    - rejected
+              required:
+                - trip_request_id
+                - driver_id
+                - action
+      security: []
+  /api/customer/ride/arrival-time:
+    put:
+      summary: ''
+      operationId: putApiCustomerRideArrivalTime
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trip_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - trip_request_id
+      security: []
+  /api/customer/ride/coordinate-arrival:
+    put:
+      summary: ''
+      operationId: putApiCustomerRideCoordinateArrival
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trip_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                is_reached:
+                  type: string
+                  description: ''
+                  example: coordinate_1
+                  nullable: false
+                  enum:
+                    - coordinate_1
+                    - coordinate_2
+                    - destination
+              required:
+                - trip_request_id
+                - is_reached
+      security: []
+  '/api/customer/ride/received-returning-parcel/{trip_request_id}':
+    put:
+      summary: ''
+      operationId: putApiCustomerRideReceivedReturningParcelTrip_request_id
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: trip_request_id
+        description: 'The ID of the trip request.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  /api/customer/ride/track-location:
+    post:
+      summary: ''
+      operationId: postApiCustomerRideTrackLocation
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                latitude:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                longitude:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                zoneId:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - latitude
+                - longitude
+                - zoneId
+      security: []
+  /api/customer/parcel/refund/create:
+    post:
+      summary: ''
+      operationId: postApiCustomerParcelRefundCreate
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trip_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                reason:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: 'n'
+                  nullable: true
+                parcel_approximate_price:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                  nullable: false
+                attachments:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                customer_note:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: 'n'
+                  nullable: true
+              required:
+                - trip_request_id
+                - parcel_approximate_price
+                - attachments
+      security: []
+  /api/customer/safety-alert/store:
+    post:
+      summary: ''
+      operationId: postApiCustomerSafetyAlertStore
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trip_request_id:
+                  type: string
+                  description: 'Must be a valid UUID.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                  nullable: false
+                lat:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                lng:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - trip_request_id
+                - lat
+                - lng
+      security: []
+  '/api/customer/safety-alert/resend/{trip_request_id}':
+    put:
+      summary: ''
+      operationId: putApiCustomerSafetyAlertResendTrip_request_id
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: trip_request_id
+        description: 'The ID of the trip request.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/customer/safety-alert/mark-as-solved/{trip_request_id}':
+    put:
+      summary: ''
+      operationId: putApiCustomerSafetyAlertMarkAsSolvedTrip_request_id
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: trip_request_id
+        description: 'The ID of the trip request.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/customer/safety-alert/undo/{trip_request_id}':
+    delete:
+      summary: ''
+      operationId: deleteApiCustomerSafetyAlertUndoTrip_request_id
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: trip_request_id
+        description: 'The ID of the trip request.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  /api/driver/ride/ride-waiting:
+    put:
+      summary: ''
+      operationId: putApiDriverRideRideWaiting
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trip_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                waiting_status:
+                  type: string
+                  description: ''
+                  example: resume
+                  nullable: false
+                  enum:
+                    - pause
+                    - resume
+              required:
+                - trip_request_id
+                - waiting_status
+      security: []
+  /api/driver/ride/arrival-time:
+    put:
+      summary: ''
+      operationId: putApiDriverRideArrivalTime
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trip_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - trip_request_id
+      security: []
+  /api/driver/ride/coordinate-arrival:
+    put:
+      summary: ''
+      operationId: putApiDriverRideCoordinateArrival
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trip_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                is_reached:
+                  type: string
+                  description: ''
+                  example: coordinate_1
+                  nullable: false
+                  enum:
+                    - coordinate_1
+                    - coordinate_2
+                    - destination
+              required:
+                - trip_request_id
+                - is_reached
+      security: []
+  /api/driver/ride/resend-otp:
+    put:
+      summary: ''
+      operationId: putApiDriverRideResendOtp
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trip_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - trip_request_id
+      security: []
+  /api/driver/ride/match-otp:
+    post:
+      summary: ''
+      operationId: postApiDriverRideMatchOtp
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trip_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                otp:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+              required:
+                - trip_request_id
+      security: []
+  /api/driver/ride/track-location:
+    post:
+      summary: ''
+      operationId: postApiDriverRideTrackLocation
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                latitude:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                longitude:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                zoneId:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - latitude
+                - longitude
+                - zoneId
+      security: []
+  /api/driver/ride/returned-parcel:
+    put:
+      summary: ''
+      operationId: putApiDriverRideReturnedParcel
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trip_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                otp:
+                  type: string
+                  description: 'Must be at least 4 characters. Must not be greater than 4 characters.'
+                  example: ngzm
+                  nullable: false
+              required:
+                - trip_request_id
+                - otp
+      security: []
+  /api/driver/ride/ignore-trip-notification:
+    post:
+      summary: ''
+      operationId: postApiDriverRideIgnoreTripNotification
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trip_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - trip_request_id
+      security: []
+  /api/driver/ride/update-status:
+    put:
+      summary: ''
+      operationId: putApiDriverRideUpdateStatus
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                trip_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                return_time:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+              required:
+                - status
+                - trip_request_id
+      security: []
+  /api/driver/ride/trip-action:
+    post:
+      summary: ''
+      operationId: postApiDriverRideTripAction
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trip_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                action:
+                  type: string
+                  description: ''
+                  example: rejected
+                  nullable: false
+                  enum:
+                    - accepted
+                    - rejected
+              required:
+                - trip_request_id
+                - action
+      security: []
+  /api/driver/ride/bid:
+    post:
+      summary: ''
+      operationId: postApiDriverRideBid
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trip_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                bid_fare:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                  nullable: false
+              required:
+                - trip_request_id
+      security: []
+  /api/driver/safety-alert/store:
+    post:
+      summary: ''
+      operationId: postApiDriverSafetyAlertStore
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trip_request_id:
+                  type: string
+                  description: 'Must be a valid UUID.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                  nullable: false
+                lat:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                lng:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - trip_request_id
+                - lat
+                - lng
+      security: []
+  '/api/driver/safety-alert/resend/{trip_request_id}':
+    put:
+      summary: ''
+      operationId: putApiDriverSafetyAlertResendTrip_request_id
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: trip_request_id
+        description: 'The ID of the trip request.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/driver/safety-alert/mark-as-solved/{trip_request_id}':
+    put:
+      summary: ''
+      operationId: putApiDriverSafetyAlertMarkAsSolvedTrip_request_id
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: trip_request_id
+        description: 'The ID of the trip request.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/driver/safety-alert/undo/{trip_request_id}':
+    delete:
+      summary: ''
+      operationId: deleteApiDriverSafetyAlertUndoTrip_request_id
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: trip_request_id
+        description: 'The ID of the trip request.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  /api/ride/store-screenshot:
+    post:
+      summary: ''
+      operationId: postApiRideStoreScreenshot
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trip_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                file:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - trip_request_id
+                - file
+      security: []
+  /api/customer/loyalty-points/convert:
+    post:
+      summary: ''
+      operationId: postApiCustomerLoyaltyPointsConvert
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                points:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - points
+      security: []
+  /api/customer/get-data:
+    post:
+      summary: ''
+      operationId: postApiCustomerGetData
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                external_base_url:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                external_token:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - token
+                - external_base_url
+                - external_token
+      security: []
+  /api/customer/external-update-data:
+    post:
+      summary: ''
+      operationId: postApiCustomerExternalUpdateData
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bearer_token:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                token:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                external_base_url:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                external_token:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - bearer_token
+                - token
+                - external_base_url
+                - external_token
+      security: []
+  /api/customer/applied-coupon:
+    post:
+      summary: ''
+      operationId: postApiCustomerAppliedCoupon
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                coupon_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the coupon_setups table.'
+                  example: architecto
+                  nullable: false
+              required:
+                - coupon_id
+      security: []
+  /api/customer/change-language:
+    post:
+      summary: ''
+      operationId: postApiCustomerChangeLanguage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/customer/address/add:
+    post:
+      summary: 'Store a newly created resource in storage.'
+      operationId: storeANewlyCreatedResourceInStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                latitude:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                longitude:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                address:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                address_label:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - latitude
+                - longitude
+                - address
+                - address_label
+      security: []
+  /api/customer/address/update:
+    put:
+      summary: 'Update the specified resource in storage.'
+      operationId: updateTheSpecifiedResourceInStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                latitude:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                longitude:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                address:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                address_label:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - id
+                - latitude
+                - longitude
+                - address
+                - address_label
+      security: []
+  /api/customer/address/delete:
+    delete:
+      summary: 'Remove the specified resource from storage.'
+      operationId: removeTheSpecifiedResourceFromStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                address_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - address_id
+      security: []
+  /api/customer/wallet/transfer-drivemond-to-mart:
+    post:
+      summary: ''
+      operationId: postApiCustomerWalletTransferDrivemondToMart
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                  nullable: false
+              required:
+                - amount
+      security: []
+  /api/customer/wallet/transfer-drivemond-from-mart:
+    post:
+      summary: ''
+      operationId: postApiCustomerWalletTransferDrivemondFromMart
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currency:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                amount:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                bearer_token:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                token:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                external_base_url:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                external_token:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - currency
+                - amount
+                - bearer_token
+                - token
+                - external_base_url
+                - external_token
+      security: []
+  /api/driver/update-online-status:
+    post:
+      summary: ''
+      operationId: postApiDriverUpdateOnlineStatus
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/driver/change-language:
+    post:
+      summary: ''
+      operationId: postApiDriverChangeLanguage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/driver/update/profile:
+    put:
+      summary: ''
+      operationId: putApiDriverUpdateProfile
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                last_name:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                email:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+                service:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                profile_image:
+                  type: string
+                  format: binary
+                  description: 'Must be an image. Must not be greater than 10000 kilobytes.'
+                  nullable: false
+                identity_images:
+                  type: array
+                  description: 'Must be an image. Must not be greater than 10000 kilobytes.'
+                  items:
+                    type: string
+                    format: binary
+              required:
+                - first_name
+                - last_name
+                - service
+      security: []
+  /api/driver/loyalty-points/convert:
+    post:
+      summary: ''
+      operationId: postApiDriverLoyaltyPointsConvert
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                points:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - points
+      security: []
+  /api/driver/withdraw/request:
+    post:
+      summary: 'Show the form for creating a new resource.'
+      operationId: showTheFormForCreatingANewResource
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                withdraw_method:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                amount:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - withdraw_method
+                - amount
+      security: []
+  /api/driver/withdraw-method-info/create:
+    post:
+      summary: ''
+      operationId: postApiDriverWithdrawMethodInfoCreate
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                withdraw_method:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                method_name:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+              required:
+                - withdraw_method
+      security: []
+  '/api/driver/withdraw-method-info/update/{id}':
+    post:
+      summary: ''
+      operationId: postApiDriverWithdrawMethodInfoUpdateId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                withdraw_method:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                method_name:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+              required:
+                - withdraw_method
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the update.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/driver/withdraw-method-info/delete/{id}':
+    post:
+      summary: ''
+      operationId: postApiDriverWithdrawMethodInfoDeleteId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the delete.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  /api/user/store-live-location:
+    post:
+      summary: ''
+      operationId: postApiUserStoreLiveLocation
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                type:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                latitude:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                longitude:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                zone_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - user_id
+                - type
+                - latitude
+                - longitude
+                - zone_id
+      security: []
+  /api/user/get-live-location:
+    post:
+      summary: ''
+      operationId: postApiUserGetLiveLocation
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trip_request_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - trip_request_id
+      security: []
+  /api/driver/vehicle/store:
+    post:
+      summary: ''
+      operationId: postApiDriverVehicleStore
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                brand_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                model_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                category_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                driver_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                ownership:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                licence_plate_number:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                licence_expire_date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2025-10-31T14:46:19'
+                  nullable: false
+                vin_number:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+                transmission:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+                parcel_weight_capacity:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+                fuel_type:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                other_documents:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - brand_id
+                - model_id
+                - category_id
+                - driver_id
+                - ownership
+                - licence_plate_number
+                - licence_expire_date
+                - fuel_type
+                - other_documents
+      security: []
+  '/api/driver/vehicle/update/{id}':
+    post:
+      summary: ''
+      operationId: postApiDriverVehicleUpdateId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                brand_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                model_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                category_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                driver_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                ownership:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                licence_plate_number:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                licence_expire_date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2025-10-31T14:46:19'
+                  nullable: false
+                vin_number:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+                transmission:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+                parcel_weight_capacity:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: false
+                fuel_type:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                other_documents:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+              required:
+                - brand_id
+                - model_id
+                - category_id
+                - driver_id
+                - ownership
+                - licence_plate_number
+                - licence_expire_date
+                - fuel_type
+                - other_documents
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the update.'
+        example: architecto
+        required: true
+        schema:
+          type: string
