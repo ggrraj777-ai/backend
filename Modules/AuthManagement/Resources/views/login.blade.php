@@ -18,7 +18,6 @@
     <link rel="shortcut icon" href="{{ $favicon ? asset('storage/app/public/business/' . $favicon) : '' }}"/>
 
     <!-- Web Fonts -->
-    <!-- Web Fonts -->
     <link href="{{ asset('assets/admin-module/css/fonts/google.css') }}" rel="stylesheet">
 
     <!-- ======= BEGIN GLOBAL MANDATORY STYLES ======= -->

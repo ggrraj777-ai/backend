@@ -11,12 +11,17 @@
                 <h1 class="page-header-title">
                     <i class="tio-wallet"></i> Wallet Management
                 </h1>
-                <p class="page-header-text">Add or deduct money from user/driver wallets</p>
+                <p class="page-header-text">
+                    Add money via Razorpay (UPI/NetBanking/Card) or deduct money from wallets
+                    <span class="badge badge-soft-success ml-2">
+                        <i class="tio-checkmark-circle"></i> Razorpay Integrated
+                    </span>
+                </p>
             </div>
             <div class="col-sm-auto">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#bulkOperationModal">
-                    <i class="tio-add"></i> Bulk Add Money
-                </button>
+                <a href="{{ route('admin.wallet.payment-history') }}" class="btn btn-success">
+                    <i class="tio-credit-card"></i> Payment History
+                </a>
                 <a href="{{ route('admin.wallet.audit-log') }}" class="btn btn-outline-info">
                     <i class="tio-history"></i> Audit Log
                 </a>
@@ -233,20 +238,20 @@
 @push('script')
 <script>
 function openWalletModal(userId, userName, currentBalance, type) {
+    // If adding money (credit), redirect to Razorpay payment form
+    if (type === 'credit') {
+        window.location.href = "{{ route('admin.wallet.payment-form', ':userId') }}".replace(':userId', userId);
+        return;
+    }
+    
+    // For debit operations, open modal
     $('#user_id').val(userId);
     $('#transaction_type').val(type);
     
-    if (type === 'credit') {
-        $('#walletModalTitle').text('Add Money to Wallet');
-        $('#submitBtn').removeClass('btn-danger').addClass('btn-success').text('Add Money');
-        $('#userInfo').removeClass('alert-warning').addClass('alert-info')
-            .html(`<strong>${userName}</strong><br>Current Balance: ₹${parseFloat(currentBalance).toFixed(2)}`);
-    } else {
-        $('#walletModalTitle').text('Deduct Money from Wallet');
-        $('#submitBtn').removeClass('btn-success').addClass('btn-danger').text('Deduct Money');
-        $('#userInfo').removeClass('alert-info').addClass('alert-warning')
-            .html(`<strong>${userName}</strong><br>Current Balance: ₹${parseFloat(currentBalance).toFixed(2)}<br><small class="text-danger">⚠ Ensure sufficient balance</small>`);
-    }
+    $('#walletModalTitle').text('Deduct Money from Wallet');
+    $('#submitBtn').removeClass('btn-success').addClass('btn-danger').text('Deduct Money');
+    $('#userInfo').removeClass('alert-info').addClass('alert-warning')
+        .html(`<strong>${userName}</strong><br>Current Balance: ₹${parseFloat(currentBalance).toFixed(2)}<br><small class="text-danger">⚠ Ensure sufficient balance</small>`);
     
     $('#walletOperationModal').modal('show');
 }
