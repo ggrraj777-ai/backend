@@ -1,0 +1,163 @@
+# Multi-stage build for better debugging and smaller final image
+FROM php:8.2-apache as builder
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install system dependencies with error checking
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    libzip-dev \
+    libicu-dev \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip intl \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* \
+    || (echo "ERROR: Failed to install system dependencies" && exit 1)
+
+# Install Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Copy only composer files first for better caching
+COPY composer.json composer.lock ./
+
+# Install PHP dependencies with verbose output
+RUN echo "=== Installing PHP dependencies ===" && \
+    composer install \
+        --no-dev \
+        --optimize-autoloader \
+        --no-interaction \
+        --no-scripts \
+        --prefer-dist \
+        --verbose \
+    || (echo "ERROR: Composer install failed!" && composer diagnose && exit 1)
+
+# Copy application files
+COPY . /var/www/html
+
+# Verify critical files exist
+RUN echo "=== Verifying critical files ===" && \
+    test -f .env.example || (echo "ERROR: .env.example missing!" && exit 1) && \
+    test -f artisan || (echo "ERROR: artisan missing!" && exit 1) && \
+    echo "All critical files present"
+
+# Create .env from .env.example
+RUN cp .env.example .env && \
+    echo "APP_NAME=DriveMond" >> .env && \
+    echo "APP_ENV=production" >> .env && \
+    echo "APP_DEBUG=false" >> .env && \
+    echo "APP_URL=https://gauva-798219755346.europe-west1.run.app" >> .env
+
+# Run post-install scripts
+RUN composer dump-autoload --optimize || echo "Warning: dump-autoload had issues"
+
+# Install Node.js (for asset compilation)
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs || echo "Warning: Node.js installation skipped"
+
+# Build assets (optional - will skip if fails)
+RUN if [ -f "package.json" ]; then \
+        echo "=== Installing Node dependencies ===" && \
+        npm install --legacy-peer-deps 2>&1 || \
+        npm install 2>&1 || \
+        echo "Warning: NPM install skipped"; \
+        npm run build 2>&1 || \
+        npm run prod 2>&1 || \
+        echo "Warning: Asset build skipped"; \
+    fi
+
+# Set permissions
+RUN mkdir -p storage/logs storage/framework/sessions storage/framework/views storage/framework/cache bootstrap/cache && \
+    chmod -R 775 storage bootstrap/cache && \
+    chown -R www-data:www-data /var/www/html
+
+# Configure Apache
+RUN sed -i 's/80/8080/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf && \
+    sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf && \
+    echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
+    a2enmod rewrite headers
+
+# Add Apache configuration
+RUN echo '<Directory /var/www/html/public>\n\
+    Options -Indexes +FollowSymLinks\n\
+    AllowOverride All\n\
+    Require all granted\n\
+</Directory>' >> /etc/apache2/sites-available/000-default.conf
+
+# Expose port
+EXPOSE 8080
+
+# Create startup script with detailed logging
+RUN echo '#!/bin/bash\n\
+set -e\n\
+echo "================================="\n\
+echo "Starting DriveMond Application"\n\
+echo "================================="\n\
+echo "PHP Version: $(php -v | head -n 1)"\n\
+echo "Laravel Version: $(php artisan --version)"\n\
+echo "Working Directory: $(pwd)"\n\
+echo ""\n\
+\n\
+# Ensure .env exists\n\
+if [ ! -f .env ]; then\n\
+    echo "Creating .env file..."\n\
+    cp .env.example .env || echo "APP_NAME=DriveMond" > .env\n\
+fi\n\
+\n\
+# Set permissions\n\
+echo "Setting permissions..."\n\
+chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache 2>/dev/null || true\n\
+chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache 2>/dev/null || true\n\
+\n\
+# Generate APP_KEY if missing\n\
+if ! grep -q "APP_KEY=base64:" .env 2>/dev/null; then\n\
+    echo "Generating APP_KEY..."\n\
+    php artisan key:generate --force --no-interaction || echo "Warning: key generation failed"\n\
+fi\n\
+\n\
+# Clear caches\n\
+echo "Clearing caches..."\n\
+php artisan config:clear 2>/dev/null || true\n\
+php artisan cache:clear 2>/dev/null || true\n\
+php artisan route:clear 2>/dev/null || true\n\
+php artisan view:clear 2>/dev/null || true\n\
+\n\
+# Create storage link\n\
+php artisan storage:link 2>/dev/null || echo "Storage link already exists"\n\
+\n\
+# Cache for production (optional)\n\
+if [ "$APP_ENV" = "production" ]; then\n\
+    echo "Caching for production..."\n\
+    php artisan config:cache 2>/dev/null || true\n\
+    php artisan route:cache 2>/dev/null || true\n\
+    php artisan view:cache 2>/dev/null || true\n\
+fi\n\
+\n\
+echo ""\n\
+echo "================================="\n\
+echo "Application Ready on Port 8080"\n\
+echo "================================="\n\
+echo ""\n\
+\n\
+# Test Apache config\n\
+apache2ctl -t || echo "Warning: Apache config test had issues"\n\
+\n\
+# Start Apache\n\
+echo "Starting Apache..."\n\
+exec apache2-foreground' > /usr/local/bin/start.sh && \
+    chmod +x /usr/local/bin/start.sh
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+    CMD curl -f http://localhost:8080/ || exit 1
+
+# Start the application
+CMD ["/usr/local/bin/start.sh"]
+

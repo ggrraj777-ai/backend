@@ -4,9 +4,13 @@ FROM php:8.2-apache
 # Set environment variables
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 ENV PORT=8080
+ENV DEBIAN_FRONTEND=noninteractive
+ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV COMPOSER_NO_INTERACTION=1
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
+# Install system dependencies with error handling
+RUN set -ex && \
+    apt-get update && apt-get install -y \
     git \
     curl \
     libpng-dev \
@@ -17,7 +21,8 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     libicu-dev \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip intl \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    && apt-get clean && rm -rf /var/lib/apt/lists/* \
+    || (echo "ERROR: System dependencies installation failed" && exit 1)
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -28,33 +33,56 @@ WORKDIR /var/www/html
 # Copy composer files first for better caching
 COPY composer.json composer.lock ./
 
-# Install PHP dependencies with better error handling
-RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts --prefer-dist || \
-    (echo "Composer install failed! Trying with --no-scripts..." && \
-    composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist)
+# Install PHP dependencies with robust error handling
+RUN set -ex && \
+    echo "=== Installing Composer dependencies ===" && \
+    composer install \
+        --no-dev \
+        --optimize-autoloader \
+        --no-interaction \
+        --no-scripts \
+        --prefer-dist \
+        --no-progress \
+        --ignore-platform-reqs \
+    && echo "✓ Composer dependencies installed successfully" \
+    || (echo "ERROR: Composer install failed!" && composer diagnose && exit 1)
 
 # Copy application files
 COPY . /var/www/html
 
-# Create .env file from .env.example
-RUN cp .env.example .env || echo "APP_NAME=DriveMond" > .env
+# Run composer scripts after all files are copied
+RUN set -ex && \
+    echo "=== Running Composer scripts ===" && \
+    composer dump-autoload --optimize \
+    && echo "✓ Autoload optimized successfully"
 
-# Set APP_URL in .env for proper asset URLs
-RUN sed -i 's|APP_URL=.*|APP_URL=https://gauva-798219755346.europe-west1.run.app|g' .env || true
+# Create .env file from .env.example with production settings
+RUN set -ex && \
+    echo "=== Creating .env file ===" && \
+    cp .env.example .env && \
+    sed -i 's|APP_URL=.*|APP_URL=https://gauva-798219755346.europe-west1.run.app|g' .env && \
+    sed -i 's|APP_ENV=.*|APP_ENV=production|g' .env && \
+    sed -i 's|APP_DEBUG=.*|APP_DEBUG=false|g' .env && \
+    echo "✓ Environment file configured"
 
-# Run composer scripts
-RUN composer dump-autoload --optimize
+# Install Node.js (with error handling)
+RUN set -ex && \
+    echo "=== Installing Node.js ===" && \
+    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs && \
+    node --version && npm --version && \
+    echo "✓ Node.js installed successfully" \
+    || echo "Warning: Node.js installation skipped"
 
-# Install Node.js (required for asset compilation)
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs
-
-# Install Node dependencies and build assets (with fallback)
+# Install Node dependencies and build assets (optional, won't fail build)
 RUN if [ -f "package.json" ]; then \
-    echo "Installing Node dependencies..." && \
-    npm install --legacy-peer-deps || npm install || echo "NPM install skipped" && \
-    npm run prod || npm run build || echo "NPM build skipped"; \
-    fi
+        echo "=== Building frontend assets ===" && \
+        npm install --legacy-peer-deps --no-audit 2>&1 && \
+        (npm run prod 2>&1 || npm run build 2>&1 || echo "Warning: Asset build skipped") && \
+        echo "✓ Frontend assets processed"; \
+    else \
+        echo "No package.json found, skipping npm build"; \
+    fi || echo "Warning: Frontend build failed but continuing..."
 
 # Ensure public directory has correct permissions
 RUN chmod -R 755 /var/www/html/public
