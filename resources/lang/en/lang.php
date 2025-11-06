@@ -3198,4 +3198,13 @@
   'Platform Charges Management' => 'Platform Charges Management',
   'GAUVA Platform Charges Configuration' => 'GAUVA Platform Charges Configuration',
   'Platform Statistics - Today' => 'Platform Statistics - Today',
+  'Tiered Fare Configuration' => 'Tiered Fare Configuration',
+  'GAUVA Tiered KM-Based Fare Configuration' => 'GAUVA Tiered KM-Based Fare Configuration',
+  'Driver Access Rules' => 'Driver Access Rules',
+  'Driver Fee Configurations' => 'Driver Fee Configurations',
+  'Daily Activities' => 'Daily Activities',
+  'Driver Statistics' => 'Driver Statistics',
+  'Free Access Achieved' => 'Free Access Achieved',
+  'Welcome Period' => 'Welcome Period',
+  'Pending Deductions' => 'Pending Deductions',
 );

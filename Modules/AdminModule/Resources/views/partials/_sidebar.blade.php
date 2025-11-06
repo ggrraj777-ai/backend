@@ -580,6 +580,12 @@
                             <span class="link-title text-capitalize">{{translate('Tiered KM Fares')}}</span>
                         </a>
                     </li>
+                    <li class="{{Request::is('admin/driver-access*')? 'active open' : ''}}">
+                        <a href="{{route('admin.driver-access.dashboard')}}">
+                            <i class="bi bi-shield-check"></i>
+                            <span class="link-title text-capitalize">{{translate('Driver Access Rules')}}</span>
+                        </a>
+                    </li>
                     <!---------- End Fare Management --------------->
                 @endif
 
