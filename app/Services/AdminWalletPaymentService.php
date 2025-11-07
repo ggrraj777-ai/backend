@@ -155,17 +155,21 @@ class AdminWalletPaymentService
             ->where('user_id', $userId)
             ->increment('wallet_balance', $amount);
 
-        // Create transaction record
+        $updatedBalance = DB::table('user_accounts')
+            ->where('user_id', $userId)
+            ->value('wallet_balance');
+
+        // Create transaction record aligned with current schema
         DB::table('transactions')->insert([
             'id' => Str::uuid(),
             'user_id' => $userId,
-            'type' => 'credit',
-            'transaction_type' => 'admin_wallet_topup',
-            'debit' => 0,
+            'attribute' => 'admin_wallet_topup',
+            'account' => 'wallet_balance',
             'credit' => $amount,
-            'balance' => DB::table('user_accounts')
-                ->where('user_id', $userId)
-                ->value('wallet_balance'),
+            'debit' => 0,
+            'balance' => $updatedBalance,
+            'transaction_type' => 'admin_wallet_topup',
+            'trx_ref_id' => $orderId,
             'reference' => $orderId,
             'created_at' => now(),
             'updated_at' => now(),

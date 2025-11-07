@@ -4,6 +4,12 @@
     </IfModule>
 
     RewriteEngine On
+    
+    # Increase PHP execution time and memory for large datasets
+    php_value max_execution_time 300
+    php_value memory_limit 512M
+    php_value post_max_size 50M
+    php_value upload_max_filesize 50M
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .

@@ -321,6 +321,21 @@
                                     {{translate('driver_identity_request_list')}}
                                 </a>
                             </li>
+                            <li class="{{Request::is('admin/driver/documents*') ? 'active open' : ''}}">
+                                <a class="text-capitalize" href="{{route('admin.driver.documents.index')}}">
+                                    <i class="bi bi-dash-lg"></i>
+                                    {{translate('document_verification')}}
+                                    @php
+                                        $pendingDocs = DB::table('users')
+                                            ->where('user_type', 'driver')
+                                            ->where('document_verification_status', 'pending')
+                                            ->count();
+                                    @endphp
+                                    @if($pendingDocs > 0)
+                                        <span class="badge badge-danger badge-pill ml-2">{{$pendingDocs}}</span>
+                                    @endif
+                                </a>
+                            </li>
                         </ul>
                         <!-- End Sub Menu -->
                     </li>

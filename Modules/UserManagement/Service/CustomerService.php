@@ -369,7 +369,7 @@ class CustomerService extends BaseService implements Interface\CustomerServiceIn
 
     public function export(array $criteria = [], array $relations = [], array $orderBy = [], int $limit = null, int $offset = null, array $withCountQuery = []): Collection|LengthAwarePaginator|\Illuminate\Support\Collection
     {
-        return $this->index(criteria: $criteria, relations: $relations, orderBy: $orderBy)->map(function ($item) {
+        return $this->index(criteria: $criteria, relations: $relations, orderBy: $orderBy, withCountQuery: $withCountQuery)->map(function ($item) {
             $identificationData = $item['identification_type'] && $item['identification_number'] ? ucwords($item['identification_type']) . ': ' . $item['identification_number'] : '-';
             return [
                 'id' => $item['id'],
@@ -379,7 +379,7 @@ class CustomerService extends BaseService implements Interface\CustomerServiceIn
                 'Profile Status' => $item['completion_percent'] . '%',
                 'Identification' => $identificationData,
                 'Level' => $item->level->name ?? 'No level attached',
-                'Total Trip' => $item->customerTrips->count(),
+                'Total Trip' => $item->customer_trips_count ?? 0,
                 'Status' => $item['is_active'] ? 'Active' : 'Inactive',
             ];
         });

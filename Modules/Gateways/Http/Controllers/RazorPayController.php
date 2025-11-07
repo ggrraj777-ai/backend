@@ -145,6 +145,15 @@ class RazorPayController extends Controller
         ]);
 
         try {
+            // Check if Razorpay is configured
+            if (!config('razor_config.api_key') || !config('razor_config.api_secret')) {
+                return response()->json([
+                    'success' => false,
+                    'error' => 'Razorpay not configured',
+                    'message' => 'Please configure Razorpay credentials in admin panel'
+                ], 500);
+            }
+
             $api = new Api(config('razor_config.api_key'), config('razor_config.api_secret'));
             $currency = $request->input('currency', 'INR');
             $amount = (int)round($request->amount * 100);
@@ -179,10 +188,16 @@ class RazorPayController extends Controller
                 'key_id' => config('razor_config.api_key'),
             ]);
         } catch (\Exception $e) {
+            \Log::error('QR Code Generation Error: ' . $e->getMessage(), [
+                'driver_id' => $request->driver_id,
+                'trip_id' => $request->trip_id,
+                'amount' => $request->amount,
+            ]);
+            
             return response()->json([
                 'success' => false,
                 'error' => $e->getMessage(),
-                'message' => 'Failed to generate QR code'
+                'message' => 'Failed to generate QR code. Please check Razorpay configuration.'
             ], 500);
         }
     }

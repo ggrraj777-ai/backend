@@ -179,10 +179,14 @@ function getAccessToken($key): array|string
     openssl_sign($unsignedJwt, $signature, $key->private_key, OPENSSL_ALGO_SHA256);
     $jwt = $unsignedJwt . '.' . base64_encode($signature);
 
-    $response = Http::asForm()->post('https://oauth2.googleapis.com/token', [
+    // Disable SSL verification for development environment (Google OAuth2)
+    $response = Http::withOptions([
+        'verify' => false, // Skip SSL verification for local dev
+    ])->asForm()->post('https://oauth2.googleapis.com/token', [
         'grant_type' => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
         'assertion' => $jwt,
     ]);
+    
     if ($response->failed()) {
         return [
             'status' => false,

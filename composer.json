@@ -64,6 +64,7 @@
             "app/Lib/Constant.php",
             "app/Lib/Response.php",
             "app/Lib/QueryInterface.php",
+            "app/Helpers/nighttime_fare_helper.php",
             "Modules/ZoneManagement/Lib/Zone.php",
             "Modules/PromotionManagement/Lib/Promotion.php",
             "Modules/BusinessManagement/Lib/BusinessSettingType.php",

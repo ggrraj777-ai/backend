@@ -160,7 +160,7 @@
                                                             </div>
                                                         </td>
                                                         <td class="level">{{ $customer->level?->name }}</td>
-                                                        <td class="total-trip">{{ $customer->customerTrips->count() }}
+                                                        <td class="total-trip">{{ $customer->customer_trips_count ?? 0 }}
                                                         </td>
                                                         @can('user_edit')
                                                             <td class="status">

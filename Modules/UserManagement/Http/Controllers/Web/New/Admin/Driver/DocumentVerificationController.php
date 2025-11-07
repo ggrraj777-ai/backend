@@ -31,14 +31,15 @@ class DocumentVerificationController extends BaseController
         
         $status = $request->get('status', 'pending');
 
+        // Use subquery to avoid GROUP BY issues with MySQL strict mode
         $drivers = DB::table('users')
-            ->select('users.*', DB::raw('COUNT(driver_documents.id) as document_count'))
-            ->leftJoin('driver_documents', 'users.id', '=', 'driver_documents.driver_id')
+            ->leftJoin(DB::raw('(SELECT driver_id, COUNT(id) as document_count FROM driver_documents WHERE deleted_at IS NULL GROUP BY driver_id) as doc_counts'), 
+                'users.id', '=', 'doc_counts.driver_id')
+            ->select('users.*', DB::raw('COALESCE(doc_counts.document_count, 0) as document_count'))
             ->where('users.user_type', 'driver')
             ->when($status !== 'all', function ($query) use ($status) {
                 $query->where('users.document_verification_status', $status);
             })
-            ->groupBy('users.id')
             ->orderBy('users.created_at', 'desc')
             ->paginate(20);
 

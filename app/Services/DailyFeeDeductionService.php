@@ -8,6 +8,7 @@ use App\Models\DriverFeeConfiguration;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class DailyFeeDeductionService
 {
@@ -184,14 +185,17 @@ class DailyFeeDeductionService
     {
         // Create wallet transaction record
         DB::table('transactions')->insert([
-            'id' => \Str::uuid(),
+            'id' => Str::uuid(),
             'user_id' => $driver->id,
-            'type' => 'debit',
-            'amount' => $amount,
-            'balance_after' => $driver->wallet_balance,
-            'description' => "Daily access fee for {$activity->activity_date->format('Y-m-d')} - {$activity->counted_trips}/{$activity->target_trips} trips",
-            'reference_type' => 'driver_daily_fee',
-            'reference_id' => $activity->id,
+            'attribute' => 'driver_daily_fee',
+            'attribute_id' => $activity->id,
+            'account' => 'wallet_balance',
+            'debit' => $amount,
+            'credit' => 0,
+            'balance' => $driver->wallet_balance,
+            'transaction_type' => 'driver_daily_fee',
+            'trx_ref_id' => $activity->id,
+            'reference' => "Daily access fee for {$activity->activity_date->format('Y-m-d')} - {$activity->counted_trips}/{$activity->target_trips} trips",
             'created_at' => now(),
             'updated_at' => now(),
         ]);
