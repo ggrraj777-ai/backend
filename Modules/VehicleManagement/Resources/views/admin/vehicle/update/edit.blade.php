@@ -185,7 +185,7 @@
                                                 <div class="file__value--remove fw-bold"
                                                      data-id="{{$document}}">
                                                     <img
-                                                        src="{{ asset('public/assets/admin-module/img/icons/close-circle.svg') }}"
+                                                        src="{{ asset('assets/admin-module/img/icons/close-circle.svg') }}"
                                                         alt="">
                                                 </div>
                                                 <input type="hidden" name="existing_documents[]"
@@ -235,7 +235,7 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('public/assets/admin-module/js/vehicle-management/vehicle/create.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/vehicle-management/vehicle/create.js') }}"></script>
 
     <script>
         "use strict";
@@ -375,7 +375,7 @@
                 const removeButton = document.createElement("div");
                 removeButton.classList.add("file__value--remove", "fw-bold");
                 removeButton.setAttribute("data-id", file.name);
-                removeButton.innerHTML = `<img src="{{ asset('public/assets/admin-module/img/icons/close-circle.svg') }}" alt="">`;
+                removeButton.innerHTML = `<img src="{{ asset('assets/admin-module/img/icons/close-circle.svg') }}" alt="">`;
 
                 // Append everything to the file value div
                 fileValueDiv.appendChild(fileIcon);
@@ -402,3 +402,4 @@
     </script>
 
 @endpush
+

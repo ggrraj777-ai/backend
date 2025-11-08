@@ -171,7 +171,7 @@
                                                                                     <div
                                                                                         class="d-flex gap-2 align-items-center">
                                                                                         <img class="text-primary"
-                                                                                             src="{{asset('public/assets/admin-module/img/svg/check.svg')}}"
+                                                                                             src="{{asset('assets/admin-module/img/svg/check.svg')}}"
                                                                                              alt="" class="svg">
                                                                                         {{translate('Required')}}
                                                                                     </div>
@@ -251,7 +251,7 @@
                                         <div
                                             class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
                                             <img
-                                                src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}"
+                                                src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}"
                                                 alt="" width="100">
                                             <p class="text-center">{{translate('no_data_available')}}</p>
                                         </div>
@@ -274,4 +274,5 @@
         </div>
     </div>
 @endsection
+
 

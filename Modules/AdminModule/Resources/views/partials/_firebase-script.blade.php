@@ -1,5 +1,5 @@
 <audio id="myAudio">
-    <source src="{{asset('public/assets/admin-module/sound/safety-alert.mp3')}}" type="audio/mpeg">
+    <source src="{{asset('assets/admin-module/sound/safety-alert.mp3')}}" type="audio/mpeg">
 </audio>
 <script>
     "use strict"
@@ -136,3 +136,4 @@
     }
 
 </script>
+

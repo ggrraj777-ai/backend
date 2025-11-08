@@ -188,7 +188,7 @@
 <div class="modal fade" id="bulkOperationModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('admin.wallet.bulk-add-money') }}" method="POST">
+            <form id="bulkOperationForm" action="{{ route('admin.wallet.bulk-add-money') }}" method="POST">
                 @csrf
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title"><i class="tio-add"></i> Bulk Add Money</h5>
@@ -216,6 +216,28 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="form-label">Payment Method <span class="text-danger">*</span></label>
+                        <div class="d-flex flex-wrap gap-3">
+                            <label class="form-check form-check-inline mb-0">
+                                <input class="form-check-input" type="radio" name="payment_method" value="upi" checked>
+                                <span class="form-check-label">UPI</span>
+                            </label>
+                            <label class="form-check form-check-inline mb-0">
+                                <input class="form-check-input" type="radio" name="payment_method" value="netbanking">
+                                <span class="form-check-label">Net Banking</span>
+                            </label>
+                            <label class="form-check form-check-inline mb-0">
+                                <input class="form-check-input" type="radio" name="payment_method" value="card">
+                                <span class="form-check-label">Card</span>
+                            </label>
+                            <label class="form-check form-check-inline mb-0">
+                                <input class="form-check-input" type="radio" name="payment_method" value="wallet">
+                                <span class="form-check-label">Wallet</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="form-label">Reference Number <span class="text-danger">*</span></label>
                         <input type="text" name="reference" class="form-control" required placeholder="e.g., PROMO-2025-01">
                         <small class="form-text text-muted">Required for bulk operations</small>
@@ -225,10 +247,17 @@
                         <label class="form-label">Note/Reason</label>
                         <textarea name="note" class="form-control" rows="3" placeholder="e.g., Festival bonus, Promotional credit"></textarea>
                     </div>
+
+                    <div id="bulkSummary" class="alert alert-info d-none">
+                        <i class="bi bi-info-circle"></i>
+                        <span class="summary-text"></span>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Confirm Bulk Operation</button>
+                    <button type="submit" class="btn btn-primary" id="bulkSubmitButton">
+                        <i class="bi bi-shield-lock"></i> Proceed to Razorpay
+                    </button>
                 </div>
             </form>
         </div>
@@ -236,25 +265,193 @@
 </div>
 
 @push('script')
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
-function openWalletModal(userId, userName, currentBalance, type) {
-    // If adding money (credit), redirect to Razorpay payment form
+const openWalletModal = (userId, userName, currentBalance, type) => {
     if (type === 'credit') {
         window.location.href = "{{ route('admin.wallet.payment-form', ':userId') }}".replace(':userId', userId);
         return;
     }
-    
-    // For debit operations, open modal
+
     $('#user_id').val(userId);
     $('#transaction_type').val(type);
-    
+
     $('#walletModalTitle').text('Deduct Money from Wallet');
     $('#submitBtn').removeClass('btn-success').addClass('btn-danger').text('Deduct Money');
     $('#userInfo').removeClass('alert-info').addClass('alert-warning')
         .html(`<strong>${userName}</strong><br>Current Balance: ₹${parseFloat(currentBalance).toFixed(2)}<br><small class="text-danger">⚠ Ensure sufficient balance</small>`);
-    
+
     $('#walletOperationModal').modal('show');
-}
+};
+
+const RAZORPAY_KEY = "{{ env('RAZORPAY_KEY_ID') }}";
+const BULK_CREATE_ORDER_URL = "{{ route('admin.wallet.bulk-create-payment-order') }}";
+const VERIFY_BULK_PAYMENT_URL = "{{ route('admin.wallet.verify-bulk-payment') }}";
+const PAYMENT_FAILED_URL = "{{ route('admin.wallet.payment-failed') }}";
+
+let currentBulkOrder = null;
+
+document.getElementById('bulkOperationForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const submitButton = document.getElementById('bulkSubmitButton');
+    const summaryBox = document.getElementById('bulkSummary');
+    const summaryText = summaryBox.querySelector('.summary-text');
+
+    const formData = new FormData(form);
+    const userType = formData.get('user_type');
+    const amount = parseFloat(formData.get('amount'));
+    const paymentMethod = formData.get('payment_method');
+    const reference = formData.get('reference');
+    const notes = formData.get('note');
+
+    if (!amount || amount <= 0) {
+        toastr.error('Please enter a valid amount greater than 0.');
+        return;
+    }
+
+    submitButton.disabled = true;
+    const originalText = submitButton.innerHTML;
+    submitButton.innerHTML = '<i class="bi bi-hourglass-split"></i> Preparing Razorpay...';
+
+    try {
+        const createResponse = await fetch(BULK_CREATE_ORDER_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({
+                user_type: userType,
+                amount: amount,
+                payment_method: paymentMethod,
+                reference: reference,
+                notes: notes
+            })
+        });
+
+        const orderData = await createResponse.json();
+
+        if (!orderData.success) {
+            throw new Error(orderData.message || 'Failed to create Razorpay order');
+        }
+
+        currentBulkOrder = orderData;
+
+        summaryText.innerHTML = `Will credit <strong>₹${Number(orderData.per_user_amount).toFixed(2)}</strong> to <strong>${orderData.target_users_count}</strong> ${userType === 'all' ? 'users' : userType + 's'} (Total: <strong>₹${Number(orderData.total_amount).toFixed(2)}</strong>)`;
+        summaryBox.classList.remove('d-none');
+
+        const razorpayOptions = {
+            key: orderData.key_id || RAZORPAY_KEY,
+            amount: Math.round(Number(orderData.total_amount) * 100),
+            currency: 'INR',
+            name: 'GAUVA Platform',
+            description: 'Bulk Wallet Top-up',
+            order_id: orderData.razorpay_order_id,
+            prefill: {
+                name: '{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}',
+                email: '{{ auth()->user()->email }}',
+                contact: '{{ auth()->user()->phone }}'
+            },
+            notes: {
+                admin_id: '{{ auth()->user()->id }}',
+                order_reference: orderData.order_id,
+                user_type: userType,
+                per_user_amount: orderData.per_user_amount
+            },
+            handler: async (paymentResult) => {
+                try {
+                    const verifyResponse = await fetch(VERIFY_BULK_PAYMENT_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        },
+                        body: JSON.stringify({
+                            razorpay_order_id: paymentResult.razorpay_order_id,
+                            razorpay_payment_id: paymentResult.razorpay_payment_id,
+                            razorpay_signature: paymentResult.razorpay_signature
+                        })
+                    });
+
+                    const verifyData = await verifyResponse.json();
+
+                    if (!verifyData.success) {
+                        throw new Error(verifyData.message || 'Verification failed');
+                    }
+
+                    toastr.success(`Wallet credited for ${verifyData.target_users_count} users.`);
+                    $('#bulkOperationModal').modal('hide');
+                    setTimeout(() => window.location.reload(), 1500);
+
+                } catch (error) {
+                    await fetch(PAYMENT_FAILED_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        },
+                        body: JSON.stringify({
+                            razorpay_order_id: paymentResult.razorpay_order_id,
+                            reason: error.message || 'Verification failed'
+                        })
+                    });
+
+                    toastr.error(error.message || 'Bulk payment verification failed');
+                } finally {
+                    currentBulkOrder = null;
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalText;
+                }
+            },
+            modal: {
+                ondismiss: async () => {
+                    if (currentBulkOrder) {
+                        await fetch(PAYMENT_FAILED_URL, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                            },
+                            body: JSON.stringify({
+                                razorpay_order_id: currentBulkOrder.razorpay_order_id,
+                                reason: 'Payment cancelled by admin'
+                            })
+                        });
+
+                        toastr.info('Bulk wallet payment was cancelled.');
+                        currentBulkOrder = null;
+                    }
+
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalText;
+                }
+            },
+            theme: {
+                color: '#0d6efd'
+            }
+        };
+
+        new Razorpay(razorpayOptions).open();
+
+    } catch (error) {
+        toastr.error(error.message || 'Failed to initiate bulk payment');
+        submitButton.disabled = false;
+        submitButton.innerHTML = originalText;
+    }
+});
+
+$('#bulkOperationModal').on('hidden.bs.modal', () => {
+    const summaryBox = document.getElementById('bulkSummary');
+    summaryBox.classList.add('d-none');
+    summaryBox.querySelector('.summary-text').innerHTML = '';
+    document.getElementById('bulkOperationForm').reset();
+    const submitButton = document.getElementById('bulkSubmitButton');
+    submitButton.disabled = false;
+    submitButton.innerHTML = '<i class="bi bi-shield-lock"></i> Proceed to Razorpay';
+    currentBulkOrder = null;
+});
 </script>
 @endpush
 @endsection

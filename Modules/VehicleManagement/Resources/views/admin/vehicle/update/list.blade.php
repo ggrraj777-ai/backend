@@ -167,7 +167,7 @@
 
                                                 <a
                                                     data-url="{{route('admin.vehicle.update.approved', [$vehicle->id])}}"
-                                                    data-icon="{{ asset('public/assets/admin-module/img/modal/mark.png') }}"
+                                                    data-icon="{{ asset('assets/admin-module/img/modal/mark.png') }}"
                                                     data-confirm-btn="{{translate("Approve")}}"
                                                     class="btn btn-outline-success btn-action d-flex justify-content-center align-items-center approval-button-vehicle-update"
                                                     data-bs-toggle="tooltip" title="{{translate("Approve")}}">
@@ -177,7 +177,7 @@
 
                                                 <a
                                                     data-url="{{route('admin.vehicle.update.denied', [$vehicle->id])}}"
-                                                    data-icon="{{ asset('public/assets/admin-module/img/modal/mark.png') }}"
+                                                    data-icon="{{ asset('assets/admin-module/img/modal/mark.png') }}"
                                                     data-confirm-btn="{{translate("Deny")}}"
                                                     class="btn btn-outline-danger btn-action d-flex justify-content-center align-items-center deny-button-vehicle-update"
                                                     data-bs-toggle="tooltip" title="{{translate("Deny")}}">
@@ -191,7 +191,7 @@
 
                                                     <a
                                                         data-url="{{route('admin.vehicle.permanent-delete', [$vehicle->id])}}"
-                                                        data-icon="{{ asset('public/assets/admin-module/img/trash.png') }}"
+                                                        data-icon="{{ asset('assets/admin-module/img/trash.png') }}"
                                                         data-confirm-btn="{{translate("Yes Delete")}}"
                                                         data-cancel-btn="{{translate("Not Now")}}"
                                                         class="btn btn-outline-danger btn-action d-flex justify-content-center align-items-center delete-button"
@@ -210,7 +210,7 @@
                                         <div
                                             class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
                                             <img
-                                                src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}"
+                                                src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}"
                                                 alt="" width="100">
                                             <p class="text-center">{{translate('no_data_available')}}</p>
                                         </div>
@@ -232,3 +232,4 @@
     <!-- End Main Content -->
 
 @endsection
+

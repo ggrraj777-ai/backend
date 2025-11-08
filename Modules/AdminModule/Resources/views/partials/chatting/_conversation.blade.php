@@ -8,7 +8,7 @@
                     <img src="{{ onErrorImage(
                         $driver?->profile_image,
                         asset('storage/app/public/driver/profile') . '/' . $driver?->profile_image,
-                        asset('public/assets/admin-module/img/user.png'),
+                        asset('assets/admin-module/img/user.png'),
                         'driver/profile/',
                     ) }}"
                         id="" class="avatar-img rounded-circle aspect-1" alt="">
@@ -54,7 +54,7 @@
                             src="{{ onErrorImage(
                                 $driver?->profile_image,
                                 asset('storage/app/public/driver/profile') . '/' . $driver?->profile_image,
-                                asset('public/assets/admin-module/img/user.png'),
+                                asset('assets/admin-module/img/user.png'),
                                 'driver/profile/',
                             ) }}"
                             alt="Image Description">
@@ -606,9 +606,10 @@
 
 {{-- Files Uploaded state ends --}}
 @push('script')
-    <script src="{{ asset('public/assets/admin-module/js/js-zip/jszip.min.js') }}"></script>
-    <script src="{{ asset('public/assets/admin-module/js/js-zip/FileSaver.min.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/js-zip/jszip.min.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/js-zip/FileSaver.min.js') }}"></script>
     
    
     
 @endpush
+

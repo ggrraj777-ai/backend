@@ -392,7 +392,7 @@
         Swal.fire({
             title: '{{ translate('are_you_sure') }}?',
             text: '{{ translate('Do you want to turn off Maintenance mode? Turning it off will activate all systems that were deactivated.') }}',
-            imageUrl: "{{asset("public/assets/admin-module/img/maintenance_off.svg")}}",
+            imageUrl: "{{asset("assets/admin-module/img/maintenance_off.svg")}}",
             imageAlt: "Custom image",
             showCancelButton: true,
             confirmButtonColor: 'var(--bs-primary)',
@@ -732,7 +732,7 @@
     function formAlertWarning(id, message) {
         Swal.fire({
             title: '{{ translate('warning') }}!',
-            imageUrl: '{{asset('public/assets/admin-module/img/warning.png')}}',
+            imageUrl: '{{asset('assets/admin-module/img/warning.png')}}',
             text: message,
             showCloseButton: true,
             showConfirmButton: false
@@ -1214,7 +1214,7 @@
 
     // Function to get the file icon
     function getFileIcon(fileName) {
-        const asset = "{{ asset('public/assets/admin-module/img/file-format/svg') }}";
+        const asset = "{{ asset('assets/admin-module/img/file-format/svg') }}";
         const extension = fileName.split('.').pop().toLowerCase();
         switch (extension) {
             case 'pdf':
@@ -1239,7 +1239,7 @@
             case 'xlsx':
                 return `${asset}/xlsx.svg`;
             default:
-                return "{{ asset('public/assets/admin-module/img/document-upload.png') }}";
+                return "{{ asset('assets/admin-module/img/document-upload.png') }}";
         }
     }
 
@@ -1308,7 +1308,7 @@
             const removeButton = document.createElement("div");
             removeButton.classList.add("file__value--remove", "fw-bold");
             removeButton.setAttribute("data-id", file.name);
-            removeButton.innerHTML = `<img src="{{ asset('public/assets/admin-module/img/icons/close-circle.svg') }}" alt="">`;
+            removeButton.innerHTML = `<img src="{{ asset('assets/admin-module/img/icons/close-circle.svg') }}" alt="">`;
 
             // Append everything to the file value div
             fileValueDiv.appendChild(fileIcon);
@@ -1341,3 +1341,4 @@
 </body>
 
 </html>
+

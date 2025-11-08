@@ -3,7 +3,7 @@
 @extends('adminmodule::layouts.master')
 
 @push('css_or_js')
-    <link rel="stylesheet" href="{{ asset('public/landing-page/assets/css/owl.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('landing-page/assets/css/owl.min.css') }}"/>
 @endpush
 
 @section('content')
@@ -112,14 +112,14 @@
     {{-- Saved answer offcanvas ends --}}
 
 
-    <span id="get-file-icon" data-default-icon="{{ asset('public/assets/admin-module/img/default-icon.png') }}"
-          data-word-icon="{{ asset('public/assets/admin-module/img/default-icon.png') }}"></span>
+    <span id="get-file-icon" data-default-icon="{{ asset('assets/admin-module/img/default-icon.png') }}"
+          data-word-icon="{{ asset('assets/admin-module/img/default-icon.png') }}"></span>
 @endsection
 
 @push('script')
-    <script src="{{ asset('public/assets/admin-module/js/chatting/chatting.js') }}"></script>
-    <script src="{{ asset('public/assets/admin-module/js/chatting/picmo-emoji.js') }}"></script>
-    <script src="{{ asset('public/landing-page/assets/js/owl.min.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/chatting/chatting.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/chatting/picmo-emoji.js') }}"></script>
+    <script src="{{ asset('landing-page/assets/js/owl.min.js') }}"></script>
 
 
 
@@ -198,13 +198,13 @@
                 $('#chattingConversation').empty().html(response);
                 driverList('{{ route('admin.search-drivers') }}', value);
                 // Dynamically load scripts
-                $.getScript("{{ asset('public/assets/admin-module/js/chatting/emoji.js') }}");
-                $.getScript("{{ asset('public/assets/admin-module/js/chatting/select-multiple-file.js') }}");
+                $.getScript("{{ asset('assets/admin-module/js/chatting/emoji.js') }}");
+                $.getScript("{{ asset('assets/admin-module/js/chatting/select-multiple-file.js') }}");
                 $.getScript(
-                    "{{ asset('public/assets/admin-module/js/chatting/select-multiple-image-for-message.js') }}"
+                    "{{ asset('assets/admin-module/js/chatting/select-multiple-image-for-message.js') }}"
                 );
-                $.getScript("{{ asset('public/assets/admin-module/js/js-zip/jszip.min.js') }}");
-                $.getScript("{{ asset('public/assets/admin-module/js/js-zip/FileSaver.min.js') }}");
+                $.getScript("{{ asset('assets/admin-module/js/js-zip/jszip.min.js') }}");
+                $.getScript("{{ asset('assets/admin-module/js/js-zip/FileSaver.min.js') }}");
                 //tooltip
                 // $('[data-bs-toggle="tooltip"]').tooltip();
                 const tooltipElements = $('[data-bs-toggle="tooltip"]');
@@ -388,3 +388,5 @@
         });
     </script>
 @endpush
+
+

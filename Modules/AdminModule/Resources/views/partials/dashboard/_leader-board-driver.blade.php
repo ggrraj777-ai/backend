@@ -11,7 +11,7 @@
                         <img src="{{ onErrorImage(
                             $leadDriver[1]?->driver?->profile_image,
                             asset('storage/app/public/driver/profile') . '/' . $leadDriver[1]?->driver?->profile_image,
-                            asset('public/assets/admin-module/img/avatar/avatar.png'),
+                            asset('assets/admin-module/img/avatar/avatar.png'),
                             'driver/profile/',
                         ) }}"
                             alt="" class="fit-object rounded-circle dark-support">
@@ -28,7 +28,7 @@
                     <h6 class="fs-12 fw-semibold my-1 text-warning">{{ translate('trips') }}</h6>
                     <div class="custom-box-size rounded-circle position-relative" style="--size: 65px">
 
-                        <img src="{{ asset('public/assets/admin-module/img/driver.png') }}"
+                        <img src="{{ asset('assets/admin-module/img/driver.png') }}"
                              alt="" class="fit-object rounded-circle dark-support">
                     </div>
                     <div class="leader-board-column second bg-warning mt-3">
@@ -46,11 +46,11 @@
                         <img src="{{ onErrorImage(
                             $leadDriver[0]?->driver?->profile_image,
                             asset('storage/app/public/driver/profile') . '/' . $leadDriver[0]?->driver?->profile_image,
-                            asset('public/assets/admin-module/img/avatar/avatar.png'),
+                            asset('assets/admin-module/img/avatar/avatar.png'),
                             'driver/profile/',
                         ) }}"
                             alt="" class="fit-object rounded-circle dark-support">
-                        <img width="36" src="{{ asset('public/assets/admin-module/img/icons/badge.png') }}"
+                        <img width="36" src="{{ asset('assets/admin-module/img/icons/badge.png') }}"
                             class="dark-support leader-board-badge" alt="">
                     </div>
                     <div class="leader-board-column first bg-primary mt-3">
@@ -64,9 +64,9 @@
                         <h5 class="text-primary">{{ 0 }}</h5>
                         <h6 class="fs-12 fw-semibold my-1 text-primary">{{ translate('trips') }}</h6>
                         <div class="custom-box-size rounded-circle position-relative" style="--size: 65px">
-                            <img src="{{ asset('public/assets/admin-module/img/driver.png') }}"
+                            <img src="{{ asset('assets/admin-module/img/driver.png') }}"
                                  alt="" class="fit-object rounded-circle dark-support">
-                            <img width="36" src="{{ asset('public/assets/admin-module/img/icons/badge.png') }}"
+                            <img width="36" src="{{ asset('assets/admin-module/img/icons/badge.png') }}"
                                  class="dark-support leader-board-badge" alt="">
                         </div>
                         <div class="leader-board-column first bg-primary mt-3">
@@ -84,7 +84,7 @@
                         <img src="{{ onErrorImage(
                             $leadDriver[2]?->driver?->profile_image,
                             asset('storage/app/public/driver/profile') . '/' . $leadDriver[2]?->driver?->profile_image,
-                            asset('public/assets/admin-module/img/avatar/avatar.png'),
+                            asset('assets/admin-module/img/avatar/avatar.png'),
                             'driver/profile/',
                         ) }}"
                             alt="" class="fit-object rounded-circle dark-support">
@@ -99,7 +99,7 @@
                         <h5>{{ 0 }}</h5>
                         <h6 class="fs-12 fw-semibold my-1">{{ translate('trips') }}</h6>
                         <div class="custom-box-size rounded-circle position-relative" style="--size: 65px">
-                            <img src="{{ asset('public/assets/admin-module/img/driver.png') }}"
+                            <img src="{{ asset('assets/admin-module/img/driver.png') }}"
                                  alt="" class="fit-object rounded-circle dark-support">
                         </div>
                         <div class="leader-board-column mt-3">
@@ -120,7 +120,7 @@
                                     <img src="{{ onErrorImage(
                                         $ld?->driver?->profile_image,
                                         asset('storage/app/public/driver/profile') . '/' . $ld?->driver?->profile_image,
-                                        asset('public/assets/admin-module/img/avatar/avatar.png'),
+                                        asset('assets/admin-module/img/avatar/avatar.png'),
                                         'driver/profile/',
                                     ) }}"
                                         alt="" class="dark-support rounded-circle custom-box-size"
@@ -135,7 +135,7 @@
                 @empty
                     <div class="py-3">
                         <div class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
-                            <img src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}" alt="" width="100">
+                            <img src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}" alt="" width="100">
                             <p class="text-center">{{translate('no_data_available')}}</p>
                         </div>
                     </div>
@@ -146,9 +146,10 @@
     @else
         <div class="py-3">
             <div class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
-                <img src="{{ asset('public/assets/admin-module/img/driver.png') }}" alt="" width="100">
+                <img src="{{ asset('assets/admin-module/img/driver.png') }}" alt="" width="100">
                 <p class="text-center">{{translate('no_Driver_Found')}}</p>
             </div>
         </div>
     @endif
 </div>
+

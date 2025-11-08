@@ -26,7 +26,7 @@
                                         <img src="{{ onErrorImage(
                                             $commonData['driver']?->profile_image,
                                             asset('storage/app/public/driver/profile') . '/' . $commonData['driver']?->profile_image,
-                                            asset('public/assets/admin-module/img/avatar/avatar.png'),
+                                            asset('assets/admin-module/img/avatar/avatar.png'),
                                             'driver/profile/',
                                         ) }}"
                                             class="rounded dark-support custom-box-size" alt=""
@@ -193,7 +193,7 @@
 
                             <div class="card h-100 d-flex justify-content-center align-items-center">
                                 <div class="card-body d-flex flex-column gap-10 align-items-center justify-content-center">
-                                    <img width="48" src="{{ asset('public/assets/admin-module/img/media/cc.png') }}"
+                                    <img width="48" src="{{ asset('assets/admin-module/img/media/cc.png') }}"
                                         alt="">
                                     <h3 class="fw-bold mb-0 fs-3">
                                         {{ getCurrencyFormat($commonData['collectable_amount']) }}</h3>
@@ -221,7 +221,7 @@
                                             </div>
                                             <div>
                                                 <img width="40" class="mb-2"
-                                                    src="{{ asset('public/assets/admin-module/img/media/pw.png') }}"
+                                                    src="{{ asset('assets/admin-module/img/media/pw.png') }}"
                                                     alt="">
                                             </div>
                                         </div>
@@ -238,7 +238,7 @@
                                             </div>
                                             <div>
                                                 <img width="40"
-                                                    src="{{ asset('public/assets/admin-module/img/media/aw.png') }}"
+                                                    src="{{ asset('assets/admin-module/img/media/aw.png') }}"
                                                     alt="">
                                             </div>
                                         </div>
@@ -256,7 +256,7 @@
                                             </div>
                                             <div>
                                                 <img width="40" class="mb-2"
-                                                    src="{{ asset('public/assets/admin-module/img/media/withdraw.png') }}"
+                                                    src="{{ asset('assets/admin-module/img/media/withdraw.png') }}"
                                                     alt="">
                                             </div>
                                         </div>
@@ -276,7 +276,7 @@
                                             </div>
                                             <div>
                                                 <img width="40"
-                                                    src="{{ asset('public/assets/admin-module/img/media/withdraw-icon.png') }}"
+                                                    src="{{ asset('assets/admin-module/img/media/withdraw-icon.png') }}"
                                                     alt="">
                                             </div>
                                         </div>
@@ -358,5 +358,6 @@
 
 @push('script')
     <!-- Apex Chart -->
-    <script src="{{ asset('public/assets/admin-module/plugins/apex/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/plugins/apex/apexcharts.min.js') }}"></script>
 @endpush
+

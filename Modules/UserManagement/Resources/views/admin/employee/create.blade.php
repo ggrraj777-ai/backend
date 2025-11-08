@@ -71,7 +71,7 @@
                                                         class="upload-file__img border-gray d-flex justify-content-center align-items-center w-180 h-180 p-0 bg-white">
                                                         <div class="upload-file__textbox text-center">
                                                             <img width="34" height="34"
-                                                                 src="{{ asset('public/assets/admin-module/img/document-upload.png') }}"
+                                                                 src="{{ asset('assets/admin-module/img/document-upload.png') }}"
                                                                  alt="" class="svg">
                                                             <h6 class="mt-2 fw-semibold">
                                                                 <span
@@ -228,11 +228,11 @@
 @endsection
 
 @push('script')
-    <link href="{{ asset('public/assets/admin-module/css/intlTelInput.min.css') }}" rel="stylesheet"/>
-    <script src="{{ asset('public/assets/admin-module/js/intlTelInput.min.js') }}"></script>
-    <script src="{{ asset('public/assets/admin-module/js/spartan-multi-image-picker.js') }}"></script>
-    <script src="{{ asset('public/assets/admin-module/js/password.js') }}"></script>
-    <script src="{{ asset('public/assets/admin-module/js/upload-files-create.js') }}"></script>
+    <link href="{{ asset('assets/admin-module/css/intlTelInput.min.css') }}" rel="stylesheet"/>
+    <script src="{{ asset('assets/admin-module/js/intlTelInput.min.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/spartan-multi-image-picker.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/password.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/upload-files-create.js') }}"></script>
 
     <script>
         "use strict";
@@ -313,3 +313,4 @@
         });
     </script>
 @endpush
+

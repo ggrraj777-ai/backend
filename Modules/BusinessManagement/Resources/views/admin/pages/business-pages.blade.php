@@ -3,7 +3,7 @@
 @section('title', translate($type ?? 'about_us'))
 
 @push('css_or_js')
-    <link rel="stylesheet" href="{{ asset('public/assets/admin-module/plugins/summernote/summernote-lite.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/admin-module/plugins/summernote/summernote-lite.min.css') }}"/>
 @endpush
 
 @section('content')
@@ -83,7 +83,7 @@
                                                 <img src="{{ onErrorImage(
                                                     $data?->value['image'],
                                                     asset('storage/app/public/business/pages') . '/' . $data?->value['image'],
-                                                    asset('public/assets/admin-module/img/media/banner-upload-file.png'),
+                                                    asset('assets/admin-module/img/media/banner-upload-file.png'),
                                                     'business/pages/',
                                                 ) }}"
                                                      alt="">
@@ -115,7 +115,7 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('public/assets/admin-module/plugins/summernote/summernote-lite.min.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/plugins/summernote/summernote-lite.min.js') }}"></script>
 
     <script>
         "use strict";
@@ -149,3 +149,4 @@
         });
     </script>
 @endpush
+

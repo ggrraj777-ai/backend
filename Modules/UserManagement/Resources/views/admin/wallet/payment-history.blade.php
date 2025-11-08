@@ -90,16 +90,31 @@
                         <td>
                             <div>
                                 <strong>{{ $payment->target_name }}</strong><br>
-                                <small class="text-muted">
-                                    {{ $payment->target_phone }} | 
-                                    <span class="badge badge-soft-{{ $payment->target_user_type == 'driver' ? 'warning' : 'primary' }}">
-                                        {{ ucfirst($payment->target_user_type) }}
-                                    </span>
-                                </small>
+                                @if($payment->is_bulk)
+                                    <small class="text-muted d-block">
+                                        Scope: {{ $payment->target_user_type === 'all' ? 'Customers + Drivers' : ucfirst($payment->target_user_type) }}
+                                    </small>
+                                    <small class="text-muted d-block">
+                                        Users: {{ $payment->bulk_target_count }}
+                                        @if($payment->per_user_amount)
+                                            • Per User: ₹{{ number_format($payment->per_user_amount, 2) }}
+                                        @endif
+                                    </small>
+                                @else
+                                    <small class="text-muted">
+                                        {{ $payment->target_phone }} |
+                                        <span class="badge badge-soft-{{ $payment->target_user_type == 'driver' ? 'warning' : 'primary' }}">
+                                            {{ ucfirst($payment->target_user_type) }}
+                                        </span>
+                                    </small>
+                                @endif
                             </div>
                         </td>
                         <td>
                             <strong class="text-success">₹{{ number_format($payment->amount, 2) }}</strong>
+                            @if($payment->is_bulk && $payment->per_user_amount)
+                                <small class="text-muted d-block">₹{{ number_format($payment->per_user_amount, 2) }} per user</small>
+                            @endif
                         </td>
                         <td>
                             <span class="badge badge-soft-info">
@@ -132,14 +147,18 @@
                             </div>
                         </td>
                         <td>
-                            @if($payment->razorpay_payment_id)
-                                <small>
+                            <small>
+                                @if($payment->reference)
+                                    <strong>Reference:</strong><br>
+                                    <code class="text-xs d-block mb-1">{{ $payment->reference }}</code>
+                                @endif
+                                @if($payment->razorpay_payment_id)
                                     <strong>Payment ID:</strong><br>
                                     <code class="text-xs">{{ $payment->razorpay_payment_id }}</code>
-                                </small>
-                            @else
-                                <span class="text-muted">N/A</span>
-                            @endif
+                                @else
+                                    <span class="text-muted">N/A</span>
+                                @endif
+                            </small>
                         </td>
                     </tr>
                     @empty

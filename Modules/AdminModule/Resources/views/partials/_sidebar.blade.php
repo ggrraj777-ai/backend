@@ -4,7 +4,7 @@
         <!-- Logo -->
         <a href="{{route('admin.dashboard')}}" class="logo d-flex gap-2">
             <img width="115"
-                 src="{{$logo ? asset("storage/app/public/business/".$logo) : asset('public/assets/admin-module/img/logo.png')}}"
+                 src="{{$logo ? asset("storage/app/public/business/".$logo) : asset('assets/admin-module/img/logo.png')}}"
                  alt="" class="main-logo">
         </a>
         <!-- End Logo -->
@@ -27,7 +27,7 @@
                          src="{{ onErrorImage(
                         auth()->user()?->profile_image,
                         asset('storage/app/public/employee/profile') . '/' . auth()->user()->profile_image,
-                        asset('public/assets/admin-module/img/user.png'),
+                        asset('assets/admin-module/img/user.png'),
                         'employee/profile/',
                     ) }}" alt="">
                 </div>
@@ -755,5 +755,6 @@
 </aside>
 
 @push('script')
-    <script src="{{asset('public/assets/admin-module/js/admin-module/sidebar.js')}}"></script>
+    <script src="{{asset('assets/admin-module/js/admin-module/sidebar.js')}}"></script>
 @endpush
+

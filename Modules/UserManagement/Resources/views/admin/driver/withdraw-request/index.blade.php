@@ -210,7 +210,7 @@
                                                            data-type="{{SETTLED}}"
                                                            title="{{translate('Settled')}}">
                                                             <img
-                                                                src="{{asset('public/assets/admin-module/img/svg/sattled.svg')}}"
+                                                                src="{{asset('assets/admin-module/img/svg/sattled.svg')}}"
                                                                 class="svg" alt="">
                                                         </a>
                                                     @endif
@@ -245,7 +245,7 @@
                                             <div
                                                 class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
                                                 <img
-                                                    src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}"
+                                                    src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}"
                                                     alt="" width="100">
                                                 <p class="text-center">{{translate('no_data_available')}}</p>
                                             </div>
@@ -268,7 +268,7 @@
     </div>
 @endsection
 @push('script')
-    <script src="{{asset('public/assets/admin-module/js/withdraw-request.js')}}"></script>
+    <script src="{{asset('assets/admin-module/js/withdraw-request.js')}}"></script>
     <script>
         "use strict"
         $(".withdraw-info-aside_open").on("click", function () {
@@ -351,3 +351,4 @@
 
     </script>
 @endpush
+

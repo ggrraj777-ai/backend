@@ -11,7 +11,7 @@
                     <div>
                         <div class="text-center">
                             <img alt="" class="mb-4" id="icon"
-                                 src="{{asset('public/assets/admin-module/img/svg/blocked_customer.svg')}}">
+                                 src="{{asset('assets/admin-module/img/svg/blocked_customer.svg')}}">
                             <h5 class="modal-title mb-3" id="title">{{translate("Are you sure?")}}</h5>
                         </div>
                         <div class="text-center mb-4 pb-2">
@@ -45,7 +45,7 @@
                     <div>
                         <div class="text-center">
                             <img alt="" class="mb-4" id="icon"
-                                 src="{{asset('public/assets/admin-module/img/warning.png')}}">
+                                 src="{{asset('assets/admin-module/img/warning.png')}}">
                             <h5 class="modal-title mb-3"
                                 id="title">{{translate("This feature is turned off from settings")}}</h5>
                         </div>
@@ -81,7 +81,7 @@
                     <div>
                         <div class="text-center">
                             <img alt="" class="mb-4" id="icon"
-                                 src="{{asset('public/assets/admin-module/img/warning.png')}}">
+                                 src="{{asset('assets/admin-module/img/warning.png')}}">
                             <h5 class="modal-title mb-3"
                                 id="title">{{translate("This feature is turned off from settings")}}</h5>
                         </div>
@@ -117,7 +117,7 @@
                     <div>
                         <div class="text-center">
                             <img alt="" class="mb-4" id="icon"
-                                 src="{{asset('public/assets/admin-module/img/sms_config_modal.png')}}">
+                                 src="{{asset('assets/admin-module/img/sms_config_modal.png')}}">
                             <h5 class="modal-title mb-3" id="title">{{translate("Set Up SMS Configuration First")}}</h5>
                         </div>
                         <div class="text-center mb-4 pb-2">
@@ -337,7 +337,7 @@
                 </button>
             </div>
             <div class="modal-body text-center">
-                <img width="80" height="80" src="{{ asset('public/assets/admin-module/img/modal/mark.png') }}"
+                <img width="80" height="80" src="{{ asset('assets/admin-module/img/modal/mark.png') }}"
                      alt="">
                 <h5 class="title-color mt-4 mb-2 "
                     id="vehicleRequestApprovalTitle"> {{ translate('Are you sure you want to approve the vehicle') }}?
@@ -373,7 +373,7 @@
             <div class="modal-body">
                 <div class="text-center">
                     <img width="80" height="80"
-                         src="{{ asset('public/assets/admin-module/img/modal/delete.png') }}" alt="">
+                         src="{{ asset('assets/admin-module/img/modal/delete.png') }}" alt="">
                     <h5 class="title-color mt-4 mb-2"> {{ translate('Are you sure you want to deny the vehicle') }}?
                     </h5>
                     <p>{{ translate('Please review the information carefully before confirming.') }}
@@ -421,7 +421,7 @@
             <div class="modal-body">
                 <div class="text-center">
                     <img width="80" height="80"
-                         src="{{ asset('public/assets/admin-module/img/modal/delete.png') }}" alt="">
+                         src="{{ asset('assets/admin-module/img/modal/delete.png') }}" alt="">
                     <h5 class="title-color mt-4 mb-2"> {{ translate('Are you sure you want to deny the vehicle') }}?
                     </h5>
                     <p>{{ translate('Please review the information carefully before confirming.') }}
@@ -459,7 +459,7 @@
                     <div>
                         <div class="text-center">
                             <img alt="" class="mb-4" id="deleteIcon"
-                                 src="{{asset('public/assets/admin-module/img/modal/trash.png')}}">
+                                 src="{{asset('assets/admin-module/img/modal/trash.png')}}">
                             <h5 class="modal-title mb-3" id="deleteTitle">{{translate("Are you sure?")}}</h5>
                         </div>
                         <div class="text-center mb-4 pb-2">
@@ -498,7 +498,7 @@
                     <div>
                         <div class="text-center">
                             <img alt="" class="mb-4" id="deleteIcon"
-                                 src="{{asset('public/assets/admin-module/img/safety-alert-shield-modal-icon-red.svg')}}">
+                                 src="{{asset('assets/admin-module/img/safety-alert-shield-modal-icon-red.svg')}}">
                             <h5 class="modal-title mb-3" id="safetyAlertNotificationTitle"></h5>
                         </div>
                         <div class="text-center mb-4 pb-2">
@@ -533,7 +533,7 @@
                     <div>
                         <div class="text-center">
                             <img alt="" class="mb-4" id="icon"
-                                 src="{{asset('public/assets/admin-module/img/svg/read-instruction-letter.svg')}}">
+                                 src="{{asset('assets/admin-module/img/svg/read-instruction-letter.svg')}}">
                             <h4 class="modal-title mb-3" id="title">{{translate("Add dynamic value to the message")}}</h4>
                         </div>
                         <div class="text-start mb-4 pb-2">
@@ -638,3 +638,4 @@
     </div>
 </div>
 {{--Read Instruction Modal with slider End--}}
+

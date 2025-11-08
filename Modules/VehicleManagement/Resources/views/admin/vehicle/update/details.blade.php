@@ -15,7 +15,7 @@
 
                     <a
                         data-url="{{route('admin.vehicle.update.approved', [$vehicle->id])}}"
-                        data-icon="{{ asset('public/assets/admin-module/img/modal/mark.png') }}"
+                        data-icon="{{ asset('assets/admin-module/img/modal/mark.png') }}"
                         data-confirm-btn="{{translate("Approve")}}"
                         class="btn btn-primary min-w-120 d-flex justify-content-center approval-button-vehicle-update"
                     >
@@ -24,7 +24,7 @@
 
                     <a
                         data-url="{{route('admin.vehicle.update.denied', [$vehicle->id])}}"
-                        data-icon="{{ asset('public/assets/admin-module/img/modal/delete.png') }}"
+                        data-icon="{{ asset('assets/admin-module/img/modal/delete.png') }}"
                         data-confirm-btn="{{translate("Deny")}}"
                         class="btn btn-danger min-w-120 d-flex justify-content-center deny-button-vehicle-update"
                     >
@@ -54,7 +54,7 @@
                                         <img src="{{ onErrorImage(
                                             $vehicle?->model?->image,
                                             asset('storage/app/public/vehicle/model') . 'requested-vehicle-info.blade.php/' . $vehicle?->model?->image,
-                                            asset('public/assets/admin-module/img/media/upload-file.png'),
+                                            asset('assets/admin-module/img/media/upload-file.png'),
                                             'vehicle/model/',
                                         ) }}"
                                              class="rounded dark-support fit-object-contain" alt="">
@@ -113,7 +113,7 @@
                                         <img src="{{ onErrorImage(
                                             $vehicle?->driver?->profile_image,
                                             asset('storage/app/public/driver/profile') . '/'. $vehicle?->driver?->profile_image,
-                                            asset('public/assets/admin-module/img/avatar/avatar.png'),
+                                            asset('assets/admin-module/img/avatar/avatar.png'),
                                             'driver/profile/',
                                         ) }}"
                                              class="rounded dark-support fit-object" alt="">
@@ -204,3 +204,4 @@
 
 @push('script')
 @endpush
+

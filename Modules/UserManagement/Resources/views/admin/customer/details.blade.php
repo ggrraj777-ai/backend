@@ -26,7 +26,7 @@
                                     <img src="{{ onErrorImage(
                                         $commonData['customer']?->profile_image,
                                         asset('storage/app/public/customer/profile') . '/' . $commonData['customer']?->profile_image,
-                                        asset('public/assets/admin-module/img/avatar/avatar.png'),
+                                        asset('assets/admin-module/img/avatar/avatar.png'),
                                         'customer/profile/',
                                     ) }}"
                                          class="rounded-circle dark-support fit-object" alt="">
@@ -206,3 +206,4 @@
 
 @push('script')
 @endpush
+

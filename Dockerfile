@@ -56,15 +56,6 @@ RUN set -ex && \
     composer dump-autoload --optimize \
     && echo "✓ Autoload optimized successfully"
 
-# Create .env file from .env.example with production settings
-RUN set -ex && \
-    echo "=== Creating .env file ===" && \
-    cp .env.example .env && \
-    sed -i 's|APP_URL=.*|APP_URL=https://gauva-798219755346.europe-west1.run.app|g' .env && \
-    sed -i 's|APP_ENV=.*|APP_ENV=production|g' .env && \
-    sed -i 's|APP_DEBUG=.*|APP_DEBUG=false|g' .env && \
-    echo "✓ Environment file configured"
-
 # Install Node.js (with error handling)
 RUN set -ex && \
     echo "=== Installing Node.js ===" && \
@@ -123,7 +114,7 @@ echo "Starting DriveMond on port 8080..."\n\
 # Ensure .env file exists\n\
 if [ ! -f /var/www/html/.env ]; then\n\
     echo "Creating .env file..."\n\
-    cp /var/www/html/.env.example /var/www/html/.env || echo "APP_NAME=DriveMond" > /var/www/html/.env\n\
+    cp /var/www/html/.env.example /var/www/html/.env || echo "APP_NAME=Gauva" > /var/www/html/.env\n\
 fi\n\
 \n\
 # Set permissions\n\

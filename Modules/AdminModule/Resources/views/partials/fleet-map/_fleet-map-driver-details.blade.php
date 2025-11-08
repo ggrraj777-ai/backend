@@ -6,7 +6,7 @@
     <img src="{{onErrorImage(
                 $driver?->profile_image,
                 asset('storage/app/public/driver/profile') . '/' . $driver?->profile_image,
-                asset('public/assets/admin-module/img/avatar/avatar.png'),
+                asset('assets/admin-module/img/avatar/avatar.png'),
                 'driver/profile/',
             )}}"
          alt="">
@@ -217,5 +217,6 @@
         @endforeach
     @endif
 </div>
+
 
 

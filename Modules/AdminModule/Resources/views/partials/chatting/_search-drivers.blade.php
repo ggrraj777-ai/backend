@@ -9,7 +9,7 @@
                         <img src="{{ onErrorImage(
                                                     $driver?->profile_image,
                                                     asset('storage/app/public/driver/profile') . '/' . $driver?->profile_image,
-                                                    asset('public/assets/admin-module/img/user.png'),
+                                                    asset('assets/admin-module/img/user.png'),
                                                     'driver/profile/',
                                                 ) }}"
                              id="" class="avatar-img rounded-circle aspect-1"
@@ -52,3 +52,4 @@
         @endforelse
     </div>
 </div>
+

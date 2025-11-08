@@ -17,7 +17,7 @@
                         <div class="card-body">
                             <div class="d-flex flex-wrap justify-content-between gap-3 mb-4">
                                 <h5 class="d-flex align-items-center gap-2 text-capitalize">
-                                    <img width="20" src="{{asset('public/assets/admin-module/img/icons/google.png')}}"
+                                    <img width="20" src="{{asset('assets/admin-module/img/icons/google.png')}}"
                                          alt="" class="dark-support">
                                     {{translate('google_login')}}
                                 </h5>
@@ -56,7 +56,7 @@
                         <div class="card-body">
                             <div class="d-flex flex-wrap justify-content-between gap-3 mb-4">
                                 <h5 class="d-flex align-items-center gap-2 text-capitalize">
-                                    <img width="20" src="{{asset('public/assets/admin-module/img/icons/facebook.png')}}"
+                                    <img width="20" src="{{asset('assets/admin-module/img/icons/facebook.png')}}"
                                          alt="" class="dark-support">
                                     {{translate('facebook_login')}}
                                 </h5>
@@ -195,3 +195,4 @@
         </div>
     </div>
 @endsection
+

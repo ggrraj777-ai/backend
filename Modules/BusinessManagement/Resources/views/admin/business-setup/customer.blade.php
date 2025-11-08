@@ -118,7 +118,7 @@
                                            data-name="{{CUSTOMER_LEVEL}}"
                                            data-type="{{CUSTOMER_SETTINGS}}"
                                            data-url="{{route('admin.business.setup.update-business-setting')}}"
-                                           data-icon="{{($settings->firstWhere('key_name', CUSTOMER_LEVEL)->value?? 0) == 0 ? asset('public/assets/admin-module/img/level-up-on.png') : asset('public/assets/admin-module/img/level-up-off.png')}}"
+                                           data-icon="{{($settings->firstWhere('key_name', CUSTOMER_LEVEL)->value?? 0) == 0 ? asset('assets/admin-module/img/level-up-on.png') : asset('assets/admin-module/img/level-up-off.png')}}"
                                            data-title="{{($settings->firstWhere('key_name', CUSTOMER_LEVEL)->value?? 0) == 0?translate('By Turning ON Level Feature') .'?' : translate('By Turning OFF Level Feature').'?'}}"
                                            data-sub-title="{{($settings->firstWhere('key_name', CUSTOMER_LEVEL)->value?? 0) == 0?translate('If you turn ON level feature, customer will see this feature on app.') : translate('If you turning off customer level feature, please do it at the beginning stage of business. Because once driver use this feature & you will off this feature they will be confused or worried about it.')}}"
                                         {{($settings->firstWhere('key_name', CUSTOMER_LEVEL)->value?? 0) == 1? 'checked' : ''}}
@@ -136,7 +136,7 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('public/assets/admin-module/js/business-management/business-setup/customer.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/business-management/business-setup/customer.js') }}"></script>
     <script>
         "use strict";
         let permission = false;
@@ -223,3 +223,4 @@
         }
     </script>
 @endpush
+

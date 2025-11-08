@@ -76,7 +76,7 @@
 
 @push('script')
     <script
-        src="{{ asset('public/assets/admin-module/js/business-management/system-settings/clean-database.js') }}"></script>
+        src="{{ asset('assets/admin-module/js/business-management/system-settings/clean-database.js') }}"></script>
 
     <script>
         "use strict";
@@ -113,3 +113,4 @@
         });
     </script>
 @endpush
+

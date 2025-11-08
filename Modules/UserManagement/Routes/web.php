@@ -208,6 +208,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
             Route::get('/', 'index')->name('index');
             Route::post('add-money', 'addMoney')->name('add-money');
             Route::post('bulk-add-money', 'bulkAddMoney')->name('bulk-add-money');
+            Route::post('bulk-create-payment-order', 'createBulkPaymentOrder')->name('bulk-create-payment-order');
             Route::get('history/{userId}', 'transactionHistory')->name('history');
             Route::get('audit-log', 'auditLog')->name('audit-log');
             
@@ -215,6 +216,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
             Route::get('payment-form/{userId}', 'showPaymentForm')->name('payment-form');
             Route::post('create-payment-order', 'createPaymentOrder')->name('create-payment-order');
             Route::post('verify-payment', 'verifyPayment')->name('verify-payment');
+            Route::post('verify-bulk-payment', 'verifyBulkPayment')->name('verify-bulk-payment');
             Route::post('payment-failed', 'paymentFailed')->name('payment-failed');
             Route::get('payment-history', 'paymentHistory')->name('payment-history');
         });

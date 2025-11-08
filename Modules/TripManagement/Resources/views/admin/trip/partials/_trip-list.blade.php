@@ -47,7 +47,7 @@
                         @if($trip?->safetyAlerts)
                             @foreach($trip->safetyAlerts as $alert)
                                 @if($alert?->sentBy->id == $trip->customer?->id)
-                                    <img src="{{ asset('public/assets/admin-module/img/safety-alert-shield-icon-red.png')}}"
+                                    <img src="{{ asset('assets/admin-module/img/safety-alert-shield-icon-red.png')}}"
                                          alt="safety alert shield icon" width="20" height="20">
                                     @break
                                 @endif
@@ -65,7 +65,7 @@
                         @if($trip?->safetyAlerts)
                             @foreach($trip->safetyAlerts as $alert)
                                 @if($alert?->sentBy->id == $trip->driver?->id)
-                                    <img src="{{ asset('public/assets/admin-module/img/safety-alert-shield-icon-red.png')}}"
+                                    <img src="{{ asset('assets/admin-module/img/safety-alert-shield-icon-red.png')}}"
                                          alt="safety alert shield icon" width="20" height="20">
                                     @break
                                 @endif
@@ -114,7 +114,7 @@
             <tr>
                 <td colspan="14">
                     <div class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
-                        <img src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}" alt=""
+                        <img src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}" alt=""
                              width="100">
                         <p class="text-center">{{translate('no_data_available')}}</p>
                     </div>
@@ -129,3 +129,4 @@
     <p class="mb-0"></p>
     {{$trips->links()}}
 </div>
+

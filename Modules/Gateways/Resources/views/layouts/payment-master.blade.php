@@ -9,7 +9,8 @@
     </head>
     <body>
         @yield('payment')
-        <script src="{{asset('public/assets/modules/select2/select2.min.js')}}"></script>
+        <script src="{{asset('assets/modules/select2/select2.min.js')}}"></script>
         @stack('script_2')
     </body>
 </html>
+

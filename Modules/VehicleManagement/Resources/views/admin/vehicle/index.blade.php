@@ -19,7 +19,7 @@
                                     <img src="{{ onErrorImage(
                                         $category?->image,
                                         asset('storage/app/public/vehicle/category') . '/' . $category?->image,
-                                        asset('public/assets/admin-module/img/media/car2.png'),
+                                        asset('assets/admin-module/img/media/car2.png'),
                                         'vehicle/category/',
                                     ) }}"
                                         class="dark-support custom-box-size" alt="" style="--size: 40px">
@@ -161,7 +161,7 @@
                                                                 <img src="{{ onErrorImage(
                                                                     $vehicle?->category?->image,
                                                                     asset('storage/app/public/vehicle/category') . '/' . $vehicle?->category?->image,
-                                                                    asset('public/assets/admin-module/img/media/car.png'),
+                                                                    asset('assets/admin-module/img/media/car.png'),
                                                                     'vehicle/category/',
                                                                 ) }}"
                                                                     class="dark-support rounded custom-box-size"
@@ -244,7 +244,7 @@
                                                     <tr>
                                                         <td colspan="14">
                                                             <div class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
-                                                                <img src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}" alt="" width="100">
+                                                                <img src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}" alt="" width="100">
                                                                 <p class="text-center">{{translate('no_data_available')}}</p>
                                                             </div>
                                                         </td>
@@ -270,3 +270,4 @@
 
 @push('script')
 @endpush
+

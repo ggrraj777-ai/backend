@@ -58,7 +58,7 @@
                                                             src="{{ onErrorImage(
                                                                 $brand?->image,
                                                                 asset('storage/app/public/vehicle/brand') . '/' . $brand?->image,
-                                                                asset('public/assets/admin-module/img/media/upload-file.png'),
+                                                                asset('assets/admin-module/img/media/upload-file.png'),
                                                                 'vehicle/brand/',
                                                             ) }}"
                                                             alt="" id="image_id">
@@ -78,7 +78,7 @@
                                                             src="{{ onErrorImage(
                                                                 $brand?->image,
                                                                 asset('storage/app/public/vehicle/brand') . '/' . $brand?->image,
-                                                                asset('public/assets/admin-module/img/media/upload-file.png'),
+                                                                asset('assets/admin-module/img/media/upload-file.png'),
                                                                 'vehicle/brand/',
                                                             ) }}"
                                                              loading="lazy" alt="" id="image_id">
@@ -112,7 +112,7 @@
         "use strict";
         // Assuming you have a reset button with ID 'reset-button'
         let resetButton = $('#reset_btn');
-        let defaultImageSrc = '{{ asset('public/assets/admin-module/img/media/upload-file.png') }}';
+        let defaultImageSrc = '{{ asset('assets/admin-module/img/media/upload-file.png') }}';
         let imageElement = $('#image_id');
         let fileInput = $('.upload-file__input');
 
@@ -122,3 +122,4 @@
         });
     </script>
 @endpush
+

@@ -34,7 +34,7 @@
                         <div class="card border-0">
                             <div class="card-body">
                                 <h5 class="fw-semibold d-flex align-items-center gap-2 mb-4">
-                                    <img src="{{ asset('public/assets/admin-module/img/svg/android.svg') }}" class="svg"
+                                    <img src="{{ asset('assets/admin-module/img/svg/android.svg') }}" class="svg"
                                          alt="{{ translate('Android logo') }}">
                                     {{ translate('For Android') }}
                                 </h5>
@@ -76,7 +76,7 @@
                         <div class="card border-0">
                             <div class="card-body">
                                 <h5 class="fw-semibold d-flex align-items-center gap-2 mb-4">
-                                    <img src="{{ asset('public/assets/admin-module/img/svg/apple.svg') }}" class="svg"
+                                    <img src="{{ asset('assets/admin-module/img/svg/apple.svg') }}" class="svg"
                                          alt="{{ translate('iOS logo') }}">
                                     {{ translate('For iOS') }}
                                 </h5>
@@ -130,7 +130,7 @@
                         <div class="card border-0">
                             <div class="card-body">
                                 <h5 class="fw-semibold d-flex align-items-center gap-2 mb-4">
-                                    <img src="{{ asset('public/assets/admin-module/img/svg/android.svg') }}" class="svg"
+                                    <img src="{{ asset('assets/admin-module/img/svg/android.svg') }}" class="svg"
                                          alt="{{ translate('Android logo') }}">
                                     {{ translate('For_Android') }}
                                 </h5>
@@ -172,7 +172,7 @@
                         <div class="card border-0">
                             <div class="card-body">
                                 <h5 class="fw-semibold d-flex align-items-center gap-2 mb-4">
-                                    <img src="{{ asset('public/assets/admin-module/img/svg/apple.svg') }}" class="svg"
+                                    <img src="{{ asset('assets/admin-module/img/svg/apple.svg') }}" class="svg"
                                          alt="{{ translate('iOS logo') }}">
                                     {{ translate('For iOS') }}
                                 </h5>
@@ -225,3 +225,4 @@
 
 @push('script')
 @endpush
+

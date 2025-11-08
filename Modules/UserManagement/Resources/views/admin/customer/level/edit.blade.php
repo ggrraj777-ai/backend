@@ -3,7 +3,7 @@
 @section('title', translate('Edit_Customer_Level'))
 
 @push('css_or_js')
-    <link rel="stylesheet" href="{{ asset('public/assets/admin-module/plugins/swiper@11/swiper-bundle.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/admin-module/plugins/swiper@11/swiper-bundle.min.css') }}"/>
 
 @endpush
 @section('content')
@@ -71,7 +71,7 @@
                                                                      src="{{ onErrorImage(
                                                         $level?->image,
                                                         asset('storage/app/public/customer/level') . '/' . $level?->image,
-                                                        asset('public/assets/admin-module/img/media/upload-file.png'),
+                                                        asset('assets/admin-module/img/media/upload-file.png'),
                                                         'customer/level/',
                                                     ) }}"
                                                                      alt="">
@@ -92,7 +92,7 @@
                                                                 src="{{ onErrorImage(
                                                                     $level?->image,
                                                                     asset('storage/app/public/customer/level') . '/' . $level?->image,
-                                                                    asset('public/assets/admin-module/img/media/upload-file.png'),
+                                                                    asset('assets/admin-module/img/media/upload-file.png'),
                                                                     'customer/level/',
                                                                 ) }}"
                                                                      loading="lazy" alt="">
@@ -320,8 +320,8 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('public/assets/admin-module/plugins/swiper@11/swiper-bundle.min.js') }}"></script>
-    <script src="{{ asset('public/assets/admin-module/js/level/level.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/plugins/swiper@11/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/level/level.js') }}"></script>
     <script>
         "use strict";
         var swiper = new Swiper(".mySwiper", {
@@ -354,3 +354,4 @@
         }
     </script>
 @endpush
+

@@ -171,7 +171,7 @@
                                                     <img src="{{ onErrorImage(
                                                             $level?->image,
                                                             asset('storage/app/public/customer/level') . '/' . $level?->image,
-                                                            asset('public/assets/admin-module/img/media/level5.png'),
+                                                            asset('assets/admin-module/img/media/level5.png'),
                                                             'customer/level/',
                                                         ) }}"
                                                          class="dark-support custom-box-size" alt=""
@@ -217,7 +217,7 @@
                                                                type="checkbox"
                                                                {{ $level->is_active == 1 ? 'checked' : '' }}
                                                                data-url="{{ route('admin.customer.level.update-status') }}"
-                                                               data-icon="{{$level->is_active == 0 ? asset('public/assets/admin-module/img/level-up-on.png') : asset('public/assets/admin-module/img/level-up-off.png')}}"
+                                                               data-icon="{{$level->is_active == 0 ? asset('assets/admin-module/img/level-up-on.png') : asset('assets/admin-module/img/level-up-off.png')}}"
                                                                data-title="{{$level->is_active == 0?translate('Turn on ').$level->name .'?' : translate('Turn off ').$level->name.'?'}}"
                                                                data-sub-title="{{$level->is_active == 0?translate('If you activate this level, customers will be able to see this level in the app. Make sure setup its priority and other data in order to function properly.') : translate('If you deactivate this level, all customer under this level will not be able to see the level details in their profile.')}}"
                                                                id="{{ $level->id }}" {{$level->users_count > 0 ? "disabled" : ($level->sequence == 1 ? "disabled" : "")}}>
@@ -274,7 +274,7 @@
                                                 <div
                                                     class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
                                                     <img
-                                                        src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}"
+                                                        src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}"
                                                         alt="" width="100">
                                                     <p class="text-center">{{translate('no_data_available')}}</p>
                                                 </div>
@@ -320,3 +320,4 @@
         loadPartialView('{{ route('admin.customer.level.statistics') }}', '#statistics')
     </script>
 @endpush
+

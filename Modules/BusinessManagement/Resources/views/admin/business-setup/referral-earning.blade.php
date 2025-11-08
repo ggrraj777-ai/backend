@@ -278,7 +278,7 @@
         });
     </script>
 
-    <script src="{{ asset('public/assets/admin-module/js/business-management/business-setup/driver.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/business-management/business-setup/driver.js') }}"></script>
 
     <script>
         "use strict";
@@ -363,3 +363,4 @@
         });
     </script>
 @endpush
+

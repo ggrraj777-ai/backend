@@ -24,7 +24,7 @@
 
                                             <div class="media mb-2 gap-3 align-items-center">
                                                 <img
-                                                    src="{{asset('public/assets/admin-module/img/svg/map-drag.svg') }}"
+                                                    src="{{asset('assets/admin-module/img/svg/map-drag.svg') }}"
                                                     class="svg"
                                                     alt="">
                                                 <div class="media-body ">
@@ -34,7 +34,7 @@
 
                                             <div class="media gap-3 align-items-center">
                                                 <img
-                                                    src="{{asset('public/assets/admin-module/img/svg/map-draw.svg') }}"
+                                                    src="{{asset('assets/admin-module/img/svg/map-draw.svg') }}"
                                                     class="svg"
                                                     alt="">
                                                 <div class="media-body ">
@@ -44,7 +44,7 @@
                                             </div>
                                             <div class="map-img mt-4">
                                                 <img
-                                                    src="{{ asset('public/assets/admin-module/img/instructions.gif') }}"
+                                                    src="{{ asset('assets/admin-module/img/instructions.gif') }}"
                                                     alt="">
                                             </div>
                                         </div>
@@ -154,7 +154,7 @@
                                                        data-name="extra_fare_status"
                                                        data-type="{{ALL_ZONE_EXTRA_FARE}}"
                                                        data-url="{{route('admin.business.setup.update-business-setting')}}"
-                                                       data-icon=" {{asset('public/assets/admin-module/img/extra-fare.png')}}"
+                                                       data-icon=" {{asset('assets/admin-module/img/extra-fare.png')}}"
                                                        data-title="{{translate('Are you Sure to turn off Extra Fare for All Zones') .'?'}}"
                                                        data-sub-title="{{($allZoneExtraFareSetups->firstWhere('key_name', 'extra_fare_status')->value?? 0) == 1 ? translate('Once you turn off this option, Customers will not be required to pay any Extra Fares.') : ""}}"
                                                        data-confirm-btn="{{($allZoneExtraFareSetups->firstWhere('key_name', 'extra_fare_status')->value?? 0) == 1 ? translate('Turn Off') : ""}}"
@@ -256,7 +256,7 @@
                                                             data-extra-fare-fee="{{$zone->extra_fare_fee}}"
                                                             data-extra-fare-reason="{{$zone->extra_fare_reason}}"
                                                             data-url="{{route('admin.zone.extra-fare.status')}}"
-                                                            data-icon=" {{asset('public/assets/admin-module/img/extra-fare.png')}}"
+                                                            data-icon=" {{asset('assets/admin-module/img/extra-fare.png')}}"
                                                             data-title="{{translate('Are you Sure to turn off Extra Fare for this Zones').' - '.$zone->name .'?'}}"
                                                             data-sub-title="{{$zone->extra_fare_status ? (translate('Once you turn off this option, Customers will not be required to pay any Extra Fares in this Zone')." - ".$zone->name) : ""}}"
                                                             data-confirm-btn="{{$zone->extra_fare_status ? translate('Turn Off') : ""}}"
@@ -332,7 +332,7 @@
                                                     <div
                                                         class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
                                                         <img
-                                                            src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}"
+                                                            src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}"
                                                             alt="" width="100">
                                                         <p class="text-center">{{translate('no_data_available')}}</p>
                                                     </div>
@@ -521,7 +521,7 @@
     @php($map_key = businessConfig(GOOGLE_MAP_API)?->value['map_api_key'] ?? null)
     <script
         src="https://maps.googleapis.com/maps/api/js?key={{ $map_key }}&libraries=drawing,places&v=3.50"></script>
-    <script src="{{asset('public/assets/admin-module/js/zone-management/zone/index.js') }}"></script>
+    <script src="{{asset('assets/admin-module/js/zone-management/zone/index.js') }}"></script>
     <script>
         "use strict";
         //zone form submit
@@ -746,3 +746,4 @@
 
     </script>
 @endpush
+

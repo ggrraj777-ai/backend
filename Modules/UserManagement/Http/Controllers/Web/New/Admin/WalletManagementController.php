@@ -76,6 +76,8 @@ class WalletManagementController extends BaseController
         DB::beginTransaction();
         try {
             $amount = abs($request->amount);
+            $reference = $request->reference ?? 'ADMIN-' . Str::random(10);
+            $paymentService = new AdminWalletPaymentService();
             
             // Update wallet balance
             if ($request->transaction_type === 'credit') {
@@ -96,6 +98,32 @@ class WalletManagementController extends BaseController
                     return redirect()->back();
                 }
 
+                $refundResult = $paymentService->refundWalletTopUp([
+                    'admin_id' => auth()->user()->id,
+                    'user_id' => $request->user_id,
+                    'amount' => $amount,
+                    'reference' => $reference,
+                    'reason' => $request->note,
+                ]);
+
+                if (!$refundResult['success']) {
+                    DB::rollBack();
+
+                    if ($request->expectsJson()) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => $refundResult['message'],
+                        ], 400);
+                    }
+
+                    Toastr::error($refundResult['message']);
+                    return redirect()->back();
+                }
+
+                if (!empty($refundResult['refunds'])) {
+                    $reference = $refundResult['refunds'][0]['razorpay_refund_id'] ?? $reference;
+                }
+
                 DB::table('user_accounts')
                     ->where('user_id', $request->user_id)
                     ->decrement('wallet_balance', $amount);
@@ -114,7 +142,7 @@ class WalletManagementController extends BaseController
                 'account' => 'wallet_balance',
                 $transactionType => $amount,
                 'balance' => $updatedAccount->wallet_balance,
-                'trx_ref_id' => $request->reference ?? 'ADMIN-' . Str::random(10),
+                'trx_ref_id' => $reference,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -128,7 +156,7 @@ class WalletManagementController extends BaseController
                 'transaction_type' => $transactionType,
                 'amount' => $amount,
                 'note' => $request->note,
-                'reference' => $request->reference,
+                'reference' => $reference,
                 'balance_before' => $transactionType === 'credit' 
                     ? $updatedAccount->wallet_balance - $amount 
                     : $updatedAccount->wallet_balance + $amount,
@@ -241,6 +269,35 @@ class WalletManagementController extends BaseController
             Toastr::error('Bulk operation failed: ' . $e->getMessage());
             return redirect()->back();
         }
+    }
+
+    /**
+     * Create Razorpay order for bulk wallet top-up
+     */
+    public function createBulkPaymentOrder(Request $request): JsonResponse
+    {
+        $request->validate([
+            'user_type' => 'required|in:customer,driver,all',
+            'amount' => 'required|numeric|min:1',
+            'reference' => 'required|string|max:100',
+            'payment_method' => 'required|in:upi,netbanking,card,wallet',
+            'notes' => 'nullable|string|max:500',
+        ]);
+
+        $paymentService = new AdminWalletPaymentService();
+
+        $result = $paymentService->createBulkWalletTopUpOrder([
+            'admin_id' => auth()->user()->id,
+            'user_type' => $request->user_type,
+            'per_user_amount' => $request->amount,
+            'payment_method' => $request->payment_method,
+            'reference' => $request->reference,
+            'notes' => $request->notes,
+        ]);
+
+        $statusCode = $result['success'] ? 200 : 422;
+
+        return response()->json($result, $statusCode);
     }
 
     /**
@@ -401,6 +458,30 @@ class WalletManagementController extends BaseController
     }
 
     /**
+     * Verify Razorpay payment for bulk wallet top-up
+     */
+    public function verifyBulkPayment(Request $request): JsonResponse
+    {
+        $request->validate([
+            'razorpay_order_id' => 'required|string',
+            'razorpay_payment_id' => 'required|string',
+            'razorpay_signature' => 'required|string',
+        ]);
+
+        $paymentService = new AdminWalletPaymentService();
+
+        $result = $paymentService->verifyAndProcessBulkPayment([
+            'razorpay_order_id' => $request->razorpay_order_id,
+            'razorpay_payment_id' => $request->razorpay_payment_id,
+            'razorpay_signature' => $request->razorpay_signature,
+        ]);
+
+        $statusCode = $result['success'] ? 200 : 422;
+
+        return response()->json($result, $statusCode);
+    }
+
+    /**
      * Handle payment failure
      */
     public function paymentFailed(Request $request): JsonResponse
@@ -431,24 +512,66 @@ class WalletManagementController extends BaseController
         $status = $request->get('status', 'all');
         $userId = $request->get('user_id');
 
-        $payments = DB::table('admin_wallet_payment_orders')
-            ->join('users as admin', 'admin_wallet_payment_orders.admin_id', '=', 'admin.id')
-            ->join('users as target', 'admin_wallet_payment_orders.user_id', '=', 'target.id')
-            ->select(
-                'admin_wallet_payment_orders.*',
+        $singlePayments = DB::table('admin_wallet_payment_orders as awo')
+            ->join('users as admin', 'awo.admin_id', '=', 'admin.id')
+            ->join('users as target', 'awo.user_id', '=', 'target.id')
+            ->select([
+                'awo.order_id',
+                'awo.razorpay_order_id',
+                'awo.razorpay_payment_id',
+                'awo.admin_id',
                 DB::raw("CONCAT(admin.first_name, ' ', admin.last_name) as admin_name"),
+                'target.id as target_user_id',
                 DB::raw("CONCAT(target.first_name, ' ', target.last_name) as target_name"),
                 'target.phone as target_phone',
-                'target.user_type as target_user_type'
-            )
+                'target.user_type as target_user_type',
+                'awo.amount',
+                'awo.payment_method',
+                'awo.payment_method_used',
+                'awo.status',
+                'awo.created_at',
+                DB::raw('0 as is_bulk'),
+                DB::raw('NULL as bulk_target_count'),
+                DB::raw('NULL as per_user_amount'),
+                'awo.notes',
+                DB::raw('NULL as reference'),
+            ]);
+
+        $bulkPayments = DB::table('admin_wallet_bulk_payment_orders as abwo')
+            ->join('users as admin', 'abwo.admin_id', '=', 'admin.id')
+            ->select([
+                'abwo.order_id',
+                'abwo.razorpay_order_id',
+                'abwo.razorpay_payment_id',
+                'abwo.admin_id',
+                DB::raw("CONCAT(admin.first_name, ' ', admin.last_name) as admin_name"),
+                DB::raw('NULL as target_user_id'),
+                DB::raw("CONCAT('Bulk - ', UPPER(abwo.user_type)) as target_name"),
+                DB::raw('NULL as target_phone'),
+                'abwo.user_type as target_user_type',
+                'abwo.total_amount as amount',
+                'abwo.payment_method',
+                'abwo.payment_method_used',
+                'abwo.status',
+                'abwo.created_at',
+                DB::raw('1 as is_bulk'),
+                'abwo.target_users_count as bulk_target_count',
+                'abwo.per_user_amount',
+                'abwo.notes',
+                'abwo.reference',
+            ]);
+
+        $paymentsQuery = DB::query()
+            ->fromSub($singlePayments->unionAll($bulkPayments), 'wallet_payments')
             ->when($status !== 'all', function ($query) use ($status) {
-                $query->where('admin_wallet_payment_orders.status', $status);
+                $query->where('status', $status);
             })
             ->when($userId, function ($query) use ($userId) {
-                $query->where('admin_wallet_payment_orders.user_id', $userId);
+                $query->where('target_user_id', $userId);
             })
-            ->orderBy('admin_wallet_payment_orders.created_at', 'desc')
-            ->paginate(20);
+            ->orderBy('created_at', 'desc');
+
+        $payments = $paymentsQuery->paginate(20);
 
         return view('usermanagement::admin.wallet.payment-history', compact('payments', 'status'));
     }

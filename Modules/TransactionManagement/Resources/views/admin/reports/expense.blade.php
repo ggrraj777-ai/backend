@@ -51,7 +51,7 @@
                                 <div class="d-flex flex-wrap gap-2">
                                     <div class="expense-info bg-F6F6F6">
                                         <div class="icon bg-info">
-                                            <img src="{{asset('public/assets/admin-module/img/svg/ride-sharing.svg')}}" alt="">
+                                            <img src="{{asset('assets/admin-module/img/svg/ride-sharing.svg')}}" alt="">
                                         </div>
                                         <div class="w-0 flex-grow-1">
                                             <span>{{translate("Ride Request")}}</span>
@@ -60,7 +60,7 @@
                                     </div>
                                     <div class="expense-info bg-F6F6F6">
                                         <div class="icon bg-warning">
-                                            <img src="{{asset('public/assets/admin-module/img/svg/parcel.svg')}}" alt="">
+                                            <img src="{{asset('assets/admin-module/img/svg/parcel.svg')}}" alt="">
                                         </div>
                                         <div class="w-0 flex-grow-1">
                                             <span>{{translate("Parcel")}}</span>
@@ -182,7 +182,7 @@
                                 <tr>
                                     <td colspan="14">
                                         <div class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
-                                            <img src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}" alt="" width="100">
+                                            <img src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}" alt="" width="100">
                                             <p class="text-center">{{translate('no_data_available')}}</p>
                                         </div>
                                     </td>
@@ -202,7 +202,7 @@
 @endsection
 
 @push('script')
-    <script src="{{asset('public/assets/admin-module/plugins/apex/apexcharts.min.js')}}"></script>
+    <script src="{{asset('assets/admin-module/plugins/apex/apexcharts.min.js')}}"></script>
     <script>
         "use strict";
         let point = {{(int)getSession('currency_decimal_point') ?? 0}};
@@ -416,3 +416,4 @@
         dateRideTypeWiseExpenseStatistics("{{ALL_TIME}}")
     </script>
 @endpush
+

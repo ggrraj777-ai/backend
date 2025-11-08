@@ -29,7 +29,7 @@
                                                 <img src="{{ onErrorImage(
                                                     $trip?->driver?->profile_image,
                                                     asset('storage/app/public/driver/profile') . '/' . $trip?->driver?->profile_image,
-                                                    asset('public/assets/admin-module/img/avatar/avatar.png'),
+                                                    asset('assets/admin-module/img/avatar/avatar.png'),
                                                     'driver/profile/',
                                                 ) }}"
                                                      class="rounded fit-object" alt="">
@@ -57,7 +57,7 @@
                                         <div class="d-flex align-items-center justify-content-center gap-2 h-100">
                                             <div
                                                 class="d-flex flex-column align-items-center justify-content-center gap-2">
-                                                <img src="{{ asset('public/assets/admin-module/img/svg/driver.svg') }}"
+                                                <img src="{{ asset('assets/admin-module/img/svg/driver.svg') }}"
                                                      class="" alt="" width="50">
                                                 <h6 class="text-muted fs-12">
                                                     {{ translate('trip_was_cancel_before_driver_accepted') }}
@@ -84,7 +84,7 @@
                                             <img src="{{ onErrorImage(
                                                 $trip?->customer?->profile_image,
                                                 asset('storage/app/public/customer/profile') . '/' . $trip?->customer?->profile_image,
-                                                asset('public/assets/admin-module/img/avatar/avatar.png'),
+                                                asset('assets/admin-module/img/avatar/avatar.png'),
                                                 'customer/profile/',
                                             ) }}"
                                                  class="rounded fit-object" alt="">
@@ -114,7 +114,7 @@
                                             <h6 class="text-muted text-capitalize">{{ translate('rider_not_found') }}
                                             </h6>
                                             <img width="62"
-                                                 src="{{ asset('public/assets/admin-module/img/media/rider-not-found.png') }}"
+                                                 src="{{ asset('assets/admin-module/img/media/rider-not-found.png') }}"
                                                  loading="lazy" alt="">
                                         </div>
                                     </div>
@@ -129,7 +129,7 @@
                                         <div class="d-flex gap-1">
                                             <div>
                                                 <img
-                                                    src="{{asset('public/assets/admin-module/img/cancellation_reason.png')}}"
+                                                    src="{{asset('assets/admin-module/img/cancellation_reason.png')}}"
                                                     alt="" width="20" height="20">
                                             </div>
                                             <div>
@@ -158,7 +158,7 @@
                                                          src="{{ onErrorImage(
                                                             $trip?->vehicle_category?->image,
                                                             asset('storage/app/public/vehicle/category') . '/' . $trip?->vehicle_category?->image,
-                                                            asset('public/assets/admin-module/img/media/bike.png'),
+                                                            asset('assets/admin-module/img/media/bike.png'),
                                                             'vehicle/category/',
                                                         ) }}"
                                                          alt="">
@@ -316,7 +316,7 @@
                                                         <img src="{{ onErrorImage(
                                                     $refundProof?->attachment,
                                                     asset('storage/app/public/parcel/proof/'.$refundProof?->attachment),
-                                                    asset('public/assets/admin-module/img/avatar/avatar.png'),
+                                                    asset('assets/admin-module/img/avatar/avatar.png'),
                                                     'parcel/proof/',
                                                 ) }}"
                                                              class="rounded fit-object" alt="">
@@ -360,7 +360,7 @@
                                                          src="{{ onErrorImage(
                                                             $trip?->vehicleCategory?->image,
                                                             asset('storage/app/public/vehicle/category') . '/' . $trip?->vehicleCategory?->image,
-                                                            asset('public/assets/admin-module/img/media/bike.png'),
+                                                            asset('assets/admin-module/img/media/bike.png'),
                                                             'vehicle/category/',
                                                         ) }}"
                                                          alt="">
@@ -581,7 +581,7 @@
                         </button>
                     </div>
                     <div class="modal-body" style="max-height: 70vh; overflow: auto">
-                        <img id="myImage" src="{{asset('public/assets/admin-module/img/media/media/banner.png')}}"
+                        <img id="myImage" src="{{asset('assets/admin-module/img/media/media/banner.png')}}"
                              class="w-100 rounded" alt="">
                     </div>
                 </div>
@@ -624,3 +624,4 @@
 
     </script>
 @endpush
+

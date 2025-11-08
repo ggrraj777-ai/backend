@@ -121,7 +121,7 @@
                                                                  src="{{ onErrorImage(
                                                                         $additionalData?->gateway_image,
                                                                         asset('storage/app/public/payment_modules/gateway_image') . '/' . $additionalData?->gateway_image,
-                                                                        asset('public/assets/admin-module/img/media/upload-file.png'),
+                                                                        asset('assets/admin-module/img/media/upload-file.png'),
                                                                         'payment_modules/gateway_image/',
                                                                     ) }}"
                                                                  alt="">
@@ -156,6 +156,7 @@
 
 
 @push('script')
-    <script src="{{ asset('public/assets/admin-module/js/business-management/configuration/payment-method.js') }}">
+    <script src="{{ asset('assets/admin-module/js/business-management/configuration/payment-method.js') }}">
     </script>
 @endpush
+

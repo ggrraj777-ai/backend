@@ -16,7 +16,7 @@
                             <img src="{{ onErrorImage(
                                 $commonData['driver']?->vehicle?->model?->image,
                                 asset('storage/app/public/vehicle/model') . '/' . $commonData['driver']?->vehicle?->model?->image,
-                                asset('public/assets/admin-module/img/media/upload-file.png'),
+                                asset('assets/admin-module/img/media/upload-file.png'),
                                 'vehicle/model/',
                             ) }}"
                                 class="rounded dark-support fit-object-contain" alt="">
@@ -137,3 +137,4 @@
         </div>
     </div>
 </div>
+

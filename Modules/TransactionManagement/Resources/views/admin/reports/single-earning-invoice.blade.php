@@ -198,7 +198,7 @@
                             </div>
                         </td>
                         <td style="padding:0;text-align:right">
-                            <img width="160" src="{{$businessLogo? asset("storage/app/public/business/".$businessLogo):asset('public/assets/admin-module/img/invoice-logo.png')}}" alt="{{$businessName}}">
+                            <img width="160" src="{{$businessLogo? asset("storage/app/public/business/".$businessLogo):asset('assets/admin-module/img/invoice-logo.png')}}" alt="{{$businessName}}">
                             <div class="font-normal">
                                 {{$businessAddress}}
                             </div>
@@ -316,3 +316,4 @@
 
 </body>
 </html>
+

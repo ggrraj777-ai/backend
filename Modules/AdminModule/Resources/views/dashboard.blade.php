@@ -3,7 +3,7 @@
 @extends('adminmodule::layouts.master')
 
 @push('css_or_js')
-    <link rel="stylesheet" href="{{asset('public/assets/admin-module/plugins/apex/apexcharts.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/admin-module/plugins/apex/apexcharts.css')}}"/>
 @endpush
 
 @section('content')
@@ -12,7 +12,7 @@
             <div class="row align-items-center mb-3 g-2">
                 <div class="col-12">
                     <div class="media gap-3">
-                        <img width="38" src="{{asset('public/assets/admin-module/img/media/car.png')}}" loading="eager"
+                        <img width="38" src="{{asset('assets/admin-module/img/media/car.png')}}" loading="eager"
                              alt="">
                         <div class="media-body text-dark">
                             <h4 class="mb-1">{{ translate('welcome')}} {{auth('web')->user()?->first_name}}</h4>
@@ -33,7 +33,7 @@
                                     <div class="p-30">
                                         <div class="d-flex flex-column gap-2">
                                             <div class="level-status fs-5 p-2 bg-info w-48 aspect-1 mb-3">
-                                                <img src="{{asset('public/assets/admin-module/img/svg/user-grp.svg')}}"
+                                                <img src="{{asset('assets/admin-module/img/svg/user-grp.svg')}}"
                                                      class="svg" alt="">
                                             </div>
                                             <h3 class="fs-24">{{abbreviateNumber($customers)}}</h3>
@@ -48,7 +48,7 @@
                                         <div class="d-flex flex-column gap-2">
                                             <div class="level-status text-white fs-5 p-2 w-48 aspect-1 mb-3">
                                                 <img width="24"
-                                                     src="{{asset('public/assets/admin-module/img/svg/driver2.svg')}}"
+                                                     src="{{asset('assets/admin-module/img/svg/driver2.svg')}}"
                                                      class="svg" alt="">
                                             </div>
                                             <h3 class="fs-24">{{abbreviateNumber($drivers)}}</h3>
@@ -62,7 +62,7 @@
                                     <div class="p-30">
                                         <div class="d-flex flex-column gap-2">
                                             <div class="level-status fs-5 p-2 bg-warning w-48 aspect-1 mb-3">
-                                                <img src="{{asset('public/assets/admin-module/img/svg/earning.svg')}}"
+                                                <img src="{{asset('assets/admin-module/img/svg/earning.svg')}}"
                                                      class="svg" alt="">
                                             </div>
                                             <h3 class="fs-24">{{abbreviateNumberWithSymbol($totalEarning) }}</h3>
@@ -76,7 +76,7 @@
                                     <div class="p-30">
                                         <div class="d-flex align-items-center gap-2">
                                             <div class="level-status fs-5 p-2 bg-success w-48 aspect-1">
-                                                <img src="{{asset('public/assets/admin-module/img/svg/ride-sharing.svg')}}" class="svg" alt="">
+                                                <img src="{{asset('assets/admin-module/img/svg/ride-sharing.svg')}}" class="svg" alt="">
                                             </div>
                                             <div>
                                                 <h3 class="fs-20">
@@ -92,7 +92,7 @@
                                         <hr>
                                         <div class="d-flex align-items-center gap-2">
                                             <div class="level-status fs-5 p-2 bg-purple w-48 aspect-1">
-                                                <img src="{{asset('public/assets/admin-module/img/svg/parcel.svg')}}" class="svg" alt="">
+                                                <img src="{{asset('assets/admin-module/img/svg/parcel.svg')}}" class="svg" alt="">
                                             </div>
                                             <div>
                                                 <h3 class="fs-20">
@@ -341,8 +341,8 @@
 
 @push('script')
     <!-- Apex Chart -->
-    <script src="{{asset('public/assets/admin-module/plugins/apex/apexcharts.min.js')}}"></script>
-    <script src="{{asset('public/assets/admin-module/js/admin-module/dashboard.js')}}"></script>
+    <script src="{{asset('assets/admin-module/plugins/apex/apexcharts.min.js')}}"></script>
+    <script src="{{asset('assets/admin-module/js/admin-module/dashboard.js')}}"></script>
     <!-- Google Map -->
 
     <script>
@@ -519,3 +519,4 @@
     @include('adminmodule::partials.dashboard.map')
 
 @endpush
+

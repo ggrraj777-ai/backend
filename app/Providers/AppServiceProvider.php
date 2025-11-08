@@ -26,9 +26,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Force HTTPS on Cloud Run / production so asset() and URL generation use https
-        if ($this->app->environment(['production', 'staging']) || request()->header('X-Forwarded-Proto') === 'https') {
-            URL::forceScheme('https');
+        if (!$this->app->runningInConsole()) {
+            $shouldForceHttps = request()->isSecure() || request()->header('X-Forwarded-Proto') === 'https';
+
+            if ($shouldForceHttps && $this->app->environment(['production', 'staging'])) {
+                URL::forceScheme('https');
+            }
         }
         Paginator::useBootstrap();
     }

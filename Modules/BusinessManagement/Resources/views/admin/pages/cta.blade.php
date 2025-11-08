@@ -54,7 +54,7 @@
                                 <div class="mb-4">
                                     <h6 class="d-flex align-items-center gap-2 mb-3">
                                         <img width="22"
-                                             src="{{ asset('public/assets/admin-module/img/media/play-store.png') }}"
+                                             src="{{ asset('assets/admin-module/img/media/play-store.png') }}"
                                              alt="">
                                         {{ translate('Playstore_Button') }}
                                     </h6>
@@ -94,7 +94,7 @@
                                 <div class="mb-4">
                                     <h6 class="d-flex align-items-center gap-2 mb-3">
                                         <img width="22"
-                                             src="{{ asset('public/assets/admin-module/img/media/app-store.png') }}"
+                                             src="{{ asset('assets/admin-module/img/media/app-store.png') }}"
                                              alt="">
                                         {{ translate('app_Store_Button') }}
                                     </h6>
@@ -169,7 +169,7 @@
                                                 </span>
                                             <div class="upload-file__img">
                                                 <img
-                                                        src="{{ $data1?->value['image'] ? asset('storage/app/public/business/landing-pages/cta/'.$data1?->value['image']) : asset('public/assets/admin-module/img/media/upload-file.png') }}"
+                                                        src="{{ $data1?->value['image'] ? asset('storage/app/public/business/landing-pages/cta/'.$data1?->value['image']) : asset('assets/admin-module/img/media/upload-file.png') }}"
                                                         alt="">
                                             </div>
                                         </div>
@@ -197,7 +197,7 @@
                                                 </span>
                                             <div class="upload-file__img upload-file__img_banner">
                                                 <img
-                                                        src="{{ $data1?->value['background_image'] ? asset('storage/app/public/business/landing-pages/cta/'.$data1?->value['background_image']) : asset('public/assets/admin-module/img/media/upload-file.png') }}"
+                                                        src="{{ $data1?->value['background_image'] ? asset('storage/app/public/business/landing-pages/cta/'.$data1?->value['background_image']) : asset('assets/admin-module/img/media/upload-file.png') }}"
                                                         alt="">
                                             </div>
                                         </div>
@@ -220,5 +220,6 @@
     </div>
     <!-- End Main Content -->
 @endsection
+
 
 

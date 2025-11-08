@@ -49,7 +49,7 @@
                                 @php($languages = businessConfig(SYSTEM_LANGUAGE)?->value ?? [['code' => 'en']])
                                 <a href="#" class="header-icon count-btn" data-bs-toggle="dropdown">
                                     <img class="dark-support" loading="lazy"
-                                         src="{{ asset('public/assets/admin-module/img/language.png') }}" height="24px"
+                                         src="{{ asset('assets/admin-module/img/language.png') }}" height="24px"
                                          width="24px" alt="language">
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
@@ -82,7 +82,7 @@
                                     <img src="{{ onErrorImage(
                                         auth()->user()?->profile_image,
                                         asset('storage/app/public/employee/profile') . '/' . auth()->user()->profile_image,
-                                        asset('public/assets/admin-module/img/user.png'),
+                                        asset('assets/admin-module/img/user.png'),
                                         'employee/profile/',
                                     ) }}"
                                          loading="lazy" class="fit-object dark-support rounded-circle" alt="">
@@ -96,7 +96,7 @@
                                                  src="{{ onErrorImage(
                                                     auth()->user()?->profile_image,
                                                     asset('storage/app/public/employee/profile') . '/' . auth()->user()->profile_image,
-                                                    asset('public/assets/admin-module/img/user.png'),
+                                                    asset('assets/admin-module/img/user.png'),
                                                     'employee/profile/',
                                                 ) }}"
                                                  alt="admin_image">
@@ -125,3 +125,4 @@
         </div>
     </div>
 </header>
+

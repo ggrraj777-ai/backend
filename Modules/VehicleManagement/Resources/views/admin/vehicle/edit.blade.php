@@ -183,7 +183,7 @@
                                                     <div class="file__value--remove fw-bold"
                                                          data-id="{{$document}}">
                                                         <img
-                                                            src="{{ asset('public/assets/admin-module/img/icons/close-circle.svg') }}"
+                                                            src="{{ asset('assets/admin-module/img/icons/close-circle.svg') }}"
                                                             alt="">
                                                     </div>
                                                     <input type="hidden" name="existing_documents[]"
@@ -231,7 +231,7 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('public/assets/admin-module/js/vehicle-management/vehicle/create.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/vehicle-management/vehicle/create.js') }}"></script>
 
     <script>
         "use strict";
@@ -327,3 +327,4 @@
         });
     </script>
 @endpush
+

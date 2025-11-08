@@ -179,19 +179,19 @@ class CouponSetup extends Model
     public function getCategoryCouponImageAttribute()
     {
         if (in_array(ALL, $this->category_coupon_type, true)) {
-            return asset('public/assets/admin-module/img/coupon-default.png');
+            return asset('assets/admin-module/img/coupon-default.png');
         } elseif (in_array(PARCEL, $this->category_coupon_type, true) && in_array(CUSTOM, $this->category_coupon_type, true)) {
-            return asset('public/assets/admin-module/img/coupon-default.png');
+            return asset('assets/admin-module/img/coupon-default.png');
         } elseif (in_array(PARCEL, $this->category_coupon_type, true)) {
-            return asset('public/assets/admin-module/img/parcel-coupon.png');
+            return asset('assets/admin-module/img/parcel-coupon.png');
         } elseif (in_array(CUSTOM, $this->category_coupon_type, true)) {
             if (count($this->vehicleCategories) > 1) {
-                return asset('public/assets/admin-module/img/coupon-default.png');
+                return asset('assets/admin-module/img/coupon-default.png');
             } else {
                 return onErrorImage(
                     $this->vehicleCategories[0]?->image,
                     asset('storage/app/public/vehicle/category') . '/' . $this->vehicleCategories[0]?->image,
-                    asset('public/assets/admin-module/img/media/car.png'),
+                    asset('assets/admin-module/img/media/car.png'),
                     'vehicle/category/',
                 );
             }
@@ -232,3 +232,4 @@ class CouponSetup extends Model
 
     }
 }
+

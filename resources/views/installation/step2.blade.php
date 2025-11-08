@@ -42,7 +42,7 @@
                                               data-bs-html="true"
                                               data-bs-title="The username of your codecanyon account">
                                                     <img
-                                                        src="{{asset('public/assets/installation')}}/assets/img/svg-icons/info2.svg"
+                                                        src="{{asset('assets/installation')}}/assets/img/svg-icons/info2.svg"
                                                         class="svg" alt="">
                                                 </span>
                                     </label>
@@ -68,3 +68,4 @@
         </div>
     </div>
 @endsection
+

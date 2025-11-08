@@ -112,7 +112,7 @@
                                                 @if($parcelRefund->status == PENDING || $parcelRefund->status == DENIED )
                                                     <a id="approvalButtonParcelRefund{{$key}}"
                                                        data-url="{{route('admin.trip.refund.approved', [$parcelRefund->id])}}"
-                                                       data-icon="{{ asset('public/assets/admin-module/img/approval-icon.png') }}"
+                                                       data-icon="{{ asset('assets/admin-module/img/approval-icon.png') }}"
                                                        data-title="{{ translate('Are you sure to Approve the Refund Request')."?" }}"
                                                        data-sub-title="{{translate("The customer has requested a refund of")}}  <strong>{{set_currency_symbol($parcelRefund->parcel_approximate_price)}}</strong> {{translate("for this parcel.")}}"
                                                        data-confirm-btn="{{translate("Approve")}}"
@@ -125,7 +125,7 @@
                                                 @if($parcelRefund->status == PENDING || $parcelRefund->status == APPROVED )
                                                     <a id="deniedButtonParcelRefund{{$key}}"
                                                        data-url="{{route('admin.trip.refund.denied', [$parcelRefund->id])}}"
-                                                       data-icon="{{ asset('public/assets/admin-module/img/denied-icon.png') }}"
+                                                       data-icon="{{ asset('assets/admin-module/img/denied-icon.png') }}"
                                                        data-title="{{ translate('Are you sure to Deny the Refund Request')."?" }}"
                                                        data-sub-title="{{translate("Once you deny the request, the customer will not be refunded the amount he asked for.")}}"
                                                        data-confirm-btn="{{translate("Deny")}}"
@@ -142,7 +142,7 @@
                                                        class="btn btn-outline-primary btn-action d-flex justify-content-center align-items-center parcel-refund-button"
                                                        data-bs-toggle="tooltip" title="{{translate("make_refund")}}">
                                                         <img
-                                                            src="{{asset('public/assets/admin-module/img/refund-icon.png')}}"
+                                                            src="{{asset('assets/admin-module/img/refund-icon.png')}}"
                                                             alt="">
                                                     </a>
                                                 @endif
@@ -155,7 +155,7 @@
                                             <div
                                                 class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
                                                 <img
-                                                    src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}"
+                                                    src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}"
                                                     alt=""
                                                     width="100">
                                                 <p class="text-center">{{translate('no_data_available')}}</p>
@@ -191,3 +191,4 @@
     </script>
 
 @endpush
+

@@ -27,7 +27,7 @@ class ConfigurationController extends Controller
 
         $configs = [
             'business_name' => businessConfig('business_name', BUSINESS_INFORMATION)?->value ?? "DriveMond",
-            'logo' => businessConfig('header_logo', BUSINESS_INFORMATION)?->value ? asset(businessConfig('header_logo', BUSINESS_INFORMATION)?->value) : asset('public/assets/admin-module/img/logo.png'),
+            'logo' => businessConfig('header_logo', BUSINESS_INFORMATION)?->value ? asset(businessConfig('header_logo', BUSINESS_INFORMATION)?->value) : asset('assets/admin-module/img/logo.png'),
             'app_url_android' => $cta?->value && $cta?->value['play_store']['user_download_link'] ? $cta?->value['play_store']['user_download_link'] : "",
             'app_url_ios' => $cta?->value && $cta?->value['app_store']['user_download_link'] ? $cta?->value['app_store']['user_download_link'] : "",
         ];
@@ -63,3 +63,4 @@ class ConfigurationController extends Controller
     }
 
 }
+

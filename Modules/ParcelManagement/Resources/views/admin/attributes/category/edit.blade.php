@@ -60,7 +60,7 @@
                                                             src="{{ onErrorImage(
                                                                 $category?->image,
                                                                 asset('storage/app/public/parcel/category') . '/' . $category?->image,
-                                                                asset('public/assets/admin-module/img/media/upload-file.png'),
+                                                                asset('assets/admin-module/img/media/upload-file.png'),
                                                                 'parcel/category/',
                                                             ) }}"
                                                              loading="lazy" alt="">
@@ -89,3 +89,4 @@
 
 @push('script')
 @endpush
+

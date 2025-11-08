@@ -76,7 +76,7 @@
                                                placeholder="Ex: New Year 23" value="{{old('coupon_code')}}"
                                                required>
                                         <a href="javascript:void(0)" class="generate-code form-control"
-                                           id="generateCode"><img src="{{ asset("public/assets/admin-module/img/coupon-generate.png") }}" alt="{{translate("generate_coupon")}}"></a>
+                                           id="generateCode"><img src="{{ asset("assets/admin-module/img/coupon-generate.png") }}" alt="{{translate("generate_coupon")}}"></a>
                                     </div>
 
                                 </div>
@@ -234,7 +234,7 @@
 @endsection
 
 @push('script')
-    <script src="{{asset('public/assets/admin-module/js/promotion-management/coupon-setup/create.js')}}"></script>
+    <script src="{{asset('assets/admin-module/js/promotion-management/coupon-setup/create.js')}}"></script>
 
     <script>
         "use strict";
@@ -293,3 +293,4 @@
 
     </script>
 @endpush
+

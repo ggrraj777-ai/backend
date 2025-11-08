@@ -57,7 +57,7 @@
                                                                required>
                                                         <div class="upload-file__img w-auto h-auto">
                                                             <img width="150"
-                                                                 src="{{ asset("public/assets/admin-module/img/media/upload-file.png") }}"
+                                                                 src="{{ asset("assets/admin-module/img/media/upload-file.png") }}"
                                                                  alt="">
                                                         </div>
                                                     </div>
@@ -71,7 +71,7 @@
                                                             class="upload-file__img border-gray d-flex justify-content-center align-items-center w-150 h-150 aspect-1 p-0">
                                                             <div class="upload-file__textbox text-center">
                                                                 <img width="34" height="34"
-                                                                     src="{{ asset('public/assets/admin-module/img/document-upload.png') }}"
+                                                                     src="{{ asset('assets/admin-module/img/document-upload.png') }}"
                                                                      alt="" class="svg">
                                                                 <h6 class="mt-2 fw-semibold fs-12">
                                                                     <span class="text-info">{{ translate('Click to upload') }}</span>
@@ -265,7 +265,7 @@
                                                         <div
                                                             class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
                                                             <img
-                                                                src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}"
+                                                                src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}"
                                                                 alt="" width="100">
                                                             <p class="text-center">{{translate('no_data_available')}}</p>
                                                         </div>
@@ -290,7 +290,7 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('public/assets/admin-module/js/single-image-upload.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/single-image-upload.js') }}"></script>
     <script>
         "use strict";
         $('.js-select-ajax').select2({
@@ -318,3 +318,4 @@
         });
     </script>
 @endpush
+

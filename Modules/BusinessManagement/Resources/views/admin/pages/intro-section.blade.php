@@ -95,10 +95,10 @@
                                             <div class="upload-file__img upload-file__img_banner aspect-ratio-3-1 overflow-hidden d-flex justify-content-center">
                                                 @if($data1?->value['background_image'] && file_exists('storage/app/public/business/landing-pages/intro-section/'.$data1?->value['background_image']))
                                                     <img class="aspect-ratio-auto h-100"
-                                                        src="{{ $data1?->value['background_image'] ? asset('storage/app/public/business/landing-pages/intro-section/'.$data1?->value['background_image']):asset('public/assets/admin-module/img/media/upload-file.png') }}"
+                                                        src="{{ $data1?->value['background_image'] ? asset('storage/app/public/business/landing-pages/intro-section/'.$data1?->value['background_image']):asset('assets/admin-module/img/media/upload-file.png') }}"
                                                         alt="">
                                                 @else
-                                                    <img class="aspect-ratio-auto h-100" src="{{ asset('public/assets/admin-module/img/media/upload-file.png') }}" alt="">
+                                                    <img class="aspect-ratio-auto h-100" src="{{ asset('assets/admin-module/img/media/upload-file.png') }}" alt="">
                                                 @endif
                                             </div>
                                         </div>
@@ -124,5 +124,6 @@
     </div>
     <!-- End Main Content -->
 @endsection
+
 
 

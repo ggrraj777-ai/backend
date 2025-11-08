@@ -12,7 +12,7 @@
                         <img src="{{ onErrorImage(
                                                 $trip?->vehicleCategory?->image,
                                                 asset('storage/app/public/vehicle/category') . '/' . $trip?->vehicleCategory?->image,
-                                                asset('public/assets/admin-module/img/media/car.png'),
+                                                asset('assets/admin-module/img/media/car.png'),
                                                 'vehicle/category/',
                                             ) }}"
                              class="dark-support rounded custom-box-size"
@@ -41,3 +41,4 @@
     @empty
     @endforelse
 </ul>
+

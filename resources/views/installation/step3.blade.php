@@ -21,7 +21,7 @@
                         <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
                               data-bs-title="Follow our documentation">
 
-                            <img src="{{asset('public/assets/installation')}}/assets/img/svg-icons/info.svg" alt=""
+                            <img src="{{asset('assets/installation')}}/assets/img/svg-icons/info.svg" alt=""
                                  class="svg">
                         </span>
             </a>
@@ -127,4 +127,5 @@
 
     </script>
 @endpush
+
 

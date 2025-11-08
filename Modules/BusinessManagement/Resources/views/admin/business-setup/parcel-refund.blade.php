@@ -34,7 +34,7 @@
                                         data-name="parcel_refund_status"
                                         data-type="{{PARCEL_SETTINGS}}"
                                         data-url="{{route('admin.business.setup.update-business-setting')}}"
-                                        data-icon=" {{asset('public/assets/admin-module/img/parcel_tracking.png')}}"
+                                        data-icon=" {{asset('assets/admin-module/img/parcel_tracking.png')}}"
                                         data-title="{{translate('Are you sure')}}?"
                                         data-sub-title="{{($settings->firstWhere('key_name', 'parcel_refund_status')->value?? 0) == 1 ? translate('Do you want to turn OFF Parcel Refund for customer')."? " .translate("When it’s off the customer will not be able to  refund any parcel.") : translate('Do you want to turn ON Parcel Refund for customer')."? ". translate('When it’s off the customer will be able to  refund any parcel.')}}"
                                         data-confirm-btn="{{($settings->firstWhere('key_name', 'parcel_refund_status')->value?? 0) == 1 ? translate('Turn Off') : translate('Turn On')}}"
@@ -197,7 +197,7 @@
                                         <div
                                             class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
                                             <img
-                                                src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}"
+                                                src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}"
                                                 alt="" width="100">
                                             <p class="text-center">{{translate('no_data_available')}}</p>
                                         </div>
@@ -295,3 +295,4 @@
 
             </script>
     @endpush
+
