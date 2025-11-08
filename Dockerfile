@@ -53,7 +53,7 @@ COPY . /var/www/html
 # Run composer scripts after all files are copied
 RUN set -ex && \
     echo "=== Running Composer scripts ===" && \
-    composer dump-autoload --optimize \
+    composer dump-autoload --optimize --no-scripts \
     && echo "✓ Autoload optimized successfully"
 
 # Install Node.js (with error handling)
@@ -143,6 +143,7 @@ if [ "$APP_ENV" = "production" ]; then\n\
     php artisan route:cache || true\n\
     php artisan view:cache || true\n\
 fi\n\
+php artisan package:discover --ansi || true\n\
 \n\
 echo "Application ready on port 8080"\n\
 echo "APP_ENV: $APP_ENV"\n\
