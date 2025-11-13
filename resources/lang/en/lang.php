@@ -3239,4 +3239,5 @@
   'It’s Time to Change The Riding Experience' => 'It’s Time to Change The Riding Experience',
   'total_volume' => 'Total volume',
   'lifetime_volume' => 'Lifetime volume',
+  'Then check the ‘All Zone Extra Fare’ from the zone list.' => 'Then check the ‘All Zone Extra Fare’ from the zone list.',
 );

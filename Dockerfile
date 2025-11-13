@@ -21,9 +21,12 @@ RUN set -ex && \
     zip \
     unzip \
     libzip-dev \
+    ca-certificates \
     libicu-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip intl \
+    && update-ca-certificates \
+    && ln -sf /etc/ssl/certs/ca-certificates.crt /usr/local/etc/ssl/cert.pem \
     && apt-get clean && rm -rf /var/lib/apt/lists/* \
     || (echo "ERROR: System dependencies installation failed" && exit 1)
 
