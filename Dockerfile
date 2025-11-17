@@ -60,8 +60,8 @@ COPY . /var/www/html
 RUN rm -f /var/www/html/.env
 
 # Ensure .env file exists
-if [ ! -f /var/www/html/.env ]; then
-    echo "Creating .env file..."
+RUN if [ ! -f /var/www/html/.env ]; then \
+    echo "Creating .env file..." && \
     cat <<EOF > /var/www/html/.env
 APP_NAME="${APP_NAME:-Gauva}"
 APP_ENV="${APP_ENV:-production}"
