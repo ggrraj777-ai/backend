@@ -60,64 +60,58 @@ COPY . /var/www/html
 RUN rm -f /var/www/html/.env
 
 # Ensure .env file exists (create default .env since we just deleted it)
-RUN echo "Creating .env file..." && \
-    cat > /var/www/html/.env << 'ENVEOF'
-APP_NAME=Gauva
-APP_ENV=production
-APP_KEY=
-APP_DEBUG=false
-APP_URL=http://localhost
-APP_TIMEZONE=UTC
-APP_LOCALE=en
-LOG_CHANNEL=stderr
-LOG_LEVEL=info
-
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=homestead
-DB_USERNAME=homestead
-DB_PASSWORD=secret
-
-BROADCAST_DRIVER=log
-CACHE_DRIVER=file
-FILESYSTEM_DISK=public
-QUEUE_CONNECTION=sync
-SESSION_DRIVER=file
-SESSION_LIFETIME=120
-
-MEMCACHED_HOST=127.0.0.1
-REDIS_HOST=127.0.0.1
-REDIS_PASSWORD=null
-REDIS_PORT=6379
-
-MAIL_MAILER=smtp
-MAIL_HOST=smtp.mailtrap.io
-MAIL_PORT=2525
-MAIL_USERNAME=null
-MAIL_PASSWORD=null
-MAIL_ENCRYPTION=null
-MAIL_FROM_ADDRESS=hello@example.com
-MAIL_FROM_NAME=Gauva
-
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-AWS_DEFAULT_REGION=us-east-1
-AWS_BUCKET=
-
-RAZORPAY_KEY_ID=
-RAZORPAY_KEY_SECRET=
-RECAPTCHA_SITE_KEY=
-RECAPTCHA_SECRET_KEY=
-
-PUSHER_APP_ID=
-PUSHER_APP_KEY=
-PUSHER_APP_SECRET=
-PUSHER_HOST=
-PUSHER_PORT=
-PUSHER_SCHEME=
-PUSHER_APP_CLUSTER=mt1
-ENVEOF
+RUN if [ ! -f /var/www/html/.env ]; then \
+    echo "Creating .env file..." && \
+    printf 'APP_NAME="%s"\nAPP_ENV="%s"\nAPP_KEY="%s"\nAPP_DEBUG="%s"\nAPP_URL="%s"\nAPP_TIMEZONE="%s"\nAPP_LOCALE="%s"\nLOG_CHANNEL="%s"\nLOG_LEVEL="%s"\n\nDB_CONNECTION="%s"\nDB_HOST="%s"\nDB_PORT="%s"\nDB_DATABASE="%s"\nDB_USERNAME="%s"\nDB_PASSWORD="%s"\n\nBROADCAST_DRIVER="%s"\nCACHE_DRIVER="%s"\nFILESYSTEM_DISK="%s"\nQUEUE_CONNECTION="%s"\nSESSION_DRIVER="%s"\nSESSION_LIFETIME="%s"\n\nMEMCACHED_HOST="%s"\nREDIS_HOST="%s"\nREDIS_PASSWORD="%s"\nREDIS_PORT="%s"\n\nMAIL_MAILER="%s"\nMAIL_HOST="%s"\nMAIL_PORT="%s"\nMAIL_USERNAME="%s"\nMAIL_PASSWORD="%s"\nMAIL_ENCRYPTION="%s"\nMAIL_FROM_ADDRESS="%s"\nMAIL_FROM_NAME="%s"\n\nAWS_ACCESS_KEY_ID="%s"\nAWS_SECRET_ACCESS_KEY="%s"\nAWS_DEFAULT_REGION="%s"\nAWS_BUCKET="%s"\n\nRAZORPAY_KEY_ID="%s"\nRAZORPAY_KEY_SECRET="%s"\nRECAPTCHA_SITE_KEY="%s"\nRECAPTCHA_SECRET_KEY="%s"\n\nPUSHER_APP_ID="%s"\nPUSHER_APP_KEY="%s"\nPUSHER_APP_SECRET="%s"\nPUSHER_HOST="%s"\nPUSHER_PORT="%s"\nPUSHER_SCHEME="%s"\nPUSHER_APP_CLUSTER="%s"\n' \
+        "${APP_NAME:-Gauva}" \
+        "${APP_ENV:-production}" \
+        "${APP_KEY:-}" \
+        "${APP_DEBUG:-false}" \
+        "${APP_URL:-http://localhost}" \
+        "${APP_TIMEZONE:-UTC}" \
+        "${APP_LOCALE:-en}" \
+        "${LOG_CHANNEL:-stderr}" \
+        "${LOG_LEVEL:-info}" \
+        "${DB_CONNECTION:-mysql}" \
+        "${DB_HOST:-127.0.0.1}" \
+        "${DB_PORT:-3306}" \
+        "${DB_DATABASE:-homestead}" \
+        "${DB_USERNAME:-homestead}" \
+        "${DB_PASSWORD:-secret}" \
+        "${BROADCAST_DRIVER:-log}" \
+        "${CACHE_DRIVER:-file}" \
+        "${FILESYSTEM_DISK:-public}" \
+        "${QUEUE_CONNECTION:-sync}" \
+        "${SESSION_DRIVER:-file}" \
+        "${SESSION_LIFETIME:-120}" \
+        "${MEMCACHED_HOST:-127.0.0.1}" \
+        "${REDIS_HOST:-127.0.0.1}" \
+        "${REDIS_PASSWORD:-null}" \
+        "${REDIS_PORT:-6379}" \
+        "${MAIL_MAILER:-smtp}" \
+        "${MAIL_HOST:-smtp.mailtrap.io}" \
+        "${MAIL_PORT:-2525}" \
+        "${MAIL_USERNAME:-null}" \
+        "${MAIL_PASSWORD:-null}" \
+        "${MAIL_ENCRYPTION:-null}" \
+        "${MAIL_FROM_ADDRESS:-hello@example.com}" \
+        "${MAIL_FROM_NAME:-Gauva}" \
+        "${AWS_ACCESS_KEY_ID:-}" \
+        "${AWS_SECRET_ACCESS_KEY:-}" \
+        "${AWS_DEFAULT_REGION:-us-east-1}" \
+        "${AWS_BUCKET:-}" \
+        "${RAZORPAY_KEY_ID:-}" \
+        "${RAZORPAY_KEY_SECRET:-}" \
+        "${RECAPTCHA_SITE_KEY:-}" \
+        "${RECAPTCHA_SECRET_KEY:-}" \
+        "${PUSHER_APP_ID:-}" \
+        "${PUSHER_APP_KEY:-}" \
+        "${PUSHER_APP_SECRET:-}" \
+        "${PUSHER_HOST:-}" \
+        "${PUSHER_PORT:-}" \
+        "${PUSHER_SCHEME:-}" \
+        "${PUSHER_APP_CLUSTER:-mt1}" > /var/www/html/.env; \
+    fi
 
 # Run composer scripts after all files are copied
 RUN set -ex && \
