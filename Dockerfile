@@ -8,10 +8,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV COMPOSER_NO_INTERACTION=1
 
-# Install system dependencies with error handling
-RUN echo "=== Updating package lists ===" && \
-    apt-get update || (sleep 5 && apt-get update) && \
-    echo "=== Installing system packages ===" && \
+# Install system dependencies and build PHP extensions
+RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     build-essential \
     git \
@@ -26,19 +24,14 @@ RUN echo "=== Updating package lists ===" && \
     libzip-dev \
     ca-certificates \
     libicu-dev \
-    && echo "=== Configuring GD extension ===" && \
-    docker-php-ext-configure gd --with-freetype --with-jpeg || \
-    (echo "GD configuration failed, trying without jpeg..." && docker-php-ext-configure gd --with-freetype) && \
-    echo "=== Installing PHP extensions ===" && \
-    docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip intl && \
-    echo "=== Updating CA certificates ===" && \
-    update-ca-certificates && \
-    echo "=== Setting up SSL certificates ===" && \
-    ln -sf /etc/ssl/certs/ca-certificates.crt /usr/local/etc/ssl/cert.pem || true && \
-    echo "=== Cleaning up ===" && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    echo "=== System dependencies installed successfully ==="
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip intl \
+    && update-ca-certificates \
+    && ln -sf /etc/ssl/certs/ca-certificates.crt /usr/local/etc/ssl/cert.pem \
+    && apt-get purge -y build-essential \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -49,19 +42,15 @@ WORKDIR /var/www/html
 # Copy composer files first for better caching
 COPY composer.json composer.lock ./
 
-# Install PHP dependencies with robust error handling
-RUN set -ex && \
-    echo "=== Installing Composer dependencies ===" && \
-    composer install \
-        --no-dev \
-        --optimize-autoloader \
-        --no-interaction \
-        --no-scripts \
-        --prefer-dist \
-        --no-progress \
-        --ignore-platform-reqs \
-    && echo "✓ Composer dependencies installed successfully" \
-    || (echo "ERROR: Composer install failed!" && composer diagnose && exit 1)
+# Install PHP dependencies
+RUN composer install \
+    --no-dev \
+    --optimize-autoloader \
+    --no-interaction \
+    --no-scripts \
+    --prefer-dist \
+    --no-progress \
+    --ignore-platform-reqs
 
 # Copy application files
 COPY . /var/www/html
@@ -69,84 +58,22 @@ COPY . /var/www/html
 # Remove any existing .env to avoid invalid configuration being baked into the image
 RUN rm -f /var/www/html/.env
 
-# Ensure .env file exists (create default .env since we just deleted it)
-RUN if [ ! -f /var/www/html/.env ]; then \
-    echo "Creating .env file..." && \
-    printf 'APP_NAME="%s"\nAPP_ENV="%s"\nAPP_KEY="%s"\nAPP_DEBUG="%s"\nAPP_URL="%s"\nAPP_TIMEZONE="%s"\nAPP_LOCALE="%s"\nLOG_CHANNEL="%s"\nLOG_LEVEL="%s"\n\nDB_CONNECTION="%s"\nDB_HOST="%s"\nDB_PORT="%s"\nDB_DATABASE="%s"\nDB_USERNAME="%s"\nDB_PASSWORD="%s"\n\nBROADCAST_DRIVER="%s"\nCACHE_DRIVER="%s"\nFILESYSTEM_DISK="%s"\nQUEUE_CONNECTION="%s"\nSESSION_DRIVER="%s"\nSESSION_LIFETIME="%s"\n\nMEMCACHED_HOST="%s"\nREDIS_HOST="%s"\nREDIS_PASSWORD="%s"\nREDIS_PORT="%s"\n\nMAIL_MAILER="%s"\nMAIL_HOST="%s"\nMAIL_PORT="%s"\nMAIL_USERNAME="%s"\nMAIL_PASSWORD="%s"\nMAIL_ENCRYPTION="%s"\nMAIL_FROM_ADDRESS="%s"\nMAIL_FROM_NAME="%s"\n\nAWS_ACCESS_KEY_ID="%s"\nAWS_SECRET_ACCESS_KEY="%s"\nAWS_DEFAULT_REGION="%s"\nAWS_BUCKET="%s"\n\nRAZORPAY_KEY_ID="%s"\nRAZORPAY_KEY_SECRET="%s"\nRECAPTCHA_SITE_KEY="%s"\nRECAPTCHA_SECRET_KEY="%s"\n\nPUSHER_APP_ID="%s"\nPUSHER_APP_KEY="%s"\nPUSHER_APP_SECRET="%s"\nPUSHER_HOST="%s"\nPUSHER_PORT="%s"\nPUSHER_SCHEME="%s"\nPUSHER_APP_CLUSTER="%s"\n' \
-        "${APP_NAME:-Gauva}" \
-        "${APP_ENV:-production}" \
-        "${APP_KEY:-}" \
-        "${APP_DEBUG:-false}" \
-        "${APP_URL:-http://localhost}" \
-        "${APP_TIMEZONE:-UTC}" \
-        "${APP_LOCALE:-en}" \
-        "${LOG_CHANNEL:-stderr}" \
-        "${LOG_LEVEL:-info}" \
-        "${DB_CONNECTION:-mysql}" \
-        "${DB_HOST:-127.0.0.1}" \
-        "${DB_PORT:-3306}" \
-        "${DB_DATABASE:-homestead}" \
-        "${DB_USERNAME:-homestead}" \
-        "${DB_PASSWORD:-secret}" \
-        "${BROADCAST_DRIVER:-log}" \
-        "${CACHE_DRIVER:-file}" \
-        "${FILESYSTEM_DISK:-public}" \
-        "${QUEUE_CONNECTION:-sync}" \
-        "${SESSION_DRIVER:-file}" \
-        "${SESSION_LIFETIME:-120}" \
-        "${MEMCACHED_HOST:-127.0.0.1}" \
-        "${REDIS_HOST:-127.0.0.1}" \
-        "${REDIS_PASSWORD:-null}" \
-        "${REDIS_PORT:-6379}" \
-        "${MAIL_MAILER:-smtp}" \
-        "${MAIL_HOST:-smtp.mailtrap.io}" \
-        "${MAIL_PORT:-2525}" \
-        "${MAIL_USERNAME:-null}" \
-        "${MAIL_PASSWORD:-null}" \
-        "${MAIL_ENCRYPTION:-null}" \
-        "${MAIL_FROM_ADDRESS:-hello@example.com}" \
-        "${MAIL_FROM_NAME:-Gauva}" \
-        "${AWS_ACCESS_KEY_ID:-}" \
-        "${AWS_SECRET_ACCESS_KEY:-}" \
-        "${AWS_DEFAULT_REGION:-us-east-1}" \
-        "${AWS_BUCKET:-}" \
-        "${RAZORPAY_KEY_ID:-}" \
-        "${RAZORPAY_KEY_SECRET:-}" \
-        "${RECAPTCHA_SITE_KEY:-}" \
-        "${RECAPTCHA_SECRET_KEY:-}" \
-        "${PUSHER_APP_ID:-}" \
-        "${PUSHER_APP_KEY:-}" \
-        "${PUSHER_APP_SECRET:-}" \
-        "${PUSHER_HOST:-}" \
-        "${PUSHER_PORT:-}" \
-        "${PUSHER_SCHEME:-}" \
-        "${PUSHER_APP_CLUSTER:-mt1}" > /var/www/html/.env; \
-    fi
+# Create minimal .env file (will be overridden by environment variables at runtime)
+RUN printf 'APP_ENV=production\nAPP_DEBUG=false\nLOG_CHANNEL=stderr\n' > /var/www/html/.env
 
-# Run composer scripts after all files are copied
-RUN set -ex && \
-    echo "=== Running Composer scripts ===" && \
-    composer dump-autoload --optimize --no-scripts \
-    && echo "✓ Autoload optimized successfully"
+# Optimize autoloader
+RUN composer dump-autoload --optimize --no-scripts
 
-# Install Node.js (with error handling)
-RUN set -ex && \
-    echo "=== Installing Node.js ===" && \
-    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+# Install Node.js and build assets
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
     apt-get install -y nodejs && \
-    node --version && npm --version && \
-    echo "✓ Node.js installed successfully" \
-    || echo "Warning: Node.js installation skipped"
-
-# Install Node dependencies and build assets (optional, won't fail build)
-RUN if [ -f "package.json" ]; then \
-        echo "=== Building frontend assets ===" && \
-        npm install --legacy-peer-deps --no-audit 2>&1 && \
-        (npm run prod 2>&1 || npm run build 2>&1 || echo "Warning: Asset build skipped") && \
-        echo "✓ Frontend assets processed"; \
-    else \
-        echo "No package.json found, skipping npm build"; \
-    fi || echo "Warning: Frontend build failed but continuing..."
+    if [ -f "package.json" ]; then \
+        npm ci --legacy-peer-deps --no-audit --production=false && \
+        npm run prod 2>/dev/null || npm run build 2>/dev/null || true; \
+    fi && \
+    apt-get purge -y nodejs && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/* /root/.npm
 
 # Ensure public directory has correct permissions
 RUN chmod -R 755 /var/www/html/public
@@ -178,74 +105,47 @@ RUN echo '<Directory /var/www/html/public>\n\
 # Expose port 8080
 EXPOSE 8080
 
-# Create startup script inline
+# Create production startup script
 RUN echo '#!/bin/bash\n\
 set -e\n\
-# Use PORT environment variable if set, otherwise default to 8080\n\
 export PORT=${PORT:-8080}\n\
-echo "Starting DriveMond on port $PORT..."\n\
 \n\
-# Configure Apache to listen on the PORT environment variable\n\
+# Configure Apache for dynamic port\n\
 echo "Listen $PORT" > /etc/apache2/ports.conf\n\
-# Update VirtualHost to use the PORT\n\
 sed -i "s/<VirtualHost.*>/<VirtualHost *:$PORT>/g" /etc/apache2/sites-available/000-default.conf\n\
-# Ensure ServerName is set\n\
-if ! grep -q "ServerName" /etc/apache2/sites-available/000-default.conf; then\n\
-    sed -i "/<VirtualHost/a\\    ServerName localhost" /etc/apache2/sites-available/000-default.conf\n\
-fi\n\
-echo "Apache configured to listen on port $PORT"\n\
-echo "Verifying Apache configuration..."\n\
-apache2ctl -t && echo "Apache configuration is valid" || echo "Warning: Apache configuration check failed"\n\
 \n\
-# Ensure .env file exists (should already be created in Dockerfile, but verify)\n\
+# Ensure .env exists\n\
 if [ ! -f /var/www/html/.env ]; then\n\
-    echo "Creating minimal .env file..."\n\
-    if [ -f /var/www/html/.env.example ]; then\n\
-        cp /var/www/html/.env.example /var/www/html/.env\n\
-    else\n\
-        echo "APP_NAME=Gauva" > /var/www/html/.env\n\
-        echo "APP_ENV=production" >> /var/www/html/.env\n\
-        echo "APP_KEY=" >> /var/www/html/.env\n\
-        echo "APP_DEBUG=false" >> /var/www/html/.env\n\
-    fi\n\
+    [ -f /var/www/html/.env.example ] && cp /var/www/html/.env.example /var/www/html/.env || \
+    printf "APP_ENV=production\nAPP_DEBUG=false\nLOG_CHANNEL=stderr\n" > /var/www/html/.env\n\
 fi\n\
 \n\
 # Set permissions\n\
-chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/.env\n\
-chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache\n\
-chmod 644 /var/www/html/.env\n\
+chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/.env 2>/dev/null || true\n\
+chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache 2>/dev/null || true\n\
+chmod 644 /var/www/html/.env 2>/dev/null || true\n\
 \n\
-# Generate APP_KEY if not set\n\
-if ! grep -q "APP_KEY=base64:" /var/www/html/.env; then\n\
-    echo "Generating new APP_KEY..."\n\
-    php artisan key:generate --force --no-interaction\n\
+# Generate APP_KEY if needed\n\
+if ! grep -q "APP_KEY=base64:" /var/www/html/.env 2>/dev/null; then\n\
+    php artisan key:generate --force --no-interaction 2>/dev/null || true\n\
 fi\n\
 \n\
-# Clear all caches\n\
-php artisan config:clear || true\n\
-php artisan cache:clear || true\n\
-php artisan route:clear || true\n\
-php artisan view:clear || true\n\
+# Optimize Laravel for production\n\
+php artisan config:clear 2>/dev/null || true\n\
+php artisan cache:clear 2>/dev/null || true\n\
+php artisan route:clear 2>/dev/null || true\n\
+php artisan view:clear 2>/dev/null || true\n\
+php artisan storage:link 2>/dev/null || true\n\
 \n\
-# Create storage link\n\
-php artisan storage:link || true\n\
-\n\
-# Optimize for production\n\
 if [ "$APP_ENV" = "production" ]; then\n\
-    php artisan config:cache || true\n\
-    php artisan route:cache || true\n\
-    php artisan view:cache || true\n\
+    php artisan config:cache 2>/dev/null || true\n\
+    php artisan route:cache 2>/dev/null || true\n\
+    php artisan view:cache 2>/dev/null || true\n\
 fi\n\
-php artisan package:discover --ansi || true\n\
 \n\
-echo "Application ready on port $PORT"\n\
-echo "APP_ENV: $APP_ENV"\n\
-echo "APP_DEBUG: $APP_DEBUG"\n\
-echo "Checking Apache..."\n\
-apache2ctl -t || echo "Apache config test failed but continuing..."\n\
+php artisan package:discover --ansi 2>/dev/null || true\n\
 \n\
-exec apache2-foreground' > /usr/local/bin/start.sh \
-    && chmod +x /usr/local/bin/start.sh
+exec apache2-foreground' > /usr/local/bin/start.sh && chmod +x /usr/local/bin/start.sh
 
 # Start Apache
 CMD ["/usr/local/bin/start.sh"]
