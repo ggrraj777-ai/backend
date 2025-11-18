@@ -174,10 +174,17 @@ RUN echo '#!/bin/bash\n\
 set -e\n\
 echo "Starting DriveMond on port 8080..."\n\
 \n\
-# Ensure .env file exists\n\
+# Ensure .env file exists (should already be created in Dockerfile, but verify)\n\
 if [ ! -f /var/www/html/.env ]; then\n\
-    echo "Creating .env file..."\n\
-    cp /var/www/html/.env.example /var/www/html/.env || echo "APP_NAME=Gauva" > /var/www/html/.env\n\
+    echo "Creating minimal .env file..."\n\
+    if [ -f /var/www/html/.env.example ]; then\n\
+        cp /var/www/html/.env.example /var/www/html/.env\n\
+    else\n\
+        echo "APP_NAME=Gauva" > /var/www/html/.env\n\
+        echo "APP_ENV=production" >> /var/www/html/.env\n\
+        echo "APP_KEY=" >> /var/www/html/.env\n\
+        echo "APP_DEBUG=false" >> /var/www/html/.env\n\
+    fi\n\
 fi\n\
 \n\
 # Set permissions\n\
