@@ -156,9 +156,8 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/storage \
     && chmod -R 775 /var/www/html/bootstrap/cache
 
-# Configure Apache for port 8080
-RUN sed -i 's/80/8080/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf \
-    && sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf \
+# Configure Apache (port will be set dynamically at runtime)
+RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf \
     && echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Enable Apache modules
@@ -182,7 +181,21 @@ EXPOSE 8080
 # Create startup script inline
 RUN echo '#!/bin/bash\n\
 set -e\n\
-echo "Starting DriveMond on port 8080..."\n\
+# Use PORT environment variable if set, otherwise default to 8080\n\
+export PORT=${PORT:-8080}\n\
+echo "Starting DriveMond on port $PORT..."\n\
+\n\
+# Configure Apache to listen on the PORT environment variable\n\
+echo "Listen $PORT" > /etc/apache2/ports.conf\n\
+# Update VirtualHost to use the PORT\n\
+sed -i "s/<VirtualHost.*>/<VirtualHost *:$PORT>/g" /etc/apache2/sites-available/000-default.conf\n\
+# Ensure ServerName is set\n\
+if ! grep -q "ServerName" /etc/apache2/sites-available/000-default.conf; then\n\
+    sed -i "/<VirtualHost/a\\    ServerName localhost" /etc/apache2/sites-available/000-default.conf\n\
+fi\n\
+echo "Apache configured to listen on port $PORT"\n\
+echo "Verifying Apache configuration..."\n\
+apache2ctl -t && echo "Apache configuration is valid" || echo "Warning: Apache configuration check failed"\n\
 \n\
 # Ensure .env file exists (should already be created in Dockerfile, but verify)\n\
 if [ ! -f /var/www/html/.env ]; then\n\
@@ -225,7 +238,7 @@ if [ "$APP_ENV" = "production" ]; then\n\
 fi\n\
 php artisan package:discover --ansi || true\n\
 \n\
-echo "Application ready on port 8080"\n\
+echo "Application ready on port $PORT"\n\
 echo "APP_ENV: $APP_ENV"\n\
 echo "APP_DEBUG: $APP_DEBUG"\n\
 echo "Checking Apache..."\n\
