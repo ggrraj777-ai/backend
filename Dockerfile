@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV COMPOSER_NO_INTERACTION=1
 
-# Install system dependencies and build PHP extensions
+# Install system dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     build-essential \
@@ -23,15 +23,15 @@ RUN apt-get update && \
     unzip \
     libzip-dev \
     ca-certificates \
-    libicu-dev \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip intl \
-    && update-ca-certificates \
-    && ln -sf /etc/ssl/certs/ca-certificates.crt /usr/local/etc/ssl/cert.pem \
-    && apt-get purge -y build-essential \
-    && apt-get autoremove -y \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    libicu-dev
+
+# Build PHP extensions
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
+    docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip intl
+
+# Update certificates
+RUN update-ca-certificates && \
+    ln -sf /etc/ssl/certs/ca-certificates.crt /usr/local/etc/ssl/cert.pem
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -64,15 +64,15 @@ RUN printf 'APP_ENV=production\nAPP_DEBUG=false\nLOG_CHANNEL=stderr\n' > /var/ww
 # Optimize autoloader
 RUN composer dump-autoload --optimize --no-scripts
 
-# Install Node.js and build assets
+# Install Node.js and build assets, then cleanup
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
     apt-get install -y nodejs && \
     if [ -f "package.json" ]; then \
         npm ci --legacy-peer-deps --no-audit --production=false && \
         npm run prod 2>/dev/null || npm run build 2>/dev/null || true; \
     fi && \
-    apt-get purge -y nodejs && \
-    apt-get autoremove -y && \
+    apt-get purge -y --auto-remove nodejs build-essential && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/* /root/.npm
 
 # Ensure public directory has correct permissions
