@@ -9,8 +9,8 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV COMPOSER_NO_INTERACTION=1
 
 # Install system dependencies with error handling
-RUN set -ex && \
-    apt-get update && apt-get install -y \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
     git \
     curl \
     libpng-dev \
@@ -24,11 +24,11 @@ RUN set -ex && \
     ca-certificates \
     libicu-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip intl \
+    && docker-php-ext-install -j$(nproc) pdo_mysql mbstring exif pcntl bcmath gd zip intl \
     && update-ca-certificates \
     && ln -sf /etc/ssl/certs/ca-certificates.crt /usr/local/etc/ssl/cert.pem \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* \
-    || (echo "ERROR: System dependencies installation failed" && exit 1)
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
