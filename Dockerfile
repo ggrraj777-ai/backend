@@ -9,8 +9,11 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV COMPOSER_NO_INTERACTION=1
 
 # Install system dependencies with error handling
-RUN apt-get update && \
+RUN echo "=== Updating package lists ===" && \
+    apt-get update || (sleep 5 && apt-get update) && \
+    echo "=== Installing system packages ===" && \
     apt-get install -y --no-install-recommends \
+    build-essential \
     git \
     curl \
     libpng-dev \
@@ -23,12 +26,19 @@ RUN apt-get update && \
     libzip-dev \
     ca-certificates \
     libicu-dev \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) pdo_mysql mbstring exif pcntl bcmath gd zip intl \
-    && update-ca-certificates \
-    && ln -sf /etc/ssl/certs/ca-certificates.crt /usr/local/etc/ssl/cert.pem \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && echo "=== Configuring GD extension ===" && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg || \
+    (echo "GD configuration failed, trying without jpeg..." && docker-php-ext-configure gd --with-freetype) && \
+    echo "=== Installing PHP extensions ===" && \
+    docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip intl && \
+    echo "=== Updating CA certificates ===" && \
+    update-ca-certificates && \
+    echo "=== Setting up SSL certificates ===" && \
+    ln -sf /etc/ssl/certs/ca-certificates.crt /usr/local/etc/ssl/cert.pem || true && \
+    echo "=== Cleaning up ===" && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    echo "=== System dependencies installed successfully ==="
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
