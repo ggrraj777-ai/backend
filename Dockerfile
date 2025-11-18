@@ -29,9 +29,8 @@ RUN apt-get update && \
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip intl
 
-# Update certificates
-RUN update-ca-certificates && \
-    ln -sf /etc/ssl/certs/ca-certificates.crt /usr/local/etc/ssl/cert.pem
+# Update certificates (optional - PHP base image usually has this configured)
+RUN update-ca-certificates 2>/dev/null || true
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
