@@ -153,7 +153,7 @@
                                 <div
                                     class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
                                     <img
-                                        src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}"
+                                        src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}"
                                         alt="" width="100">
                                     <p class="text-center">{{translate('no_data_available')}}</p>
                                 </div>
@@ -185,3 +185,4 @@
         </div>
     </div>
 </div>
+

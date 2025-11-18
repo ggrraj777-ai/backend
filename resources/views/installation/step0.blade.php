@@ -31,7 +31,7 @@
                         <div class="col-sm-6">
                             <div class="d-flex gap-4 align-items-center flex-wrap">
                                 <img
-                                    src="{{asset('public/assets/installation')}}/assets/img/svg-icons/database-name.svg"
+                                    src="{{asset('assets/installation')}}/assets/img/svg-icons/database-name.svg"
                                     alt="">
                                 <div>{{translate('Database Name')}}</div>
                             </div>
@@ -39,7 +39,7 @@
                         <div class="col-sm-6">
                             <div class="d-flex gap-4 align-items-center flex-wrap">
                                 <img
-                                    src="{{asset('public/assets/installation')}}/assets/img/svg-icons/database-password.svg"
+                                    src="{{asset('assets/installation')}}/assets/img/svg-icons/database-password.svg"
                                     alt="">
                                 <div>{{translate('Database Password')}}</div>
                             </div>
@@ -47,7 +47,7 @@
                         <div class="col-sm-6">
                             <div class="d-flex gap-4 align-items-center flex-wrap">
                                 <img
-                                    src="{{asset('public/assets/installation')}}/assets/img/svg-icons/database-username.svg"
+                                    src="{{asset('assets/installation')}}/assets/img/svg-icons/database-username.svg"
                                     alt="">
                                 <div>{{translate('Database Username')}}</div>
                             </div>
@@ -55,7 +55,7 @@
                         <div class="col-sm-6">
                             <div class="d-flex gap-4 align-items-center flex-wrap">
                                 <img
-                                    src="{{asset('public/assets/installation')}}/assets/img/svg-icons/database-hostname.svg"
+                                    src="{{asset('assets/installation')}}/assets/img/svg-icons/database-hostname.svg"
                                     alt="">
                                 <div>{{translate('Database Host Name')}}</div>
                             </div>
@@ -75,3 +75,4 @@
         </div>
     </div>
 @endsection
+

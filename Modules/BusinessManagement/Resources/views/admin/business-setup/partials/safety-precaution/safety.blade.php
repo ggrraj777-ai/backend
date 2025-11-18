@@ -21,7 +21,7 @@
                            data-name="safety_feature_status"
                            data-type="{{SAFETY_FEATURE_SETTINGS}}"
                            data-url="{{route('admin.business.setup.update-business-setting')}}"
-                           data-icon=" {{($settings->firstWhere('key_name', 'safety_feature_status')->value ?? 0) == 1 ? asset('public/assets/admin-module/img/svg/turn-off-safety-feature.svg') : asset('public/assets/admin-module/img/svg/turn-on-safety-feature.svg')}}"
+                           data-icon=" {{($settings->firstWhere('key_name', 'safety_feature_status')->value ?? 0) == 1 ? asset('assets/admin-module/img/svg/turn-off-safety-feature.svg') : asset('assets/admin-module/img/svg/turn-on-safety-feature.svg')}}"
                            data-title="{{translate('Are you sure')}}?"
                            data-sub-title="{{
                                          ($settings->firstWhere('key_name', 'safety_feature_status')->value?? 0) == 1 ?
@@ -162,7 +162,7 @@
                            data-name="emergency_number_for_call_status"
                            data-type="{{SAFETY_FEATURE_SETTINGS}}"
                            data-url="{{route('admin.business.setup.update-business-setting')}}"
-                           data-icon=" {{($settings->firstWhere('key_name', 'emergency_number_for_call_status')->value ?? 0) == 1 ? asset('public/assets/admin-module/img/svg/turn-off-emergency-number.svg') : asset('public/assets/admin-module/img/svg/turn-on-emergency-number.svg')}}"
+                           data-icon=" {{($settings->firstWhere('key_name', 'emergency_number_for_call_status')->value ?? 0) == 1 ? asset('assets/admin-module/img/svg/turn-off-emergency-number.svg') : asset('assets/admin-module/img/svg/turn-on-emergency-number.svg')}}"
                            data-title="{{translate('Are you sure')}}?"
                            data-sub-title="{{
                                                 ($settings->firstWhere('key_name', 'emergency_number_for_call_status')->value?? 0) == 1 ?
@@ -367,7 +367,7 @@
                            data-name="safety_alert_reasons_status"
                            data-type="{{SAFETY_FEATURE_SETTINGS}}"
                            data-url="{{route('admin.business.setup.update-business-setting')}}"
-                           data-icon=" {{($settings->firstWhere('key_name', 'safety_alert_reasons_status')->value ?? 0) == 1 ? asset('public/assets/admin-module/img/svg/turn-off-safety-alert-reason.svg') : asset('public/assets/admin-module/img/svg/turn-on-safety-alert-reason.svg')}}"
+                           data-icon=" {{($settings->firstWhere('key_name', 'safety_alert_reasons_status')->value ?? 0) == 1 ? asset('assets/admin-module/img/svg/turn-off-safety-alert-reason.svg') : asset('assets/admin-module/img/svg/turn-on-safety-alert-reason.svg')}}"
                            data-title="{{translate('Are you sure')}}?"
                            data-sub-title="{{
                                             ($settings->firstWhere('key_name', 'safety_alert_reasons_status')->value?? 0) == 1 ?
@@ -503,7 +503,7 @@
                                     <div
                                         class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
                                         <img
-                                            src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}"
+                                            src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}"
                                             alt="" width="100">
                                         <p class="text-center">{{translate('no_data_available')}}</p>
                                     </div>
@@ -524,3 +524,4 @@
         </div>
     </div>
 </div>
+

@@ -3,7 +3,7 @@
 @section('title', translate('notification'))
 
 @push('css_or_js')
-    <link rel="stylesheet" href="{{ asset('public/assets/admin-module/plugins/swiper@11/swiper-bundle.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/admin-module/plugins/swiper@11/swiper-bundle.min.css') }}"/>
 @endpush
 
 @section('content')
@@ -45,7 +45,7 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('public/assets/admin-module/plugins/swiper@11/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/plugins/swiper@11/swiper-bundle.min.js') }}"></script>
     <script>
         "use strict";
 
@@ -198,3 +198,4 @@
 
     </script>
 @endpush
+

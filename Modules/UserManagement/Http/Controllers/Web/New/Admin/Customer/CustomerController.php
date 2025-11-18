@@ -60,8 +60,14 @@ class CustomerController extends BaseController
     public function index(?Request $request, string $type = null): View|Collection|LengthAwarePaginator|null|callable|RedirectResponse
     {
         $this->authorize('user_view');
+        
+        // Increase execution time for large customer lists
+        set_time_limit(300);
+        ini_set('memory_limit', '512M');
+        
+        // Optimize query - use withCount instead of eager loading all trips
         $customers = $this->customerService
-            ->index(criteria: $request?->all(), relations: ["customerTrips", "level"], orderBy: ['created_at' => 'desc'], limit: paginationLimit(), offset: $request['page']??1);
+            ->index(criteria: $request?->all(), relations: ["level"], withCountQuery:['customerTrips' => []], orderBy: ['created_at' => 'desc'], limit: paginationLimit(), offset: $request['page']??1);
         $levels = $this->customerLevelService->getBy(criteria: ['user_type' => CUSTOMER], orderBy: ['created_at' => 'asc']);
         return view('usermanagement::admin.customer.index', compact('customers', 'levels'));
     }
@@ -180,7 +186,8 @@ class CustomerController extends BaseController
     public function export(Request $request): View|Factory|Response|StreamedResponse|string|Application
     {
         $this->authorize('user_export');
-        $data = $this->customerService->export($request->all(), relations: ['level'],orderBy : ['created_at' => 'desc']);
+        // Optimize export by using withCount instead of loading all trips
+        $data = $this->customerService->export($request->all(), relations: ['level'], orderBy: ['created_at' => 'desc'], withCountQuery: ['customerTrips' => []]);
         return exportData($data, $request['file'], 'usermanagement::admin.customer.print');
     }
 

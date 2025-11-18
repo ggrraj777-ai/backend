@@ -1,23 +1,36 @@
-# Use PHP 8.2 with Apache
-FROM php:8.2-apache
+# Use PHP 8.3 with Apache
+FROM php:8.3-apache
 
 # Set environment variables
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 ENV PORT=8080
+ENV DEBIAN_FRONTEND=noninteractive
+ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV COMPOSER_NO_INTERACTION=1
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    build-essential \
     git \
     curl \
     libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
     libonig-dev \
     libxml2-dev \
     zip \
     unzip \
     libzip-dev \
-    libicu-dev \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip intl \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    ca-certificates \
+    libicu-dev
+
+# Build PHP extensions
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
+    docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip intl
+
+# Update certificates (optional - PHP base image usually has this configured)
+RUN update-ca-certificates 2>/dev/null || true
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -29,29 +42,37 @@ WORKDIR /var/www/html
 COPY composer.json composer.lock ./
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+RUN composer install \
+    --no-dev \
+    --optimize-autoloader \
+    --no-interaction \
+    --no-scripts \
+    --prefer-dist \
+    --no-progress \
+    --ignore-platform-reqs
 
 # Copy application files
 COPY . /var/www/html
 
-# Create .env file from .env.example
-RUN cp .env.example .env || echo "APP_NAME=DriveMond" > .env
+# Remove any existing .env to avoid invalid configuration being baked into the image
+RUN rm -f /var/www/html/.env
 
-# Set APP_URL in .env for proper asset URLs
-RUN sed -i 's|APP_URL=.*|APP_URL=https://gauva-798219755346.europe-west1.run.app|g' .env || true
+# Create minimal .env file (will be overridden by environment variables at runtime)
+RUN printf 'APP_ENV=production\nAPP_DEBUG=false\nLOG_CHANNEL=stderr\n' > /var/www/html/.env
 
-# Run composer scripts
-RUN composer dump-autoload --optimize
+# Optimize autoloader
+RUN composer dump-autoload --optimize --no-scripts
 
-# Install Node.js (required for asset compilation)
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs
-
-# Install Node dependencies and build assets
-RUN if [ -f "package.json" ]; then \
-    npm install && \
-    npm run prod; \
-    fi
+# Install Node.js and build assets, then cleanup
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs && \
+    if [ -f "package.json" ]; then \
+        npm ci --legacy-peer-deps --no-audit --production=false && \
+        npm run prod 2>/dev/null || npm run build 2>/dev/null || true; \
+    fi && \
+    apt-get purge -y --auto-remove nodejs build-essential && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /root/.npm
 
 # Ensure public directory has correct permissions
 RUN chmod -R 755 /var/www/html/public
@@ -61,9 +82,8 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/storage \
     && chmod -R 775 /var/www/html/bootstrap/cache
 
-# Configure Apache for port 8080
-RUN sed -i 's/80/8080/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf \
-    && sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf \
+# Configure Apache (port will be set dynamically at runtime)
+RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf \
     && echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Enable Apache modules
@@ -84,52 +104,47 @@ RUN echo '<Directory /var/www/html/public>\n\
 # Expose port 8080
 EXPOSE 8080
 
-# Create startup script inline
+# Create production startup script
 RUN echo '#!/bin/bash\n\
 set -e\n\
-echo "Starting DriveMond on port 8080..."\n\
+export PORT=${PORT:-8080}\n\
 \n\
-# Ensure .env file exists\n\
+# Configure Apache for dynamic port\n\
+echo "Listen $PORT" > /etc/apache2/ports.conf\n\
+sed -i "s/<VirtualHost.*>/<VirtualHost *:$PORT>/g" /etc/apache2/sites-available/000-default.conf\n\
+\n\
+# Ensure .env exists\n\
 if [ ! -f /var/www/html/.env ]; then\n\
-    echo "Creating .env file..."\n\
-    cp /var/www/html/.env.example /var/www/html/.env || echo "APP_NAME=DriveMond" > /var/www/html/.env\n\
+    [ -f /var/www/html/.env.example ] && cp /var/www/html/.env.example /var/www/html/.env || \
+    printf "APP_ENV=production\nAPP_DEBUG=false\nLOG_CHANNEL=stderr\n" > /var/www/html/.env\n\
 fi\n\
 \n\
 # Set permissions\n\
-chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/.env\n\
-chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache\n\
-chmod 644 /var/www/html/.env\n\
+chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/.env 2>/dev/null || true\n\
+chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache 2>/dev/null || true\n\
+chmod 644 /var/www/html/.env 2>/dev/null || true\n\
 \n\
-# Generate APP_KEY if not set\n\
-if ! grep -q "APP_KEY=base64:" /var/www/html/.env; then\n\
-    echo "Generating new APP_KEY..."\n\
-    php artisan key:generate --force --no-interaction\n\
+# Generate APP_KEY if needed\n\
+if ! grep -q "APP_KEY=base64:" /var/www/html/.env 2>/dev/null; then\n\
+    php artisan key:generate --force --no-interaction 2>/dev/null || true\n\
 fi\n\
 \n\
-# Clear all caches\n\
-php artisan config:clear || true\n\
-php artisan cache:clear || true\n\
-php artisan route:clear || true\n\
-php artisan view:clear || true\n\
+# Optimize Laravel for production\n\
+php artisan config:clear 2>/dev/null || true\n\
+php artisan cache:clear 2>/dev/null || true\n\
+php artisan route:clear 2>/dev/null || true\n\
+php artisan view:clear 2>/dev/null || true\n\
+php artisan storage:link 2>/dev/null || true\n\
 \n\
-# Create storage link\n\
-php artisan storage:link || true\n\
-\n\
-# Optimize for production\n\
 if [ "$APP_ENV" = "production" ]; then\n\
-    php artisan config:cache || true\n\
-    php artisan route:cache || true\n\
-    php artisan view:cache || true\n\
+    php artisan config:cache 2>/dev/null || true\n\
+    php artisan route:cache 2>/dev/null || true\n\
+    php artisan view:cache 2>/dev/null || true\n\
 fi\n\
 \n\
-echo "Application ready on port 8080"\n\
-echo "APP_ENV: $APP_ENV"\n\
-echo "APP_DEBUG: $APP_DEBUG"\n\
-echo "Checking Apache..."\n\
-apache2ctl -t || echo "Apache config test failed but continuing..."\n\
+php artisan package:discover --ansi 2>/dev/null || true\n\
 \n\
-exec apache2-foreground' > /usr/local/bin/start.sh \
-    && chmod +x /usr/local/bin/start.sh
+exec apache2-foreground' > /usr/local/bin/start.sh && chmod +x /usr/local/bin/start.sh
 
 # Start Apache
 CMD ["/usr/local/bin/start.sh"]

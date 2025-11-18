@@ -9,7 +9,7 @@
                 <div class="parcel-tracking-left">
                     <div class="product-media mb-20">
                         <div class="img">
-                            <img src="{{ asset('public/assets/admin-module/img/parcel-box.png') }}" alt="">
+                            <img src="{{ asset('assets/admin-module/img/parcel-box.png') }}" alt="">
                             <div class="fs-14">{{translate("Parcel")}}</div>
                         </div>
                         <div class="w-0 flex-grow-1">
@@ -25,14 +25,14 @@
                     <div class="fs-14 text--base fw-semibold mb-2">{{translate("Trip Details")}}</div>
                     <ul class="trip-details-address mb-20">
                         <li>
-                            <img width="18" src="{{asset('public/assets/admin-module/img/svg/gps.svg')}}" class="svg"
+                            <img width="18" src="{{asset('assets/admin-module/img/svg/gps.svg')}}" class="svg"
                                  alt="">
                             <span class="w-0 flex-grow-1">
                                 {{$trip->coordinate->pickup_address}}
                             </span>
                         </li>
                         <li>
-                            <img width="18" src="{{asset('public/assets/admin-module/img/svg/map-nav.svg')}}"
+                            <img width="18" src="{{asset('assets/admin-module/img/svg/map-nav.svg')}}"
                                  class="svg" alt="">
                             <span class="w-0 flex-grow-1">
                                 {{$trip->coordinate->destination_address}}
@@ -244,3 +244,4 @@
     </section>
 
 @endsection
+

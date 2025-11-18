@@ -4,9 +4,9 @@
 
 @push('css_or_js')
     @php($map_key = businessConfig(GOOGLE_MAP_API)?->value['map_api_key'] ?? null)
-    <link rel="stylesheet" href="{{asset('public/assets/admin-module/plugins/daterangepicker/daterangepicker.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/admin-module/plugins/daterangepicker/daterangepicker.css')}}">
     <script src="https://maps.googleapis.com/maps/api/js?key={{$map_key}}&libraries=places"></script>
-    <script src="{{asset('public/assets/admin-module/js/maps/markerclusterer.js')}}"></script>
+    <script src="{{asset('assets/admin-module/js/maps/markerclusterer.js')}}"></script>
 @endpush
 
 @section('content')
@@ -104,7 +104,7 @@
                                 @empty
                                     <div class="card gap-3 p-4 mt-3">
                                         <div class="d-flex justify-content-center"><img
-                                                src="{{asset("public/assets/admin-module/img/zone_empty.png")}}"
+                                                src="{{asset("assets/admin-module/img/zone_empty.png")}}"
                                                 alt=""></div>
                                         <div
                                             class="text-capitalize d-flex justify-content-center">{{translate("no_result_found")}}</div>
@@ -126,10 +126,10 @@
 @push('script')
 
     <script type="text/javascript"
-            src="{{asset('public/assets/admin-module/plugins/daterangepicker/moment.min.js')}}"></script>
-    <script src="{{asset('public/assets/admin-module/plugins/daterangepicker/daterangepicker.min.js')}}"></script>
-    <script src="{{asset('public/assets/admin-module/js/date-range-picker.js')}}"></script>
-    <script src="{{asset('public/assets/admin-module/js/maps/map-init-overview.js')}}"></script>
+            src="{{asset('assets/admin-module/plugins/daterangepicker/moment.min.js')}}"></script>
+    <script src="{{asset('assets/admin-module/plugins/daterangepicker/daterangepicker.min.js')}}"></script>
+    <script src="{{asset('assets/admin-module/js/date-range-picker.js')}}"></script>
+    <script src="{{asset('assets/admin-module/js/maps/map-init-overview.js')}}"></script>
 
     <script>
 
@@ -211,7 +211,7 @@
                 },
                 success: function (response) {
                     $('#overviewMap').empty().html(response);
-                    $.getScript('{{ asset('public/assets/admin-module/js/maps/map-init-overview.js') }}');
+                    $.getScript('{{ asset('assets/admin-module/js/maps/map-init-overview.js') }}');
                 },
                 complete: function () {
                     $('#resource-loader').hide();
@@ -228,3 +228,4 @@
     </script>
 
 @endpush
+

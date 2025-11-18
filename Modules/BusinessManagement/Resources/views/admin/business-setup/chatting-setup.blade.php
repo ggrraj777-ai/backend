@@ -35,7 +35,7 @@
                                            name="driver_question_answer_status"
                                            data-name="driver_question_answer_status" data-type="{{ CHATTING_SETTINGS }}"
                                            data-url="{{ route('admin.business.setup.update-business-setting') }}"
-                                           data-icon="{{ ($settings->firstWhere('key_name', 'driver_question_answer_status')->value ?? 0) == 1 ? asset('public/assets/admin-module/img/question-answer-off.png') : asset('public/assets/admin-module/img/question-answer-on.png') }}"
+                                           data-icon="{{ ($settings->firstWhere('key_name', 'driver_question_answer_status')->value ?? 0) == 1 ? asset('assets/admin-module/img/question-answer-off.png') : asset('assets/admin-module/img/question-answer-on.png') }}"
                                            data-title="{{ translate('Are you sure') }}?"
                                            data-sub-title="{{ ($settings->firstWhere('key_name', 'driver_question_answer_status')->value ?? 0) == 1 ? translate('Do you want to turn OFF predefined Q & A for the driver') . '? ' . translate('When it’s off the Driver will not be able to see any predefined Q & A.') : translate('Do you want to turn ON predefined Q & A for the driver') . '? ' . translate('When it’s on the Driver will be able to see any predefined Q & A.') }}"
                                            data-confirm-btn="{{ ($settings->firstWhere('key_name', 'driver_question_answer_status')->value ?? 0) == 1 ? translate('Turn Off') : translate('Turn On') }}"
@@ -188,7 +188,7 @@
                                                         <div
                                                             class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
                                                             <img
-                                                                src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}"
+                                                                src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}"
                                                                 alt="" width="100">
                                                             <p class="text-center">{{translate('no_data_available')}}</p>
                                                         </div>
@@ -379,7 +379,7 @@
                                                     <div
                                                         class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
                                                         <img
-                                                            src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}"
+                                                            src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}"
                                                             alt="" width="100">
                                                         <p class="text-center">{{translate('no_data_available')}}</p>
                                                     </div>
@@ -503,3 +503,4 @@
         });
     </script>
 @endpush
+

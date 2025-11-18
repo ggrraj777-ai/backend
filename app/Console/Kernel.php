@@ -16,6 +16,17 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('trip-request:cancel')->everyMinute();
+        
+        // Process daily fee deductions at 11:59 PM every day
+        $schedule->command('driver:process-daily-fees')
+            ->dailyAt('23:59')
+            ->timezone('Asia/Kolkata')
+            ->onSuccess(function () {
+                \Log::info('Daily fee processing completed successfully');
+            })
+            ->onFailure(function () {
+                \Log::error('Daily fee processing failed');
+            });
     }
 
     /**

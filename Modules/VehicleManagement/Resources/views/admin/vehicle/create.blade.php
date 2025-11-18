@@ -193,7 +193,7 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('public/assets/admin-module/js/vehicle-management/vehicle/create.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/vehicle-management/vehicle/create.js') }}"></script>
     <script>
         "use strict";
 
@@ -307,3 +307,4 @@
         })
     </script>
 @endpush
+

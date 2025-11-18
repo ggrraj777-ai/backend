@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 use Modules\BusinessManagement\Http\Controllers\Web\Admin\Configuration\PaymentConfigController;
@@ -28,11 +17,31 @@ use Modules\Gateways\Http\Controllers\RazorPayController;
 use Modules\Gateways\Http\Controllers\SenangPayController;
 use Modules\Gateways\Http\Controllers\SslCommerzPaymentController;
 use Modules\Gateways\Http\Controllers\StripePaymentController;
+use Modules\Gateways\Http\Controllers\Web\Admin\RazorpaySettlementController;
 
 /*
-
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
 */
 
+// Admin routes
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
+    
+    // Razorpay Settlement Management
+    Route::group(['prefix' => 'razorpay', 'as' => 'razorpay.'], function () {
+        Route::controller(RazorpaySettlementController::class)->group(function () {
+            Route::get('settlements', 'index')->name('settlements');
+            Route::get('driver-accounts', 'driverAccounts')->name('driver-accounts');
+            Route::get('driver-account/{driverId}', 'driverAccount')->name('driver-account');
+        });
+    });
+});
 
 Route::group(['prefix' => 'payment'], function () {
 

@@ -91,7 +91,7 @@
                                                    accept=".jpg, .jpeg, .png, .webp">
                                             <span class="edit-btn show">
                                                 <img
-                                                    src="{{ asset('public/assets/admin-module/img/svg/edit-circle.svg') }}"
+                                                    src="{{ asset('assets/admin-module/img/svg/edit-circle.svg') }}"
                                                     alt="" class="svg">
                                             </span>
                                             <div
@@ -101,7 +101,7 @@
                                                      src="{{ onErrorImage(
                                                     $driver?->profile_image,
                                                     asset('storage/app/public/driver/profile') . '/' . $driver?->profile_image,
-                                                    asset('public/assets/admin-module/img/avatar/avatar.png'),
+                                                    asset('assets/admin-module/img/avatar/avatar.png'),
                                                     'driver/profile/',
                                                 ) }}"
                                                      alt="">
@@ -126,7 +126,7 @@
                                                             <img src="{{ onErrorImage(
                                                                 $img,
                                                                 asset('storage/app/public/driver/identity') . '/' . $img,
-                                                                asset('public/assets/admin-module/img/media/banner-upload-file.png'),
+                                                                asset('assets/admin-module/img/media/banner-upload-file.png'),
                                                                 'driver/identity/',
                                                             ) }}"
                                                                  class="rounded-circle dark-support"
@@ -211,7 +211,7 @@
                                             <div class="file__value--remove fw-bold"
                                                  data-id="{{$document}}">
                                                 <img
-                                                    src="{{ asset('public/assets/admin-module/img/icons/close-circle.svg') }}"
+                                                    src="{{ asset('assets/admin-module/img/icons/close-circle.svg') }}"
                                                     alt="">
                                             </div>
                                             <input type="hidden" name="existing_documents[]"
@@ -252,14 +252,15 @@
 @endsection
 
 @push('script')
-    <link href="{{ asset('public/assets/admin-module/css/intlTelInput.min.css') }}" rel="stylesheet"/>
-    <script src="{{ asset('public/assets/admin-module/js/intlTelInput.min.js') }}"></script>
-    <script src="{{ asset('public/assets/admin-module/js/spartan-multi-image-picker.js') }}"></script>
-    <script src="{{ asset('public/assets/admin-module/js/password.js') }}"></script>
-    <script src="{{ asset('public/assets/admin-module/js/upload-files-create.js') }}"></script>
+    <link href="{{ asset('assets/admin-module/css/intlTelInput.min.css') }}" rel="stylesheet"/>
+    <script src="{{ asset('assets/admin-module/js/intlTelInput.min.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/spartan-multi-image-picker.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/password.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/upload-files-create.js') }}"></script>
 
     <script>
         "use strict";
         initializePhoneInput("#phone_number", "#phone_number-hidden-element");
     </script>
 @endpush
+

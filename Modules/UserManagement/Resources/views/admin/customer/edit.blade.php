@@ -87,7 +87,7 @@
                                                    accept=".jpg, .jpeg, .png, .webp">
                                             <span class="edit-btn show">
                                                 <img
-                                                    src="{{ asset('public/assets/admin-module/img/svg/edit-circle.svg') }}"
+                                                    src="{{ asset('assets/admin-module/img/svg/edit-circle.svg') }}"
                                                     alt="" class="svg">
                                             </span>
                                             <div
@@ -97,7 +97,7 @@
                                                      src="{{ onErrorImage(
                                                         $customer?->profile_image,
                                                         asset('storage/app/public/customer/profile') . '/' . $customer?->profile_image,
-                                                        asset('public/assets/admin-module/img/avatar/avatar.png'),
+                                                        asset('assets/admin-module/img/avatar/avatar.png'),
                                                         'customer/profile/',
                                                     ) }}"
                                                      alt="">
@@ -126,7 +126,7 @@
                                                     src="{{ onErrorImage(
                                                                                 $img,
                                                                                 asset('storage/app/public/customer/identity') . '/' . $img,
-                                                                                asset('public/assets/admin-module/img/media/banner-upload-file.png'),
+                                                                                asset('assets/admin-module/img/media/banner-upload-file.png'),
                                                                                 'customer/identity/',
                                                                             )  }}"
                                                     class="existing_image"
@@ -203,7 +203,7 @@
                                             <div class="file__value--remove fw-bold"
                                                  data-id="{{$document}}">
                                                 <img
-                                                    src="{{ asset('public/assets/admin-module/img/icons/close-circle.svg') }}"
+                                                    src="{{ asset('assets/admin-module/img/icons/close-circle.svg') }}"
                                                     alt="">
                                             </div>
                                             <input type="hidden" name="existing_documents[]"
@@ -244,11 +244,11 @@
 @endsection
 
 @push('script')
-    <link href="{{ asset('public/assets/admin-module/css/intlTelInput.min.css') }}" rel="stylesheet"/>
-    <script src="{{ asset('public/assets/admin-module/js/intlTelInput.min.js') }}"></script>
-    <script src="{{ asset('public/assets/admin-module/js/spartan-multi-image-picker.js') }}"></script>
-    <script src="{{ asset('public/assets/admin-module/js/password.js') }}"></script>
-    <script src="{{ asset('public/assets/admin-module/js/upload-files-edit.js') }}"></script>
+    <link href="{{ asset('assets/admin-module/css/intlTelInput.min.css') }}" rel="stylesheet"/>
+    <script src="{{ asset('assets/admin-module/js/intlTelInput.min.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/spartan-multi-image-picker.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/password.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/upload-files-edit.js') }}"></script>
 
     <script>
         "use strict";
@@ -260,3 +260,4 @@
         })
     </script>
 @endpush
+

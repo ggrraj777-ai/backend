@@ -325,6 +325,10 @@ class BusinessSettingService extends BaseService implements BusinessSettingServi
             if (!array_key_exists('trip_push_notification', $data)) {
                 $data['trip_push_notification'] = 0;
             }
+            // Handle nighttime fare checkbox
+            if (!array_key_exists('nighttime_fare_status', $data)) {
+                $data['nighttime_fare_status'] = 0;
+            }
         }
         foreach ($data as $key => $value) {
             $driverSetting = $this->businessSettingRepository

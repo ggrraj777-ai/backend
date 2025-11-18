@@ -35,7 +35,7 @@
                                             <div class="d-flex align-items-baseline gap-2">
                                                 <h5>
                                                     <img
-                                                        src="{{ asset('public/assets/admin-module/img/svg/notification.svg') }}"
+                                                        src="{{ asset('assets/admin-module/img/svg/notification.svg') }}"
                                                         alt="" class="svg">
                                                 </h5>
                                                 <div>
@@ -110,7 +110,7 @@
                             <div class="card-header b-dark">
                                 <div class="d-flex align-items-baseline gap-2">
                                     <h5>
-                                        <img src="{{ asset('public/assets/admin-module/img/svg/briefcase.svg') }}"
+                                        <img src="{{ asset('assets/admin-module/img/svg/briefcase.svg') }}"
                                              alt="" class="svg">
                                     </h5>
                                     <div>
@@ -225,7 +225,7 @@
                             <div class="card-header b-dark">
                                 <div class="d-flex align-items-baseline gap-2">
                                     <h5>
-                                        <img src="{{ asset('public/assets/admin-module/img/svg/briefcase.svg') }}"
+                                        <img src="{{ asset('assets/admin-module/img/svg/briefcase.svg') }}"
                                              alt="" class="svg">
                                     </h5>
                                     <div>
@@ -430,7 +430,7 @@
                             <div class="card-header b-dark">
                                 <div class="d-flex align-items-baseline gap-2">
                                     <h5>
-                                        <img src="{{ asset('public/assets/admin-module/img/svg/palette.svg') }}"
+                                        <img src="{{ asset('assets/admin-module/img/svg/palette.svg') }}"
                                              alt="" class="svg">
                                     </h5>
                                     <div>
@@ -535,7 +535,7 @@
                             <div class="card-header b-dark">
                                 <div class="d-flex align-items-baseline gap-2">
                                     <h5>
-                                        <img src="{{ asset('public/assets/admin-module/img/svg/grid.svg') }}"
+                                        <img src="{{ asset('assets/admin-module/img/svg/grid.svg') }}"
                                              alt="" class="svg">
                                     </h5>
                                     <div>
@@ -570,7 +570,7 @@
                                                             <span
                                                                 class="edit-btn {{ $settings?->firstWhere('key_name', 'header_logo')?->value ? 'show' : '' }}">
                                                                 <img
-                                                                    src="{{ asset('public/assets/admin-module/img/svg/edit-circle.svg') }}"
+                                                                    src="{{ asset('assets/admin-module/img/svg/edit-circle.svg') }}"
                                                                     alt="" class="svg">
                                                             </span>
                                                             <div
@@ -580,7 +580,7 @@
                                                                          src="{{ onErrorImage(
                                                         $settings?->firstWhere('key_name', 'header_logo')?->value,
                                                         asset('storage/app/public/business') . '/' . $settings?->firstWhere('key_name', 'header_logo')?->value,
-                                                        asset('public/assets/admin-module/img/svg/document-upload.svg'),
+                                                        asset('assets/admin-module/img/svg/document-upload.svg'),
                                                         'business/',
                                                     ) }}"
                                                                          alt="" class="svg">
@@ -624,7 +624,7 @@
                                                             <span
                                                                 class="edit-btn {{ $settings?->firstWhere('key_name', 'footer_logo')?->value ? 'show' : '' }}">
                                                                 <img
-                                                                    src="{{ asset('public/assets/admin-module/img/svg/edit-circle.svg') }}"
+                                                                    src="{{ asset('assets/admin-module/img/svg/edit-circle.svg') }}"
                                                                     alt="" class="svg">
                                                             </span>
 
@@ -635,7 +635,7 @@
                                                                          src="{{ onErrorImage(
                                                         $settings?->firstWhere('key_name', 'footer_logo')?->value,
                                                         asset('storage/app/public/business') . '/' . $settings?->firstWhere('key_name', 'footer_logo')?->value,
-                                                        asset('public/assets/admin-module/img/svg/document-upload.svg'),
+                                                        asset('assets/admin-module/img/svg/document-upload.svg'),
                                                         'business/',
                                                     ) }}"
                                                                          alt="" class="svg">
@@ -679,7 +679,7 @@
                                                             <span
                                                                 class="edit-btn {{ $settings?->firstWhere('key_name', 'favicon')?->value ? 'show' : '' }}">
                                                                 <img
-                                                                    src="{{ asset('public/assets/admin-module/img/svg/edit-circle.svg') }}"
+                                                                    src="{{ asset('assets/admin-module/img/svg/edit-circle.svg') }}"
                                                                     alt="" class="svg">
                                                             </span>
                                                             <div
@@ -689,7 +689,7 @@
                                                                          src="{{ onErrorImage(
                                                         $settings?->firstWhere('key_name', 'favicon')?->value,
                                                         asset('storage/app/public/business') . '/' . $settings?->firstWhere('key_name', 'favicon')?->value,
-                                                        asset('public/assets/admin-module/img/svg/document-upload.svg'),
+                                                        asset('assets/admin-module/img/svg/document-upload.svg'),
                                                         'business/',
                                                     ) }}"
                                                                          alt="" class="svg">
@@ -732,7 +732,7 @@
                                                             <span
                                                                 class="edit-btn {{ $settings?->firstWhere('key_name', 'preloader')?->value ? 'show' : '' }}">
                                                                 <img
-                                                                    src="{{ asset('public/assets/admin-module/img/svg/edit-circle.svg') }}"
+                                                                    src="{{ asset('assets/admin-module/img/svg/edit-circle.svg') }}"
                                                                     alt="" class="svg">
                                                             </span>
                                                             <div
@@ -742,7 +742,7 @@
                                                                          src="{{ onErrorImage(
                                                         $settings?->firstWhere('key_name', 'preloader')?->value,
                                                         asset('storage/app/public/business') . '/' . $settings?->firstWhere('key_name', 'preloader')?->value,
-                                                        asset('public/assets/admin-module/img/svg/document-upload.svg'),
+                                                        asset('assets/admin-module/img/svg/document-upload.svg'),
                                                         'business/',
                                                     ) }}"
                                                                          alt="" class="svg">
@@ -797,7 +797,7 @@
                                                     src="{{ onErrorImage(
                                                         $settings?->firstWhere('key_name', 'footer_logo')?->value,
                                                         asset('storage/app/public/business') . '/' . $settings?->firstWhere('key_name', 'footer_logo')?->value,
-                                                        asset('public/assets/admin-module/img/media/banner-upload-file.png'),
+                                                        asset('assets/admin-module/img/media/banner-upload-file.png'),
                                                         'business/',
                                                     ) }}"
                                                     alt="">
@@ -837,7 +837,7 @@
                                                     src="{{ onErrorImage(
                                                         $settings?->firstWhere('key_name', 'favicon')?->value,
                                                         asset('storage/app/public/business') . '/' . $settings?->firstWhere('key_name', 'favicon')?->value,
-                                                        asset('public/assets/admin-module/img/media/upload-file.png'),
+                                                        asset('assets/admin-module/img/media/upload-file.png'),
                                                         'business/',
                                                     ) }}"
                                                     alt="">
@@ -877,7 +877,7 @@
                                                     src="{{ onErrorImage(
                                                         $settings?->firstWhere('key_name', 'preloader')?->value,
                                                         asset('storage/app/public/business') . '/' . $settings?->firstWhere('key_name', 'preloader')?->value,
-                                                        asset('public/assets/admin-module/img/media/upload-file.png'),
+                                                        asset('assets/admin-module/img/media/upload-file.png'),
                                                         'business/',
                                                     ) }}"
                                                     alt="">
@@ -1152,7 +1152,7 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('public/assets/admin-module/js/business-management/business-setup/index.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/business-management/business-setup/index.js') }}"></script>
 
     <script>
         "use strict";
@@ -1354,3 +1354,4 @@
         });
     </script>
 @endpush
+

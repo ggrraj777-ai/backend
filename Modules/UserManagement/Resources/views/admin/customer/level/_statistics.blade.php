@@ -12,7 +12,7 @@
                     <img src="{{ onErrorImage(
                         $level?->image,
                         asset('storage/app/public/customer/level') . '/' . $level?->image,
-                        asset('public/assets/admin-module/img/media/level5.png'),
+                        asset('assets/admin-module/img/media/level5.png'),
                         'customer/level/',
                     ) }}" class="dark-support mb-3 custom-box-size" alt="" style="--size: 48px">
                 </div>
@@ -27,3 +27,4 @@
         </div>
     </div>
 @endif
+

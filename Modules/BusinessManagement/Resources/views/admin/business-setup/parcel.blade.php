@@ -31,7 +31,7 @@
                                        id="parcelTrackingStatus" type="checkbox" name="parcel_tracking_status"
                                        data-name="parcel_tracking_status" data-type="{{ PARCEL_SETTINGS }}"
                                        data-url="{{ route('admin.business.setup.update-business-setting') }}"
-                                       data-icon=" {{ asset('public/assets/admin-module/img/parcel_tracking.png') }}"
+                                       data-icon=" {{ asset('assets/admin-module/img/parcel_tracking.png') }}"
                                        data-title="{{ translate('Are you sure?') }}"
                                        data-sub-title="{{ ($settings->firstWhere('key_name', 'parcel_tracking_status')->value ?? 0) == 1 ? translate('Do you want to turn OFF Parcel Tracking Link for customer? When it’s off the customer don’t received any parcel tracking link message.') : translate('Do you want to turn ON Parcel Tracking Link for customer? When turned ON, customers will receive a tracking link once the parcel is confirmed.') }}"
                                        data-confirm-btn="{{ ($settings->firstWhere('key_name', 'parcel_tracking_status')->value ?? 0) == 1 ? translate('Turn Off') : translate('Turn On') }}"
@@ -129,7 +129,7 @@
                                        name="parcel_return_time_fee_status"
                                        data-name="parcel_return_time_fee_status" data-type="{{ PARCEL_SETTINGS }}"
                                        data-url="{{ route('admin.business.setup.update-business-setting') }}"
-                                       data-icon=" {{ asset('public/assets/admin-module/img/parcel_return.png') }}"
+                                       data-icon=" {{ asset('assets/admin-module/img/parcel_return.png') }}"
                                        data-title="{{ translate('Are you sure?') }}"
                                        data-sub-title="{{ ($settings->firstWhere('key_name', 'parcel_return_time_fee_status')->value ?? 0) == 1 ? translate('Do you want to turn OFF Parcel Return Time & Fee for driver? When it’s off the driver don’t need to pay return fee for delay. ') : translate('Do you want to turn ON Parcel Return Time & Fee for driver? When it’s ON, the driver need to pay parcel return delay fee. ') }}"
                                        data-confirm-btn="{{ ($settings->firstWhere('key_name', 'parcel_return_time_fee_status')->value ?? 0) == 1 ? translate('Turn Off') : translate('Turn On') }}"
@@ -250,7 +250,7 @@
                                                name="max_parcel_weight_status"
                                                data-name="max_parcel_weight_status" data-type="{{ PARCEL_SETTINGS }}"
                                                data-url="{{ route('admin.business.setup.update-business-setting') }}"
-                                               data-icon=" {{ asset('public/assets/admin-module/img/parcel_return.png') }}"
+                                               data-icon=" {{ asset('assets/admin-module/img/parcel_return.png') }}"
                                                data-title="{{ translate('Are you sure?') }}"
                                                data-sub-title="{{ ($settings->firstWhere('key_name', 'max_parcel_weight_status')->value ?? 0) == 1 ? translate('If the toggle is turned OFF, Customer will not notify if their requested weight exceeds the capacity.') : translate('If the toggle is turned ON, Customer will notify if their requested weight exceeds the capacity.') }}"
                                                data-confirm-btn="{{ ($settings->firstWhere('key_name', 'max_parcel_weight_status')->value ?? 0) == 1 ? translate('Turn Off') : translate('Turn On') }}"
@@ -423,7 +423,7 @@
                                         <div
                                             class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
                                             <img
-                                                src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}"
+                                                src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}"
                                                 alt="" width="100">
                                             <p class="text-center">{{ translate('no_data_available') }}</p>
                                         </div>
@@ -531,3 +531,4 @@
         });
     </script>
 @endpush
+

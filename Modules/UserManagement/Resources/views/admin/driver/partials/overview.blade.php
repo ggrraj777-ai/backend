@@ -110,23 +110,47 @@
                         Attached Documents
                     </h5>
                     <div class="d-flex align-items-center gap-3 flex-wrap">
-                        @forelse($driver->other_documents ?? [] as $doc)
-                            <div class="mb-2">
-                                <a href="{{ asset('storage/app/public/driver/document/') }}/{{ $doc }}"
-                                   download="{{ $doc }}"
-                                   class="border border-C5D2D2 rounded p-3 d-flex align-items-center gap-3">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <img class="w-30px aspect-1"
-                                             src="{{ getExtensionIcon($doc) }}"
-                                             alt="">
-                                        <h6 class="fs-12">{{ $doc }}</h6>
+                        @php
+                            $hasDocuments = false;
+                            $otherDocs = $driver->other_documents ?? [];
+                            // Check if any documents exist
+                            if (is_array($otherDocs)) {
+                                foreach ($otherDocs as $doc) {
+                                    if (file_exists(storage_path('app/public/driver/document/' . $doc))) {
+                                        $hasDocuments = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        @endphp
+                        
+                        @if($hasDocuments)
+                            @foreach($otherDocs as $doc)
+                                @if(file_exists(storage_path('app/public/driver/document/' . $doc)))
+                                    <div class="mb-2">
+                                        <a href="{{ asset('storage/driver/document/' . $doc) }}"
+                                           download="{{ $doc }}"
+                                           class="border border-C5D2D2 rounded p-3 d-flex align-items-center gap-3">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <img class="w-30px aspect-1"
+                                                     src="{{ getExtensionIcon($doc) }}"
+                                                     alt="">
+                                                <h6 class="fs-12">{{ $doc }}</h6>
+                                            </div>
+                                            <i class="bi bi-arrow-down-circle-fill fs-20 text-primary"></i>
+                                        </a>
                                     </div>
-                                    <i class="bi bi-arrow-down-circle-fill fs-20 text-primary"></i>
+                                @endif
+                            @endforeach
+                        @else
+                            <p class="text-muted text-capitalize">
+                                <i class="bi bi-info-circle"></i> 
+                                {{ translate('no_documents_available') }}. 
+                                <a href="{{ route('admin.driver.documents.show', $driver->id) }}" class="text-primary">
+                                    View verified documents
                                 </a>
-                            </div>
-                        @empty
-                            <p class="text-capitalize">{{translate('no_documents_found')}}</p>
-                        @endforelse
+                            </p>
+                        @endif
                     </div>
                 </div>
             </div>

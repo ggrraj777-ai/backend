@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Validator;
 use Modules\Gateways\Entities\PaymentRequest;
 use Modules\Gateways\Traits\Processor;
 use Razorpay\Api\Api;
+use App\Services\RazorpayAutoSplitService;
+use Modules\FareManagement\Service\TieredFareCalculator;
 
 class RazorPayController extends Controller
 {
@@ -24,8 +26,13 @@ class RazorPayController extends Controller
 
     private PaymentRequest $payment;
     private User $user;
+    private RazorpayAutoSplitService $autoSplitService;
 
-    public function __construct(PaymentRequest $payment, User $user)
+    public function __construct(
+        PaymentRequest $payment, 
+        User $user,
+        RazorpayAutoSplitService $autoSplitService
+    )
     {
         $config = $this->paymentConfig('razor_pay', PAYMENT_CONFIG);
         $razor = null;
@@ -53,6 +60,7 @@ class RazorPayController extends Controller
 
         $this->payment = $payment;
         $this->user = $user;
+        $this->autoSplitService = $autoSplitService;
     }
 
     /**
@@ -105,6 +113,224 @@ class RazorPayController extends Controller
             'currency' => $order['currency'] ?? $currency,
             'key_id' => config('razor_config.api_key'),
         ]);
+    }
+
+    /**
+     * @OA\Post(
+     *   path="/api/v1/driver/payments/razorpay/generate-qr",
+     *   tags={"Payments"},
+     *   summary="Generate Razorpay QR code for driver fare collection",
+     *   security={{"sanctum":{}}},
+     *   @OA\RequestBody(
+     *     required=true,
+     *     @OA\JsonContent(required={"driver_id","amount","trip_id"},
+     *       @OA\Property(property="driver_id", type="integer"),
+     *       @OA\Property(property="trip_id", type="string"),
+     *       @OA\Property(property="amount", type="number", format="float", example=100.0),
+     *       @OA\Property(property="currency", type="string", example="INR"),
+     *       @OA\Property(property="description", type="string", example="Trip fare payment")
+     *     )
+     *   ),
+     *   @OA\Response(response=200, description="OK")
+     * )
+     */
+    public function generateDriverQRCode(Request $request): JsonResponse
+    {
+        $request->validate([
+            'driver_id' => 'required|integer',
+            'trip_id' => 'required|string',
+            'amount' => 'required|numeric',
+            'currency' => 'nullable|string',
+            'description' => 'nullable|string'
+        ]);
+
+        try {
+            // Check if Razorpay is configured
+            if (!config('razor_config.api_key') || !config('razor_config.api_secret')) {
+                return response()->json([
+                    'success' => false,
+                    'error' => 'Razorpay not configured',
+                    'message' => 'Please configure Razorpay credentials in admin panel'
+                ], 500);
+            }
+
+            $api = new Api(config('razor_config.api_key'), config('razor_config.api_secret'));
+            $currency = $request->input('currency', 'INR');
+            $amount = (int)round($request->amount * 100);
+            $receipt = 'DRV-QR-' . Str::ulid() . '-' . $request->driver_id;
+
+            // Create QR code for payment
+            $qrCode = $api->qrCode->create([
+                'type' => 'upi_qr',
+                'name' => 'Trip Fare #' . $request->trip_id,
+                'usage' => 'single_use',
+                'fixed_amount' => true,
+                'payment_amount' => $amount,
+                'description' => $request->input('description', 'Trip fare payment'),
+                'customer_id' => 'customer_' . $request->driver_id,
+                'close_by' => time() + (30 * 60), // Valid for 30 minutes
+                'notes' => [
+                    'driver_id' => (string)$request->driver_id,
+                    'trip_id' => $request->trip_id,
+                    'receipt' => $receipt
+                ]
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'qr_code_id' => $qrCode['id'] ?? null,
+                'qr_code_url' => $qrCode['image_url'] ?? null,
+                'qr_string' => $qrCode['qr_string'] ?? null,
+                'receipt' => $receipt,
+                'amount' => $amount / 100,
+                'currency' => $currency,
+                'expires_at' => date('Y-m-d H:i:s', time() + (30 * 60)),
+                'key_id' => config('razor_config.api_key'),
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('QR Code Generation Error: ' . $e->getMessage(), [
+                'driver_id' => $request->driver_id,
+                'trip_id' => $request->trip_id,
+                'amount' => $request->amount,
+            ]);
+            
+            return response()->json([
+                'success' => false,
+                'error' => $e->getMessage(),
+                'message' => 'Failed to generate QR code. Please check Razorpay configuration.'
+            ], 500);
+        }
+    }
+
+    /**
+     * @OA\Get(
+     *   path="/api/v1/driver/payments/razorpay/qr-status/{qrCodeId}",
+     *   tags={"Payments"},
+     *   summary="Check Razorpay QR code payment status",
+     *   security={{"sanctum":{}}},
+     *   @OA\Parameter(
+     *     name="qrCodeId",
+     *     in="path",
+     *     required=true,
+     *     @OA\Schema(type="string")
+     *   ),
+     *   @OA\Response(response=200, description="OK")
+     * )
+     */
+    public function checkQRCodeStatus(Request $request, string $qrCodeId): JsonResponse
+    {
+        try {
+            $api = new Api(config('razor_config.api_key'), config('razor_config.api_secret'));
+            $qrCode = $api->qrCode->fetch($qrCodeId);
+
+            $payments = $qrCode['payments'] ?? [];
+            $isPaid = !empty($payments);
+            $paymentDetails = null;
+
+            if ($isPaid && isset($payments[0])) {
+                $paymentId = $payments[0]['id'] ?? null;
+                if ($paymentId) {
+                    $payment = $api->payment->fetch($paymentId);
+                    $paymentDetails = [
+                        'payment_id' => $payment['id'] ?? null,
+                        'amount' => ($payment['amount'] ?? 0) / 100,
+                        'currency' => $payment['currency'] ?? 'INR',
+                        'status' => $payment['status'] ?? 'unknown',
+                        'method' => $payment['method'] ?? 'unknown',
+                        'created_at' => isset($payment['created_at']) ? date('Y-m-d H:i:s', $payment['created_at']) : null,
+                    ];
+                }
+            }
+
+            return response()->json([
+                'success' => true,
+                'qr_code_id' => $qrCode['id'] ?? null,
+                'status' => $qrCode['status'] ?? 'unknown',
+                'is_paid' => $isPaid,
+                'payment_details' => $paymentDetails,
+                'payments_received_count' => count($payments),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error' => $e->getMessage(),
+                'message' => 'Failed to fetch QR code status'
+            ], 500);
+        }
+    }
+
+    /**
+     * @OA\Post(
+     *   path="/api/v1/customer/payments/razorpay/create-order-with-split",
+     *   tags={"Payments"},
+     *   summary="Create Razorpay order with auto-split to driver",
+     *   security={{"sanctum":{}}},
+     *   @OA\RequestBody(
+     *     required=true,
+     *     @OA\JsonContent(
+     *       required={"trip_id","amount"},
+     *       @OA\Property(property="trip_id", type="string"),
+     *       @OA\Property(property="amount", type="number"),
+     *       @OA\Property(property="driver_share", type="number"),
+     *       @OA\Property(property="platform_share", type="number")
+     *     )
+     *   ),
+     *   @OA\Response(response=200, description="OK")
+     * )
+     */
+    public function createOrderWithAutoSplit(Request $request): JsonResponse
+    {
+        $request->validate([
+            'trip_id' => 'required|string',
+            'amount' => 'required|numeric',
+            'driver_share' => 'required|numeric',
+            'platform_share' => 'required|numeric',
+        ]);
+
+        $trip = \DB::table('trip_requests')->where('id', $request->trip_id)->first();
+        
+        if (!$trip) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Trip not found'
+            ], 404);
+        }
+
+        // Check if driver has linked Razorpay account
+        if (!$this->autoSplitService->hasLinkedAccount($trip->driver_id)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Driver has not linked bank account. Auto-split not available.',
+                'fallback' => 'manual_settlement'
+            ], 400);
+        }
+
+        // Create order with auto-split
+        $result = $this->autoSplitService->createOrderWithAutoSplit(
+            tripId: $request->trip_id,
+            totalAmount: $request->amount,
+            driverShare: $request->driver_share,
+            platformShare: $request->platform_share,
+            driverId: $trip->driver_id
+        );
+
+        if ($result['success']) {
+            return response()->json([
+                'success' => true,
+                'order_id' => $result['order_id'],
+                'amount' => $result['amount'],
+                'currency' => $result['currency'],
+                'key_id' => $result['key_id'],
+                'driver_share' => $result['driver_share'],
+                'platform_share' => $result['platform_share'],
+                'auto_split_enabled' => true,
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => $result['message'],
+        ], 400);
     }
 
     /**

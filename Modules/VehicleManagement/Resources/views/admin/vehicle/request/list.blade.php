@@ -134,7 +134,7 @@
                                                 @if($vehicle->vehicle_request_status == PENDING)
                                                     <a
                                                         data-url="{{route('admin.vehicle.request.approved', [$vehicle->id])}}"
-                                                        data-icon="{{ asset('public/assets/admin-module/img/modal/mark.png') }}"
+                                                        data-icon="{{ asset('assets/admin-module/img/modal/mark.png') }}"
                                                         data-confirm-btn="{{translate("Approve")}}"
                                                         class="btn btn-outline-success btn-action d-flex justify-content-center align-items-center approval-button-vehicle-request"
                                                         data-bs-toggle="tooltip" title="{{translate("Approve")}}">
@@ -144,7 +144,7 @@
 
                                                     <a
                                                         data-url="{{route('admin.vehicle.request.denied', [$vehicle->id])}}"
-                                                        data-icon="{{ asset('public/assets/admin-module/img/modal/mark.png') }}"
+                                                        data-icon="{{ asset('assets/admin-module/img/modal/mark.png') }}"
                                                         data-confirm-btn="{{translate("Deny")}}"
                                                         class="btn btn-outline-danger btn-action d-flex justify-content-center align-items-center deny-button-vehicle-request"
                                                         data-bs-toggle="tooltip" title="{{translate("Deny")}}">
@@ -160,7 +160,7 @@
 
                                                     <a
                                                         data-url="{{route('admin.vehicle.permanent-delete', [$vehicle->id])}}"
-                                                        data-icon="{{ asset('public/assets/admin-module/img/trash.png') }}"
+                                                        data-icon="{{ asset('assets/admin-module/img/trash.png') }}"
                                                         data-title="{{ translate('Are you sure to delete this Request')."?" }}"
                                                         data-sub-title="{{ translate('Once you delete it') . ', ' . translate('This will permanently remove from the Vehicle Request list.') }}"
                                                         data-confirm-btn="{{translate("Yes Delete")}}"
@@ -179,7 +179,7 @@
                                 <tr>
                                     <td colspan="14">
                                         <div class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
-                                            <img src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}" alt="" width="100">
+                                            <img src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}" alt="" width="100">
                                             <p class="text-center">{{translate('no_data_available')}}</p>
                                         </div>
                                     </td>
@@ -201,3 +201,4 @@
 
 
 @endsection
+

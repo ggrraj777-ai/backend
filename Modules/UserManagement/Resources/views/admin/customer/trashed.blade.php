@@ -3,7 +3,7 @@
 @section('title', translate('deleted_customer_list'))
 
 @push('css_or_js')
-    <link rel="stylesheet" href="{{ asset('public/assets/admin-module/plugins/dataTables/jquery.dataTables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/admin-module/plugins/dataTables/jquery.dataTables.min.css') }}">
 @endpush
 @section('content')
 
@@ -69,7 +69,7 @@
                                                                          src="{{ onErrorImage(
                                                                             $customer?->profile_image,
                                                                             asset('storage/app/public/customer/profile') . '/' . $customer?->profile_image,
-                                                                            asset('public/assets/admin-module/img/avatar/avatar.png'),
+                                                                            asset('assets/admin-module/img/avatar/avatar.png'),
                                                                             'customer/profile/',
                                                                         ) }}" alt="">
                                                                 </div>
@@ -138,7 +138,7 @@
                                                     <tr>
                                                         <td colspan="14">
                                                             <div class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
-                                                                <img src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}" alt="" width="100">
+                                                                <img src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}" alt="" width="100">
                                                                 <p class="text-center">{{translate('no_data_available')}}</p>
                                                             </div>
                                                         </td>
@@ -165,3 +165,4 @@
     <!-- End Main Content -->
 
 @endsection
+

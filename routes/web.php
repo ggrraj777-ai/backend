@@ -70,3 +70,6 @@ Route::get('test', function () {
         'null');
     return true;
 });
+
+// Driver Access Rules Admin Panel
+require __DIR__.'/web_driver_access_admin.php';

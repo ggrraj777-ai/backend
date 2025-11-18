@@ -93,7 +93,7 @@
                                                 </span>
                                                 <div class="upload-file__img">
                                                     <img
-                                                        src="{{ $data?->value['reviewer_image'] ? asset('storage/app/public/business/landing-pages/testimonial/'.$data?->value['reviewer_image'])  :  asset('public/assets/admin-module/img/media/upload-file.png') }}"
+                                                        src="{{ $data?->value['reviewer_image'] ? asset('storage/app/public/business/landing-pages/testimonial/'.$data?->value['reviewer_image'])  :  asset('assets/admin-module/img/media/upload-file.png') }}"
                                                         alt="">
                                                 </div>
                                             </div> --}}
@@ -109,7 +109,7 @@
                                                         class="upload-file__img border-gray d-flex justify-content-center align-items-center w-150 h-150 aspect-1 p-0">
                                                         <img class="upload-file__img__img h-100 d-block"
                                                              loading="lazy" 
-                                                             src="{{ $data?->value['reviewer_image'] ? asset('storage/app/public/business/landing-pages/testimonial/'.$data?->value['reviewer_image'])  :  asset('public/assets/admin-module/img/media/upload-file.png') }}"
+                                                             src="{{ $data?->value['reviewer_image'] ? asset('storage/app/public/business/landing-pages/testimonial/'.$data?->value['reviewer_image'])  :  asset('assets/admin-module/img/media/upload-file.png') }}"
                                                              alt="" 
                                                             >
                                                     </div>
@@ -134,5 +134,6 @@
     </div>
     <!-- End Main Content -->
 @endsection
+
 
 

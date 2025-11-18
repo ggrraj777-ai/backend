@@ -4,7 +4,7 @@
         <!-- Logo -->
         <a href="{{route('admin.dashboard')}}" class="logo d-flex gap-2">
             <img width="115"
-                 src="{{$logo ? asset("storage/app/public/business/".$logo) : asset('public/assets/admin-module/img/logo.png')}}"
+                 src="{{$logo ? asset("storage/app/public/business/".$logo) : asset('assets/admin-module/img/logo.png')}}"
                  alt="" class="main-logo">
         </a>
         <!-- End Logo -->
@@ -27,7 +27,7 @@
                          src="{{ onErrorImage(
                         auth()->user()?->profile_image,
                         asset('storage/app/public/employee/profile') . '/' . auth()->user()->profile_image,
-                        asset('public/assets/admin-module/img/user.png'),
+                        asset('assets/admin-module/img/user.png'),
                         'employee/profile/',
                     ) }}" alt="">
                 </div>
@@ -321,6 +321,21 @@
                                     {{translate('driver_identity_request_list')}}
                                 </a>
                             </li>
+                            <li class="{{Request::is('admin/driver/documents*') ? 'active open' : ''}}">
+                                <a class="text-capitalize" href="{{route('admin.driver.documents.index')}}">
+                                    <i class="bi bi-dash-lg"></i>
+                                    {{translate('document_verification')}}
+                                    @php
+                                        $pendingDocs = DB::table('users')
+                                            ->where('user_type', 'driver')
+                                            ->where('document_verification_status', 'pending')
+                                            ->count();
+                                    @endphp
+                                    @if($pendingDocs > 0)
+                                        <span class="badge badge-danger badge-pill ml-2">{{$pendingDocs}}</span>
+                                    @endif
+                                </a>
+                            </li>
                         </ul>
                         <!-- End Sub Menu -->
                     </li>
@@ -405,6 +420,36 @@
                             <i class="bi bi-wallet-fill"></i>
                             <span class="link-title text-capitalize">{{translate('customer_wallet')}}</span>
                         </a>
+                    </li>
+
+                    <!-- Unified Wallet Management -->
+                    <li class="has-sub-item {{Request::is('admin/wallet*')? 'active sub-menu-opened' : ''}}">
+                        <a href="#">
+                            <i class="bi bi-wallet2"></i>
+                            <span class="link-title text-capitalize">{{translate('Wallet Management')}}</span>
+                        </a>
+                        <!-- Sub Menu -->
+                        <ul class="nav sub-menu">
+                            <li class="{{Request::is('admin/wallet') && request('user_type') == 'customer' ? 'active open' : ''}}">
+                                <a class="text-capitalize" href="{{route('admin.wallet.index', ['user_type' => 'customer'])}}">
+                                    <i class="bi bi-dash-lg"></i>
+                                    {{translate('Customer Wallets')}}
+                                </a>
+                            </li>
+                            <li class="{{Request::is('admin/wallet') && request('user_type') == 'driver' ? 'active open' : ''}}">
+                                <a class="text-capitalize" href="{{route('admin.wallet.index', ['user_type' => 'driver'])}}">
+                                    <i class="bi bi-dash-lg"></i>
+                                    {{translate('Driver Wallets')}}
+                                </a>
+                            </li>
+                            <li class="{{Request::is('admin/wallet/audit-log') ? 'active open' : ''}}">
+                                <a class="text-capitalize" href="{{route('admin.wallet.audit-log')}}">
+                                    <i class="bi bi-dash-lg"></i>
+                                    {{translate('Audit Log')}}
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- End Sub Menu -->
                     </li>
 
                     <li class="has-sub-item {{Request::is('admin/employee*')? 'active sub-menu-opened' : ''}}">
@@ -530,6 +575,30 @@
                         <a href="{{route('admin.fare.parcel.index')}}">
                             <i class="bi bi-box"></i>
                             <span class="link-title text-capitalize">{{translate('parcel_delivery_fare_setup')}}</span>
+                        </a>
+                    </li>
+                    <li class="{{Request::is('admin/platform/charges*')? 'active open' : ''}}">
+                        <a href="{{route('admin.platform.index')}}">
+                            <i class="bi bi-gear-fill"></i>
+                            <span class="link-title text-capitalize">{{translate('Platform Charges')}}</span>
+                        </a>
+                    </li>
+                    <li class="{{Request::is('admin/platform/statistics*')? 'active open' : ''}}">
+                        <a href="{{route('admin.platform.statistics')}}">
+                            <i class="bi bi-graph-up"></i>
+                            <span class="link-title text-capitalize">{{translate('Platform Statistics')}}</span>
+                        </a>
+                    </li>
+                    <li class="{{Request::is('admin/tiered*')? 'active open' : ''}}">
+                        <a href="{{route('admin.tiered.index')}}">
+                            <i class="bi bi-speedometer2"></i>
+                            <span class="link-title text-capitalize">{{translate('Tiered KM Fares')}}</span>
+                        </a>
+                    </li>
+                    <li class="{{Request::is('admin/driver-access*')? 'active open' : ''}}">
+                        <a href="{{route('admin.driver-access.dashboard')}}">
+                            <i class="bi bi-shield-check"></i>
+                            <span class="link-title text-capitalize">{{translate('Driver Access Rules')}}</span>
                         </a>
                     </li>
                     <!---------- End Fare Management --------------->
@@ -686,5 +755,6 @@
 </aside>
 
 @push('script')
-    <script src="{{asset('public/assets/admin-module/js/admin-module/sidebar.js')}}"></script>
+    <script src="{{asset('assets/admin-module/js/admin-module/sidebar.js')}}"></script>
 @endpush
+

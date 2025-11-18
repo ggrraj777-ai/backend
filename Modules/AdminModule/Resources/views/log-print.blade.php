@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ translate('Banner_Activity_Log') }}</title>
-    <link rel="stylesheet" href="{{ asset('public/assets/admin-module/css/bootstrap.min.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('public/assets/admin-module/css/style.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/admin-module/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/admin-module/css/style.css') }}"/>
     <style>
         #printableTable {
             background-color: var(--bs-white);
@@ -75,3 +75,4 @@
     window.frames["print_frame"].window.focus();
     window.frames["print_frame"].window.print();
 </script>
+

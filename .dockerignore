@@ -1,20 +1,57 @@
+# Dependencies
 /node_modules
+/vendor
+
+# Build artifacts
 /public/hot
 /public/storage
 /storage/*.key
-/vendor
+
+# Environment files
 .env
-.env.backup
+.env.*
+!.env.example
+
+# Cache and logs
+/storage/logs/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/bootstrap/cache/*
 .phpunit.result.cache
-Homestead.json
-Homestead.yaml
 npm-debug.log
 yarn-error.log
+
+# IDE files
 /.idea
 /.vscode
-/tests
+*.swp
+*.swo
+*~
+
+# Git files
 .git
 .gitignore
 .gitattributes
+
+# Documentation
 README.md
+*.md
+!README.md
+
+# Docker files
 docker-compose.yml
+Dockerfile.dev
+
+# Test files
+/tests
+phpunit.xml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Deployment files
+*.sh
+*.bat
+cloudbuild.yaml.backup

@@ -95,7 +95,7 @@
                                                     src="{{ onErrorImage(
                                                         auth()->user()?->profile_image,
                                                         asset('storage/app/public/employee/profile') . '/' . auth()->user()->profile_image,
-                                                        asset('public/assets/admin-module/img/avatar/avatar.png'),
+                                                        asset('assets/admin-module/img/avatar/avatar.png'),
                                                         'employee/profile/',
                                                     ) }}"
                                                     alt="">
@@ -124,12 +124,13 @@
 @endsection
 
 @push('script')
-    <link href="{{ asset('public/assets/admin-module/css/intlTelInput.min.css') }}" rel="stylesheet"/>
-    <script src="{{ asset('public/assets/admin-module/js/intlTelInput.min.js') }}"></script>
-    <script src="{{ asset('public/assets/admin-module/js/password.js') }}"></script>
+    <link href="{{ asset('assets/admin-module/css/intlTelInput.min.css') }}" rel="stylesheet"/>
+    <script src="{{ asset('assets/admin-module/js/intlTelInput.min.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/password.js') }}"></script>
 
     <script>
         "use strict";
         initializePhoneInput("#phone_number", "#phone_number-hidden-element");
     </script>
 @endpush
+

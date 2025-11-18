@@ -1,0 +1,71 @@
+steps:
+  # Step 1: List files to verify context
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        echo "=== Build Context Files ==="
+        ls -lah
+        echo ""
+        echo "=== Checking critical files ==="
+        test -f Dockerfile && echo "✓ Dockerfile exists" || echo "✗ Dockerfile missing"
+        test -f composer.json && echo "✓ composer.json exists" || echo "✗ composer.json missing"
+        test -f composer.lock && echo "✓ composer.lock exists" || echo "✗ composer.lock missing"
+        test -f .env.example && echo "✓ .env.example exists" || echo "✗ .env.example missing"
+        test -f artisan && echo "✓ artisan exists" || echo "✗ artisan missing"
+        echo ""
+        echo "=== Composer.json content (first 20 lines) ==="
+        head -20 composer.json || echo "Cannot read composer.json"
+        echo ""
+  
+  # Step 2: Build the container image with detailed output
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '--progress=plain'
+      - '--no-cache'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/drivemond-backend:$SHORT_SHA'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/drivemond-backend:latest'
+      - '-f'
+      - 'Dockerfile'
+      - '.'
+    timeout: 2400s
+  
+  # Step 3: Push the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/drivemond-backend:$SHORT_SHA']
+  
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/drivemond-backend:latest']
+  
+  # Step 4: Deploy to Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'gauva'
+      - '--image=gcr.io/$PROJECT_ID/drivemond-backend:$SHORT_SHA'
+      - '--region=europe-west1'
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+      - '--port=8080'
+      - '--memory=1Gi'
+      - '--cpu=2'
+      - '--timeout=300'
+      - '--max-instances=10'
+      - '--set-env-vars=APP_ENV=production,APP_DEBUG=false,LOG_CHANNEL=stderr,APP_URL=https://gauva-798219755346.europe-west1.run.app,RAZORPAY_KEY_ID=rzp_test_RVmSxTBdwWng9o,RAZORPAY_KEY_SECRET=L0Q7LVHqXj1seMQut0D87m5S'
+
+images:
+  - 'gcr.io/$PROJECT_ID/drivemond-backend:$SHORT_SHA'
+  - 'gcr.io/$PROJECT_ID/drivemond-backend:latest'
+
+timeout: 3600s
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: 'E2_HIGHCPU_8'
+  diskSizeGb: 100
+

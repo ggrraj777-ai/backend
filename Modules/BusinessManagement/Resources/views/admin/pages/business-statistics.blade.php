@@ -42,7 +42,7 @@
                                                 </span>
                                                     <div class="upload-file__img w-auto h-auto" style="--size: 5rem">
                                                         <img width="80"
-                                                             src="{{ $data?->value['total_download']['image'] ? asset('storage/app/public/business/landing-pages/business-statistics/total-download/'.$data?->value['total_download']['image']):asset('public/assets/admin-module/img/media/upload-file.png') }}"
+                                                             src="{{ $data?->value['total_download']['image'] ? asset('storage/app/public/business/landing-pages/business-statistics/total-download/'.$data?->value['total_download']['image']):asset('assets/admin-module/img/media/upload-file.png') }}"
                                                              alt="">
                                                     </div>
                                                 </div>
@@ -87,7 +87,7 @@
                                                 </span>
                                                     <div class="upload-file__img w-auto h-auto" style="--size: 5rem">
                                                         <img width="80"
-                                                             src="{{ $data?->value['complete_ride']['image'] ? asset('storage/app/public/business/landing-pages/business-statistics/complete-ride/'.$data?->value['complete_ride']['image']):asset('public/assets/admin-module/img/media/upload-file.png') }}"
+                                                             src="{{ $data?->value['complete_ride']['image'] ? asset('storage/app/public/business/landing-pages/business-statistics/complete-ride/'.$data?->value['complete_ride']['image']):asset('assets/admin-module/img/media/upload-file.png') }}"
                                                              alt="">
                                                     </div>
                                                 </div>
@@ -133,7 +133,7 @@
                                                 </span>
                                                     <div class="upload-file__img w-auto h-auto" style="--size: 5rem">
                                                         <img width="80"
-                                                             src="{{ $data?->value['happy_customer']['image'] ? asset('storage/app/public/business/landing-pages/business-statistics/happy-customer/'.$data?->value['happy_customer']['image']):asset('public/assets/admin-module/img/media/upload-file.png') }}"
+                                                             src="{{ $data?->value['happy_customer']['image'] ? asset('storage/app/public/business/landing-pages/business-statistics/happy-customer/'.$data?->value['happy_customer']['image']):asset('assets/admin-module/img/media/upload-file.png') }}"
                                                              alt="">
                                                     </div>
                                                 </div>
@@ -178,7 +178,7 @@
                                                 </span>
                                                     <div class="upload-file__img w-auto h-auto" style="--size: 5rem">
                                                         <img width="80"
-                                                             src="{{ $data?->value['support']['image'] ? asset('storage/app/public/business/landing-pages/business-statistics/support/'.$data?->value['support']['image']):asset('public/assets/admin-module/img/media/upload-file.png') }}"
+                                                             src="{{ $data?->value['support']['image'] ? asset('storage/app/public/business/landing-pages/business-statistics/support/'.$data?->value['support']['image']):asset('assets/admin-module/img/media/upload-file.png') }}"
                                                              alt="">
                                                     </div>
                                                 </div>
@@ -219,5 +219,6 @@
     </div>
     <!-- End Main Content -->
 @endsection
+
 
 

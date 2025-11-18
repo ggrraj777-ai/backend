@@ -3,7 +3,7 @@
 @section('title', translate('notification'))
 
 @push('css_or_js')
-    <link rel="stylesheet" href="{{ asset('public/landing-page/assets/css/owl.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('landing-page/assets/css/owl.min.css') }}"/>
 @endpush
 
 @section('content')
@@ -140,7 +140,7 @@
                 </div>
                 <div class="modal-body px-xl-5 pb-xl-5">
                     <div class="d-flex justify-content-center mb-4">
-                        <img width="120" src="{{asset("public/assets/admin-module/img/bell.png")}}" alt="">
+                        <img width="120" src="{{asset("assets/admin-module/img/bell.png")}}" alt="">
                     </div>
                     <h5 class="mb-3">{{translate('instructions')}}</h5>
                     <p>{{translate("For configuring OTP in the Firebase, you must create a Firebase project first. lf you haven't
@@ -237,7 +237,7 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('public/landing-page/assets/js/owl.min.js') }}"></script>
+    <script src="{{ asset('landing-page/assets/js/owl.min.js') }}"></script>
 
     <script>
         function initializeSlider() {
@@ -320,3 +320,5 @@
         }
     </script>
 @endpush
+
+

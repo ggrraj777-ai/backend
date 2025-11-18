@@ -1,0 +1,55 @@
+name: Deploy Laravel Backend (PHP 8.3) to Azure App Service
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AZURE_WEBAPP_NAME: gauva   # Must match your Azure App Service name exactly
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, bcmath, intl, gd, pdo_mysql, tokenizer, xml, curl, zip
+          ini-values: post_max_size=256M, upload_max_filesize=256M
+          tools: composer, npm
+
+      - name: Install composer dependencies
+        run: |
+          cp .env.example .env
+          composer install --no-dev --optimize-autoloader
+          php artisan key:generate
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+
+      - name: Install Node.js and build assets
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - run: |
+          npm ci
+          npm run build
+
+      - name: Prepare deployment package
+        run: zip -r release.zip . -x "node_modules/*" "vendor/*"
+
+      - name: Deploy to Azure Web App (Code Publish)
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: release.zip
+
+      - name: Done
+        run: echo "🚀 Laravel app successfully deployed to Azure App Service (PHP 8.3)"

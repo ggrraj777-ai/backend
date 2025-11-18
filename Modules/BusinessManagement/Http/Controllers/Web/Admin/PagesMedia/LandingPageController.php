@@ -220,7 +220,7 @@ class LandingPageController extends BaseController
         $martBaseUrl = externalConfig('mart_base_url');
         if ($activationMode && $activationMode->value == 1 && $martBaseUrl && $martBaseUrl->value != null) {
             $name = businessConfig('business_name', BUSINESS_INFORMATION)?->value ?? "DriveMond";
-            $logo = businessConfig('header_logo', BUSINESS_INFORMATION)?->value ? asset(businessConfig('header_logo', BUSINESS_INFORMATION)?->value) : asset('public/assets/admin-module/img/logo.png');
+            $logo = businessConfig('header_logo', BUSINESS_INFORMATION)?->value ? asset(businessConfig('header_logo', BUSINESS_INFORMATION)?->value) : asset('assets/admin-module/img/logo.png');
             $cta = $this->businessSettingService->findOneBy(criteria: ['key_name' => CTA, 'settings_type' => LANDING_PAGES_SETTINGS]);
 
             try {
@@ -238,3 +238,4 @@ class LandingPageController extends BaseController
         return back();
     }
 }
+

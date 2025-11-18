@@ -77,7 +77,7 @@
                                                        accept=".jpg, .jpeg, .png, .webp" required>
                                                 <div class="upload-file__img upload-file__img_banner">
                                                     <img
-                                                        src="{{ asset('public/assets/admin-module/img/media/banner-upload-file.png') }}"
+                                                        src="{{ asset('assets/admin-module/img/media/banner-upload-file.png') }}"
                                                         alt="">
                                                 </div>
                                             </div>
@@ -90,7 +90,7 @@
                                                     class="upload-file__img border-gray d-flex justify-content-center align-items-center h-100px w-250px aspect-ratio-3-1 p-0 bg-white">
                                                     <div class="upload-file__textbox text-center">
                                                         <img width="34" height="34"
-                                                             src="{{ asset('public/assets/admin-module/img/document-upload.png') }}"
+                                                             src="{{ asset('assets/admin-module/img/document-upload.png') }}"
                                                              alt="" class="svg">
                                                         <h6 class="mt-2 fw-semibold fs-12">
                                                             <span class="text-info">{{ translate('Click to upload') }}</span>
@@ -276,8 +276,8 @@
 @endsection
 
 @push('script')
-    <script src="{{asset('public/assets/admin-module/js/promotion-management/discount-setup/create.js')}}"></script>
-    <script src="{{ asset('public/assets/admin-module/js/single-image-upload.js') }}"></script>
+    <script src="{{asset('assets/admin-module/js/promotion-management/discount-setup/create.js')}}"></script>
+    <script src="{{ asset('assets/admin-module/js/single-image-upload.js') }}"></script>
 
     <script>
         "use strict";
@@ -349,3 +349,4 @@
         });
     </script>
 @endpush
+

@@ -8,15 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@yield('title')</title>
 
-    <link rel="stylesheet" href="{{ asset('public/landing-page') }}/assets/css/bootstrap-icons.min.css" />
-    <link rel="stylesheet" href="{{ asset('public/landing-page') }}/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="{{ asset('public/landing-page') }}/assets/css/animate.css" />
-    <link rel="stylesheet" href="{{ asset('public/landing-page') }}/assets/css/line-awesome.min.css" />
-    <link rel="stylesheet" href="{{ asset('public/landing-page') }}/assets/css/odometer.css" />
-    <link rel="stylesheet" href="{{ asset('public/landing-page') }}/assets/css/owl.min.css" />
-    <link rel="stylesheet" href="{{ asset('public/landing-page') }}/assets/css/main.css" />
+    <link rel="stylesheet" href="{{ asset('landing-page') }}/assets/css/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="{{ asset('landing-page') }}/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{ asset('landing-page') }}/assets/css/animate.css" />
+    <link rel="stylesheet" href="{{ asset('landing-page') }}/assets/css/line-awesome.min.css" />
+    <link rel="stylesheet" href="{{ asset('landing-page') }}/assets/css/odometer.css" />
+    <link rel="stylesheet" href="{{ asset('landing-page') }}/assets/css/owl.min.css" />
+    <link rel="stylesheet" href="{{ asset('landing-page') }}/assets/css/main.css" />
         @include('landing-page.layouts.css')
-    <link rel="shortcut icon" href="{{ $favicon ? asset("storage/app/public/business/".$favicon) : asset('public/landing-page/assets/img/favicon.png') }}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ $favicon ? asset("storage/app/public/business/".$favicon) : asset('landing-page/assets/img/favicon.png') }}" type="image/x-icon" />
 </head>
 
 <body>
@@ -41,14 +41,15 @@
 <!-- Footer Section End -->
 {{--<script src="{{ asset('public/js/app.js') }}"></script>--}}
 
-<script src="{{ asset('public/landing-page') }}/assets/js/jquery-3.6.0.min.js"></script>
-<script src="{{ asset('public/landing-page') }}/assets/js/bootstrap.min.js"></script>
-<script src="{{ asset('public/landing-page') }}/assets/js/viewport.jquery.js"></script>
-<script src="{{ asset('public/landing-page') }}/assets/js/wow.min.js"></script>
-<script src="{{ asset('public/landing-page') }}/assets/js/owl.min.js"></script>
-<script src="{{ asset('public/landing-page') }}/assets/js/main.js"></script>
+<script src="{{ asset('landing-page') }}/assets/js/jquery-3.6.0.min.js"></script>
+<script src="{{ asset('landing-page') }}/assets/js/bootstrap.min.js"></script>
+<script src="{{ asset('landing-page') }}/assets/js/viewport.jquery.js"></script>
+<script src="{{ asset('landing-page') }}/assets/js/wow.min.js"></script>
+<script src="{{ asset('landing-page') }}/assets/js/owl.min.js"></script>
+<script src="{{ asset('landing-page') }}/assets/js/main.js"></script>
 
 @stack('script')
 </body>
 
 </html>
+

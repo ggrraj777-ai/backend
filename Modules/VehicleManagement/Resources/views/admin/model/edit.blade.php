@@ -117,7 +117,7 @@
                                                             src="{{ onErrorImage(
                                                                 $model?->image,
                                                                 asset('storage/app/public/vehicle/model') . '/' . $model?->image,
-                                                                asset('public/assets/admin-module/img/media/upload-file.png'),
+                                                                asset('assets/admin-module/img/media/upload-file.png'),
                                                                 'vehicle/model/',
                                                             ) }}"
                                                             id="image_id"
@@ -178,7 +178,7 @@
 
         // Assuming you have a reset button with ID 'reset-button'
         let resetButton = $('#reset_btn');
-        let defaultImageSrc = '{{ asset('public/assets/admin-module/img/media/upload-file.png') }}';
+        let defaultImageSrc = '{{ asset('assets/admin-module/img/media/upload-file.png') }}';
         let imageElement = $('#image_id');
         let fileInput = $('.upload-file__input');
 
@@ -188,3 +188,4 @@
         });
     </script>
 @endpush
+

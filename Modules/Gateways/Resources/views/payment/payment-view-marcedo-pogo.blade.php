@@ -6,9 +6,9 @@
         @yield('title')
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{{asset('public/assets/modules/payment/mercado_pogo/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('public/assets/modules/payment/mercado_pogo/css/index.css')}}">
-    <script src="{{asset('public/assets/admin-module/js/jquery-3.6.0.min.js')}}"></script>
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/modules/payment/mercado_pogo/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/modules/payment/mercado_pogo/css/index.css')}}">
+    <script src="{{asset('assets/admin-module/js/jquery-3.6.0.min.js')}}"></script>
     <script src="https://sdk.mercadopago.com/js/v2"></script>
 </head>
 <body>
@@ -210,3 +210,4 @@
     }
 </script>
 </html>
+

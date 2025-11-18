@@ -45,6 +45,58 @@
                                 </div>
                             </div>
 
+                            <!-- Nighttime Fare Hike Section -->
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <h6 class="text-primary mb-3"><i class="bi bi-moon-stars-fill"></i> {{ translate('Nighttime Fare Hike') }}</h6>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-4">
+                                        <label for="nighttime_fare_status" class="mb-2">{{ translate('Enable Nighttime Fare Hike') }}</label>
+                                        <div class="form-check form-switch">
+                                            <input type="checkbox" class="form-check-input" id="nighttime_fare_status" name="nighttime_fare_status" value="1" 
+                                                {{ ($settings->firstWhere('key_name', 'nighttime_fare_status')?->value ?? 0) == 1 ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="nighttime_fare_status">{{ translate('Active') }}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-4">
+                                        <label for="nighttime_start" class="mb-2">{{ translate('Night Start Time') }}</label>
+                                        <div class="input-group_tooltip">
+                                            <input type="time" class="form-control" id="nighttime_start" name="nighttime_start_time" 
+                                                value="{{ $settings->firstWhere('key_name', 'nighttime_start_time')?->value ?? '22:00' }}">
+                                            <i class="bi bi-info-circle-fill text-primary tooltip-icon" data-bs-toggle="tooltip"
+                                                data-bs-title="{{ translate('Time when nighttime fare starts (e.g., 10:00 PM)') }}"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-4">
+                                        <label for="nighttime_end" class="mb-2">{{ translate('Night End Time') }}</label>
+                                        <div class="input-group_tooltip">
+                                            <input type="time" class="form-control" id="nighttime_end" name="nighttime_end_time" 
+                                                value="{{ $settings->firstWhere('key_name', 'nighttime_end_time')?->value ?? '06:00' }}">
+                                            <i class="bi bi-info-circle-fill text-primary tooltip-icon" data-bs-toggle="tooltip"
+                                                data-bs-title="{{ translate('Time when nighttime fare ends (e.g., 6:00 AM)') }}"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-4">
+                                        <label for="nighttime_percentage" class="mb-2">{{ translate('Fare Increase (%)') }}</label>
+                                        <div class="input-group_tooltip">
+                                            <input type="number" step="0.01" min="0" max="100" class="form-control" 
+                                                placeholder="15-25" id="nighttime_percentage" name="nighttime_fare_percentage" 
+                                                value="{{ $settings->firstWhere('key_name', 'nighttime_fare_percentage')?->value ?? 20 }}">
+                                            <i class="bi bi-info-circle-fill text-primary tooltip-icon" data-bs-toggle="tooltip"
+                                                data-bs-title="{{ translate('Percentage increase in fare during nighttime (recommended: 15-25%)') }}"></i>
+                                        </div>
+                                        <small class="text-muted">{{ translate('Recommended: 15-25%') }}</small>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="d-flex gap-3 flex-wrap justify-content-end">
                                 <button type="submit" class="btn btn-primary text-uppercase">{{ translate('submit') }}</button>
                             </div>

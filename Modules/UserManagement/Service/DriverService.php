@@ -13,6 +13,7 @@ use Modules\TransactionManagement\Repository\TransactionRepositoryInterface;
 use Modules\TripManagement\Repository\TripRequestRepositoryInterface;
 use Modules\UserManagement\Repository\UserLevelRepositoryInterface;
 use Modules\UserManagement\Repository\UserRepositoryInterface;
+use Illuminate\Support\Str;
 
 class DriverService extends BaseService implements Interface\DriverServiceInterface
 {
@@ -55,6 +56,22 @@ class DriverService extends BaseService implements Interface\DriverServiceInterf
 
     public function create(array $data): ?Model
     {
+        $documentPayload = [];
+        if (array_key_exists('document_payload', $data)) {
+            $documentPayload = is_string($data['document_payload'])
+                ? json_decode($data['document_payload'], true) ?? []
+                : (array)$data['document_payload'];
+            unset($data['document_payload']);
+        }
+
+        $documentMetadata = [];
+        if (array_key_exists('document_metadata', $data)) {
+            $documentMetadata = is_string($data['document_metadata'])
+                ? json_decode($data['document_metadata'], true) ?? []
+                : (array)$data['document_metadata'];
+            unset($data['document_metadata']);
+        }
+
         $firstLevel = $this->userLevelRepository->findOneBy(criteria: ['user_type' => DRIVER, 'sequence' => 1]);
         $identityImages = [];
         if (array_key_exists('identity_images', $data)) {
@@ -78,6 +95,7 @@ class DriverService extends BaseService implements Interface\DriverServiceInterf
             'other_documents' => $otherDocuments ?? null,
             'identification_image' => $identityImages ?? null,
             'is_active' => 1,
+            'document_verification_status' => 'pending',
             'ref_code' => generateReferralCode(),
         ]);
         DB::beginTransaction();
@@ -94,8 +112,120 @@ class DriverService extends BaseService implements Interface\DriverServiceInterf
         }
         $driver?->driverDetails()->create($driverDetailsData);
         $driver?->userAccount()->create();
+
+        if ($driver && !empty($documentPayload)) {
+            $this->storeDriverDocuments(
+                driverId: (string) $driver->id,
+                documents: $documentPayload,
+                metadata: $documentMetadata
+            );
+        }
         DB::commit();
         return $driver;
+    }
+
+    private function storeDriverDocuments(string $driverId, array $documents, array $metadata = []): void
+    {
+        $metadataByType = $this->groupMetadataByDocumentType($metadata);
+
+        foreach ($documents as $key => $document) {
+            if (!is_array($document)) {
+                continue;
+            }
+
+            $documentType = $this->normalizeDocumentType($key);
+
+            if (is_null($documentType)) {
+                continue;
+            }
+
+            $documentNumber = $document['document_number'] ?? $this->resolveDocumentNumber($documentType, $metadataByType);
+            $front = isset($document['front']) && is_array($document['front']) ? $document['front'] : [];
+            $back = isset($document['back']) && is_array($document['back']) ? $document['back'] : [];
+
+            $docMetadata = [];
+            if (!empty($metadataByType[$documentType] ?? [])) {
+                $docMetadata = array_merge($docMetadata, $metadataByType[$documentType]);
+            }
+            if (!empty($document['metadata'] ?? [])) {
+                $docMetadata = array_merge($docMetadata, (array) $document['metadata']);
+            }
+
+            DB::table('driver_documents')->insert([
+                'id' => (string) Str::uuid(),
+                'driver_id' => $driverId,
+                'document_type' => $documentType,
+                'document_number' => $documentNumber,
+                'front_image_url' => $front['url'] ?? null,
+                'back_image_url' => $back['url'] ?? null,
+                'firebase_front_path' => $front['path'] ?? null,
+                'firebase_back_path' => $back['path'] ?? null,
+                'verification_status' => 'pending',
+                'metadata' => !empty($docMetadata) ? json_encode($docMetadata) : null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        DB::table('users')->where('id', $driverId)->update([
+            'document_verification_status' => 'pending',
+            'documents_verified_at' => null,
+            'updated_at' => now(),
+        ]);
+    }
+
+    private function normalizeDocumentType(string $key): ?string
+    {
+        return match (true) {
+            str_starts_with($key, 'driving_license'), str_starts_with($key, 'license') => 'driving_license',
+            str_starts_with($key, 'rc_book'), str_starts_with($key, 'rc') => 'rc_book',
+            str_starts_with($key, 'aadhar_card'), str_starts_with($key, 'aadhar') => 'aadhar_card',
+            str_starts_with($key, 'photo'), str_starts_with($key, 'driver') => 'photo',
+            str_starts_with($key, 'other') => 'other',
+            default => null,
+        };
+    }
+
+    private function groupMetadataByDocumentType(array $metadata): array
+    {
+        $grouped = [];
+
+        foreach ($metadata as $key => $value) {
+            $documentType = $this->normalizeDocumentType($key);
+
+            if ($documentType === null) {
+                $documentType = match ($key) {
+                    'license_number' => 'driving_license',
+                    'rc_number' => 'rc_book',
+                    'aadhar_number' => 'aadhar_card',
+                    default => null,
+                };
+            }
+
+            if ($documentType === null) {
+                continue;
+            }
+
+            if (!isset($grouped[$documentType])) {
+                $grouped[$documentType] = [];
+            }
+
+            $grouped[$documentType][$key] = $value;
+        }
+
+        return $grouped;
+    }
+
+    private function resolveDocumentNumber(string $documentType, array $metadataByType): ?string
+    {
+        $metadata = $metadataByType[$documentType] ?? [];
+
+        return match ($documentType) {
+            'driving_license' => $metadata['license_number'] ?? ($metadata['driving_license_number'] ?? null),
+            'rc_book' => $metadata['rc_number'] ?? null,
+            'aadhar_card' => $metadata['aadhar_number'] ?? null,
+            default => $metadata['document_number'] ?? null,
+        };
     }
 
     public function update(int|string $id, array $data = []): ?Model

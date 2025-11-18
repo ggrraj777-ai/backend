@@ -28,7 +28,7 @@
                                         <img src="{{ onErrorImage(
                                             $vehicle?->model?->image,
                                             asset('storage/app/public/vehicle/model') . '/' . $vehicle?->model?->image,
-                                            asset('public/assets/admin-module/img/media/upload-file.png'),
+                                            asset('assets/admin-module/img/media/upload-file.png'),
                                             'vehicle/model/',
                                         ) }}"
                                              class="rounded dark-support fit-object-contain" alt="">
@@ -87,7 +87,7 @@
                                         <img src="{{ onErrorImage(
                                             $vehicle?->driver?->profile_image,
                                             asset('storage/app/public/driver/profile') . '/' . $vehicle?->driver?->profile_image,
-                                            asset('public/assets/admin-module/img/avatar/avatar.png'),
+                                            asset('assets/admin-module/img/avatar/avatar.png'),
                                             'driver/profile/',
                                         ) }}"
                                              class="rounded dark-support fit-object" alt="">
@@ -177,3 +177,4 @@
 
 @push('script')
 @endpush
+

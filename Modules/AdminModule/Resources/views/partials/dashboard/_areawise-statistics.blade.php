@@ -37,7 +37,7 @@
         </div>
     @else
         <div class="d-flex flex-column gap-2 justify-content-center align-items-center py-5 text-center">
-            <div><img src="{{ asset("public/assets/admin-module/img/map-marker-question.png") }}" alt=""></div>
+            <div><img src="{{ asset("assets/admin-module/img/map-marker-question.png") }}" alt=""></div>
             <div class="fs-16">{{ translate("No Zone Found") }}</div>
             <div>{{ translate("Currently there are no zone is active in your system.") }}</div>
             <div><a class="text-primary text-decoration-underline" href="{{route("admin.zone.index")}}">{{ translate("Go to Zone setup") }}</a></div>
@@ -52,3 +52,4 @@
     }
 
 </script>
+

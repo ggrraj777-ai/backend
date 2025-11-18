@@ -54,7 +54,7 @@
                                             <img src="{{ onErrorImage(
                                                 $banner?->image,
                                                 asset('storage/app/public/promotion/banner') . '/' . $banner?->image,
-                                                asset('public/assets/admin-module/img/media/banner-upload-file.png'),
+                                                asset('assets/admin-module/img/media/banner-upload-file.png'),
                                                 'promotion/banner/',
                                             ) }}"
                                                  class="custom-box-size-banner rounded dark-support" alt="">
@@ -107,7 +107,7 @@
                                     <tr>
                                         <td colspan="8">
                                             <div class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
-                                                <img src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}" alt="" width="100">
+                                                <img src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}" alt="" width="100">
                                                 <p class="text-center">{{translate('no_data_available')}}</p>
                                             </div>
                                         </td>
@@ -126,3 +126,4 @@
     </div>
     <!-- End Main Content -->
 @endsection
+

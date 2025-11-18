@@ -100,7 +100,7 @@
                                             <a class="btn btn-outline-primary btn-action d-flex"
                                                href="{{ route('admin.business.languages.translate', [$data['code']]) }}">
                                                 <img
-                                                    src="{{ asset('public/assets/admin-module/img/svg/translate.svg') }}"
+                                                    src="{{ asset('assets/admin-module/img/svg/translate.svg') }}"
                                                     alt="" class="svg">
                                             </a>
                                             @if ($data['code'] != 'en')
@@ -109,7 +109,7 @@
                                                             id="dropdownMenuButton" data-bs-toggle="dropdown"
                                                             aria-expanded="false">
                                                         <img
-                                                            src="{{ asset('public/assets/admin-module/img/svg/settings.svg') }}"
+                                                            src="{{ asset('assets/admin-module/img/svg/settings.svg') }}"
                                                             alt="" class="svg">
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -252,7 +252,7 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('public/assets/admin-module/js/business-management/language/index.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/business-management/language/index.js') }}"></script>
     <!-- Page level custom scripts -->
     <script>
         "use strict";
@@ -275,3 +275,4 @@
         });
     </script>
 @endpush
+

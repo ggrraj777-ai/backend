@@ -5,8 +5,8 @@
 @section('content')
     <div class="container pt-3">
         <section class="page-header bg__img"
-                 data-img="{{$data?->value['image'] ? asset('storage/app/public/business/pages/'.$data?->value['image']) : asset('public/landing-page/assets/img/page-header.png')}}"
-                 style="background-image: url({{$data?->value['image'] ? asset('storage/app/public/business/pages/'.$data?->value['image']) : asset('public/landing-page/assets/img/page-header.png')}});">
+                 data-img="{{$data?->value['image'] ? asset('storage/app/public/business/pages/'.$data?->value['image']) : asset('landing-page/assets/img/page-header.png')}}"
+                 style="background-image: url({{$data?->value['image'] ? asset('storage/app/public/business/pages/'.$data?->value['image']) : asset('landing-page/assets/img/page-header.png')}});">
 
             <h1 class="title">{{ translate('Privacy Policy') }}</h1>
             <p class="mt-2">
@@ -21,3 +21,4 @@
         </div>
     </section>
 @endsection
+

@@ -17,7 +17,7 @@ class BaseController extends Controller implements BaseControllerInterface
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     protected $baseService;
-    public function __construct(BaseServiceInterface $baseService){
+    public function __construct(BaseServiceInterface $baseService = null){
         $this->baseService = $baseService;
     }
 

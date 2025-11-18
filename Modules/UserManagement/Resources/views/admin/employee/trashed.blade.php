@@ -47,7 +47,7 @@
                                                             <img src="{{ onErrorImage(
                                                                 $employee?->profile_image,
                                                                 asset('storage/app/public/employee/profile') . '/' . $employee?->profile_image,
-                                                                asset('public/assets/admin-module/img/avatar/avatar.png'),
+                                                                asset('assets/admin-module/img/avatar/avatar.png'),
                                                                 'employee/profile/',
                                                             ) }}"
                                                                 class="dark-support fit-object" alt="">
@@ -93,7 +93,7 @@
                                             <tr>
                                                 <td colspan="6">
                                                     <div class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
-                                                        <img src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}" alt="" width="100">
+                                                        <img src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}" alt="" width="100">
                                                         <p class="text-center">{{translate('no_data_available')}}</p>
                                                     </div>
                                                 </td>
@@ -123,3 +123,4 @@
     <!-- End Main Content -->
 
 @endsection
+

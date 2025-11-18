@@ -184,7 +184,7 @@
                                         <tr>
                                             <td colspan="14">
                                                 <div class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
-                                                    <img src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}" alt="" width="100">
+                                                    <img src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}" alt="" width="100">
                                                     <p class="text-center">{{translate('no_data_available')}}</p>
                                                 </div>
                                             </td>
@@ -208,7 +208,7 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('public/assets/admin-module/js/business-management/pages/social-media.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/business-management/pages/social-media.js') }}"></script>
 
     <script>
         "use strict";
@@ -271,3 +271,4 @@
         })
     </script>
 @endpush
+

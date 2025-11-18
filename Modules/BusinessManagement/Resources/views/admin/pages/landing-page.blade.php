@@ -3,7 +3,7 @@
 @section('title', translate($type ?? 'about_us'))
 
 @push('css_or_js')
-    <link rel="stylesheet" href="{{asset('public/assets/admin-module/plugins/summernote/summernote-lite.min.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/admin-module/plugins/summernote/summernote-lite.min.css')}}"/>
 @endpush
 
 @section('content')
@@ -45,7 +45,7 @@
 @endsection
 
 @push('script')
-    <script src="{{asset('public/assets/admin-module/plugins/summernote/summernote-lite.min.js')}}"></script>
+    <script src="{{asset('assets/admin-module/plugins/summernote/summernote-lite.min.js')}}"></script>
 
     <script>
         @can('business_edit')
@@ -83,3 +83,4 @@
         });
     </script>
 @endpush
+

@@ -81,7 +81,7 @@
                                                     <img src="{{ onErrorImage(
                                                     $discount?->image,
                                                     asset('storage/app/public/promotion/discount') . '/' . $discount?->image,
-                                                    asset('public/assets/admin-module/img/media/banner-upload-file.png'),
+                                                    asset('assets/admin-module/img/media/banner-upload-file.png'),
                                                     'promotion/discount/',
                                                 ) }}"
                                                          alt="">
@@ -95,7 +95,7 @@
                                                        accept=".jpg, .jpeg, .png, .webp">
                                                     <span class="edit-btn show">
                                                         <img
-                                                            src="{{ asset('public/assets/admin-module/img/svg/edit-circle.svg') }}"
+                                                            src="{{ asset('assets/admin-module/img/svg/edit-circle.svg') }}"
                                                             alt="" class="svg">
                                                     </span>
                                                 <div
@@ -105,7 +105,7 @@
                                                          src="{{ onErrorImage(
                                                             $discount?->image,
                                                             asset('storage/app/public/promotion/discount') . '/' . $discount?->image,
-                                                            asset('public/assets/admin-module/img/media/banner-upload-file.png'),
+                                                            asset('assets/admin-module/img/media/banner-upload-file.png'),
                                                             'promotion/discount/',
                                                         ) }}"
                                                          alt="">
@@ -306,7 +306,7 @@
 @endsection
 
 @push('script')
-    <script src="{{asset('public/assets/admin-module/js/promotion-management/discount-setup/edit.js')}}"></script>
+    <script src="{{asset('assets/admin-module/js/promotion-management/discount-setup/edit.js')}}"></script>
 
     <script>
         "use strict";
@@ -361,3 +361,4 @@
         });
     </script>
 @endpush
+

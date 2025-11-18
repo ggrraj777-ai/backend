@@ -35,7 +35,17 @@ class TransactionController extends Controller
         if (!is_null($request->type)) {
             $criteria['account'] = $request->type;
         }
-        $data = $this->transactionService->getBy(criteria: $criteria, relations: ['user'], limit: $request->limit, offset: $request->offset,orderBy:['updated_at'=>'desc']);
+        $data = $this->transactionService->getBy(
+            criteria: $criteria,
+            relations: [
+                'user' => function ($query) {
+                    $query->select('id', 'first_name', 'last_name', 'phone');
+                },
+            ],
+            limit: $request->limit,
+            offset: $request->offset,
+            orderBy: ['updated_at' => 'desc']
+        );
         $transactions = TransactionResource::collection($data);
 
         return response()->json(responseFormatter(constant: DEFAULT_200, content: $transactions, limit: $request->limit, offset: $request->offset));
@@ -56,7 +66,17 @@ class TransactionController extends Controller
             'attribute' => 'referral_earning',
             'account' => 'wallet_balance',
         ];
-        $data = $this->transactionService->getBy(criteria: $criteria, relations: ['user'], limit: $request->limit, offset: $request->offset,orderBy:['updated_at'=>'desc']);
+        $data = $this->transactionService->getBy(
+            criteria: $criteria,
+            relations: [
+                'user' => function ($query) {
+                    $query->select('id', 'first_name', 'last_name', 'phone');
+                },
+            ],
+            limit: $request->limit,
+            offset: $request->offset,
+            orderBy: ['updated_at' => 'desc']
+        );
         $transactions = TransactionResource::collection($data);
 
         return response()->json(responseFormatter(constant: DEFAULT_200, content: $transactions, limit: $request->limit, offset: $request->offset));

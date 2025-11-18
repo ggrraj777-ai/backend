@@ -5,7 +5,7 @@
         <div class="container">
             <div class="navbar-bottom-wrapper">
                 <a href="{{route('index')}}" class="logo">
-                    <img src="{{ $logo ? asset("storage/app/public/business/".$logo) : asset('public/landing-page/assets/img/logo.png') }}" alt="">
+                    <img src="{{ $logo ? asset("storage/app/public/business/".$logo) : asset('landing-page/assets/img/logo.png') }}" alt="">
                 </a>
                 <ul class="menu me-lg-4">
                     <li>
@@ -36,3 +36,4 @@
     </div>
     <!-- Header Bottom -->
 </header>
+

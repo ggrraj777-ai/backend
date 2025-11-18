@@ -126,7 +126,7 @@
                                                                  src="{{ onErrorImage(
                                                                         $driver?->profile_image,
                                                                         asset('storage/app/public/driver/profile') . '/' . $driver?->profile_image,
-                                                                        asset('public/assets/admin-module/img/avatar/avatar.png'),
+                                                                        asset('assets/admin-module/img/avatar/avatar.png'),
                                                                         'driver/profile/',
                                                                     ) }}"
                                                                  class="rounded custom-box-size" alt=""
@@ -200,7 +200,7 @@
                                                                                                     <img src="{{ onErrorImage(
                                                                                                                 $driver?->profile_image,
                                                                                                                 asset('storage/app/public/driver/profile') . '/' . $driver?->profile_image,
-                                                                                                                asset('public/assets/admin-module/img/avatar/avatar.png'),
+                                                                                                                asset('assets/admin-module/img/avatar/avatar.png'),
                                                                                                                 'driver/profile/',
                                                                                                             ) }}"
                                                                                                          class="rounded dark-support custom-box-size"
@@ -310,7 +310,7 @@
                                                         <div
                                                                 class="d-flex flex-column justify-content-center align-items-center gap-2 py-3">
                                                             <img
-                                                                    src="{{ asset('public/assets/admin-module/img/empty-icons/no-data-found.svg') }}"
+                                                                    src="{{ asset('assets/admin-module/img/empty-icons/no-data-found.svg') }}"
                                                                     alt="" width="100">
                                                             <p class="text-center">{{translate('no_data_available')}}</p>
                                                         </div>
@@ -346,3 +346,4 @@
 
 
 @endsection
+

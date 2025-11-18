@@ -168,7 +168,7 @@
                                            name="driver_level" type="checkbox" data-name="driver_level"
                                            data-type="driver_settings"
                                            data-url="{{ route('admin.business.setup.update-business-setting') }}"
-                                           data-icon="{{ ($settings->firstWhere('key_name', 'driver_level')->value ?? 0) == 0 ? asset('public/assets/admin-module/img/level-up-on.png') : asset('public/assets/admin-module/img/level-up-off.png') }}"
+                                           data-icon="{{ ($settings->firstWhere('key_name', 'driver_level')->value ?? 0) == 0 ? asset('assets/admin-module/img/level-up-on.png') : asset('assets/admin-module/img/level-up-off.png') }}"
                                            data-title="{{ ($settings->firstWhere('key_name', 'driver_level')->value ?? 0) == 0 ? translate('By Turning ON Level Feature') . '?' : translate('By Turning OFF Level Feature') . '?' }}"
                                            data-sub-title="{{ ($settings->firstWhere('key_name', 'driver_level')->value ?? 0) == 0 ? translate('If you turn ON level feature, customer will see this feature on app.') : translate('If you turning off customer level feature, please do it at the beginning stage of business. Because once driver use this feature & you will off this feature they will be confused or worried about it.') }}"
                                         {{ ($settings->firstWhere('key_name', 'driver_level')->value ?? 0) == 1 ? 'checked' : '' }}>
@@ -200,7 +200,7 @@
                                            id="updateVehicle" type="checkbox" name="update_vehicle_status"
                                            data-name="update_vehicle_status" data-type="{{ DRIVER_SETTINGS }}"
                                            data-url="{{ route('admin.business.setup.update-business-setting') }}"
-                                           data-icon="{{ ($settings->firstWhere('key_name', 'update_vehicle_status')?->value ?? 0) == 1 ? asset('public/assets/admin-module/img/media/car5.png') : asset('public/assets/admin-module/img/media/car4.png') }}"
+                                           data-icon="{{ ($settings->firstWhere('key_name', 'update_vehicle_status')?->value ?? 0) == 1 ? asset('assets/admin-module/img/media/car5.png') : asset('assets/admin-module/img/media/car4.png') }}"
                                            data-title="{{ translate('Are you sure?') }}"
                                            data-sub-title="{{ ($settings->firstWhere('key_name', 'update_vehicle_status')?->value ?? 0) == 1 ? translate('Do you want to turn OFF update vehicle?') : translate('Do you want to turn ON update vehicle?') }}"
                                            data-confirm-btn="{{ ($settings->firstWhere('key_name', 'update_vehicle_status')?->value ?? 0) == 1 ? translate('Turn Off') : translate('Turn On') }}"
@@ -244,7 +244,7 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('public/assets/admin-module/js/business-management/business-setup/driver.js') }}"></script>
+    <script src="{{ asset('assets/admin-module/js/business-management/business-setup/driver.js') }}"></script>
 
     <script>
         "use strict";
@@ -362,3 +362,4 @@
         });
     </script>
 @endpush
+

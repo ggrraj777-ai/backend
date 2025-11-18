@@ -7,7 +7,7 @@
     <section class="banner-section">
         <div class="container">
             <div class="banner-wrapper justify-content-between bg__img wow animate__fadeInDown"
-                 data-img="{{ $introSectionImage?->value && $introSectionImage?->value['background_image'] ? asset('storage/app/public/business/landing-pages/intro-section/'.$introSectionImage?->value['background_image']) : asset('public/landing-page/assets/img/banner/banner-bg.png') }}">
+                 data-img="{{ $introSectionImage?->value && $introSectionImage?->value['background_image'] ? asset('storage/app/public/business/landing-pages/intro-section/'.$introSectionImage?->value['background_image']) : asset('landing-page/assets/img/banner/banner-bg.png') }}">
                 <div class="banner-content">
                     <h1 class="title">{{ $introSection?->value && $introSection?->value['title'] ? translate($introSection?->value['title']) : translate("It’s Time to Change The Riding Experience") }}</h1>
                     <p class="txt">{{ $introSection?->value && $introSection?->value['sub_title'] ? translate($introSection?->value['sub_title']) : translate("Embrace the future today and explore the amazing features that make "). (($business_name && $business_name['value']) ? $business_name['value'] : "DriveMond") .translate("the smart, sustainable, and efficient ride sharing & delivery solution.") }}
@@ -19,13 +19,13 @@
                                 <ul>
                                     <li>
                                         <a href="{{ $cta?->value && $cta?->value['play_store']['user_download_link'] ? $cta?->value['play_store']['user_download_link'] : "" }}">
-                                            <img src="{{ asset('public/landing-page') }}/assets/img/play-fav.png" alt="">
+                                            <img src="{{ asset('landing-page') }}/assets/img/play-fav.png" alt="">
                                             <span>{{translate('Play Store')}}</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{ $cta?->value && $cta?->value['app_store']['user_download_link'] ? $cta?->value['app_store']['user_download_link'] : "" }}">
-                                            <img src="{{ asset('public/landing-page') }}/assets/img/apple-fav.png" alt="">
+                                            <img src="{{ asset('landing-page') }}/assets/img/apple-fav.png" alt="">
                                             <span>{{translate('App Store')}}</span>
                                         </a>
                                     </li>
@@ -48,7 +48,7 @@
             <div class="basic-info-wrapper wow animate__fadeInUp">
                 <div class="basic-info-item">
                     <img
-                        src="{{ $businessStatistics?->value && $businessStatistics?->value['total_download']['image'] ? asset('storage/app/public/business/landing-pages/business-statistics/total-download/'.$businessStatistics?->value['total_download']['image']) : asset('public/landing-page/assets/img/icons/1.png') }}"
+                        src="{{ $businessStatistics?->value && $businessStatistics?->value['total_download']['image'] ? asset('storage/app/public/business/landing-pages/business-statistics/total-download/'.$businessStatistics?->value['total_download']['image']) : asset('landing-page/assets/img/icons/1.png') }}"
                         alt="">
                     <div class="content">
                         <h2 class="h5 fw-bold mb-3">{{ $businessStatistics?->value && $businessStatistics?->value['total_download']['count'] ? $businessStatistics?->value['total_download']['count'] : "1M+" }}</h2>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="basic-info-item">
                     <img
-                        src="{{ $businessStatistics?->value && $businessStatistics?->value['complete_ride']['image'] ? asset('storage/app/public/business/landing-pages/business-statistics/complete-ride/'.$businessStatistics?->value['complete_ride']['image']) : asset('public/landing-page/assets/img/icons/2.png') }}"
+                        src="{{ $businessStatistics?->value && $businessStatistics?->value['complete_ride']['image'] ? asset('storage/app/public/business/landing-pages/business-statistics/complete-ride/'.$businessStatistics?->value['complete_ride']['image']) : asset('landing-page/assets/img/icons/2.png') }}"
                         alt="">
                     <div class="content">
                         <h2 class="h5 fw-bold mb-3">{{ $businessStatistics?->value && $businessStatistics?->value['complete_ride']['count'] ? $businessStatistics?->value['complete_ride']['count'] : "1M+" }}</h2>
@@ -66,7 +66,7 @@
                 </div>
                 <div class="basic-info-item">
                     <img
-                        src="{{ $businessStatistics?->value && $businessStatistics?->value['happy_customer']['image'] ? asset('storage/app/public/business/landing-pages/business-statistics/happy-customer/'.$businessStatistics?->value['happy_customer']['image']) : asset('public/landing-page/assets/img/icons/3.png') }}"
+                        src="{{ $businessStatistics?->value && $businessStatistics?->value['happy_customer']['image'] ? asset('storage/app/public/business/landing-pages/business-statistics/happy-customer/'.$businessStatistics?->value['happy_customer']['image']) : asset('landing-page/assets/img/icons/3.png') }}"
                         alt="">
                     <div class="content">
                         <h2 class="h5 fw-bold mb-3">{{ $businessStatistics?->value && $businessStatistics?->value['happy_customer']['count'] ? $businessStatistics?->value['happy_customer']['count'] : "1M+" }}</h2>
@@ -75,7 +75,7 @@
                 </div>
                 <div class="basic-info-item">
                     <img
-                        src="{{ $businessStatistics?->value && $businessStatistics?->value['support']['image'] ? asset('storage/app/public/business/landing-pages/business-statistics/support/'.$businessStatistics?->value['support']['image']) : asset('public/landing-page/assets/img/icons/4.png')}}"
+                        src="{{ $businessStatistics?->value && $businessStatistics?->value['support']['image'] ? asset('storage/app/public/business/landing-pages/business-statistics/support/'.$businessStatistics?->value['support']['image']) : asset('landing-page/assets/img/icons/4.png')}}"
                         alt="">
                     <div class="content">
                         <h2 class="h5 fw-bold mb-3">{{ $businessStatistics?->value && $businessStatistics?->value['support']['title'] ? $businessStatistics?->value['support']['title'] : "24/7 hr" }}</h2>
@@ -89,7 +89,7 @@
 
     <!-- Platform Section Start -->
     <section class="platform-section pt-60 pb-60">
-        <img src="{{ asset('public/landing-page/assets/img/platform/platform-bg.png') }}"
+        <img src="{{ asset('landing-page/assets/img/platform/platform-bg.png') }}"
              class="shape d-none d-lg-block" alt="">
         <div class="container position-relative">
             <div class="text-center wow animate__fadeInUp pb-4">
@@ -111,7 +111,7 @@
                                     <img src="{{ onErrorImage(
                                             $ourSolutionSingle?->value['image'],
                                             asset('storage/app/public/business/landing-pages/our-solutions/'.$ourSolutionSingle?->value['image']),
-                                            asset('public/landing-page/assets/img/platform/'.rand(1,2).'.png'),
+                                            asset('landing-page/assets/img/platform/'.rand(1,2).'.png'),
                                             'business/landing-pages/our-solutions/',
                                         ) }}" alt="" class="img-fluid square-uploaded-img">
                                     <h3 class="title mt-3">
@@ -127,14 +127,14 @@
                 @else
                     <div class="col-sm-6 col-md-5 mb-3">
                         <div class="platform-item wow animate__fadeInUp">
-                            <img src="{{ asset('public/landing-page/assets/img/platform/1.png') }}" alt="">
+                            <img src="{{ asset('landing-page/assets/img/platform/1.png') }}" alt="">
                             <h3 class="title">{{ translate('Ride Sharing') }}</h3>
                             <p class="txt">{{ translate('Book a ride to your desired destination and set a custom fare from the app') }}</p>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-5 mb-3">
                         <div class="platform-item wow animate__fadeInUp">
-                            <img src="{{ asset('public/landing-page/assets/img/platform/2.png') }}" alt="">
+                            <img src="{{ asset('landing-page/assets/img/platform/2.png') }}" alt="">
                             <h3 class="title">{{ translate('Parcel Delivery') }}</h3>
                             <p class="txt">{{ translate('Send important parcels to the right place with custom fare setup option') }}</p>
                         </div>
@@ -154,7 +154,7 @@
             <div class="about__wrapper">
                 <div class="about__wrapper-thumb wow animate__fadeInUp">
                     <img class="main-img"
-                         src="{{ $earnMoneyImage?->value['image'] ? asset('storage/app/public/business/landing-pages/earn-money/'.$earnMoneyImage?->value['image']): asset('public/landing-page/assets/img/about1.png') }}"
+                         src="{{ $earnMoneyImage?->value['image'] ? asset('storage/app/public/business/landing-pages/earn-money/'.$earnMoneyImage?->value['image']): asset('landing-page/assets/img/about1.png') }}"
                          alt="img">
                 </div>
 
@@ -173,13 +173,13 @@
                             <ul>
                                 <li>
                                     <a href="{{ $cta?->value && $cta?->value['play_store']['driver_download_link'] ? $cta?->value['play_store']['driver_download_link'] : "" }}">
-                                        <img src="{{ asset('public/landing-page/assets/img/play-fav.png') }}" alt="">
+                                        <img src="{{ asset('landing-page/assets/img/play-fav.png') }}" alt="">
                                         <span>{{translate('Play Store')}}</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ $cta?->value && $cta?->value['app_store']['driver_download_link'] ? $cta?->value['app_store']['driver_download_link'] : "" }}">
-                                        <img src="{{ asset('public/landing-page/assets/img/apple-fav.png') }}" alt="">
+                                        <img src="{{ asset('landing-page/assets/img/apple-fav.png') }}" alt="">
                                         <span>{{translate('App Store')}}</span>
                                     </a>
                                 </li>
@@ -207,7 +207,7 @@
                                         <img src="{{ onErrorImage(
                                         $testimonial?->value && $testimonial?->value['reviewer_image'] ? $testimonial?->value['reviewer_image'] : '',
                                         $testimonial?->value && $testimonial?->value['reviewer_image'] ? asset('storage/app/public/business/landing-pages/testimonial/'.$testimonial?->value['reviewer_image']) : '',
-                                        asset('public/landing-page/assets/img/client/user.png'),
+                                        asset('landing-page/assets/img/client/user.png'),
                                         'business/landing-pages/testimonial/',
                                     ) }}" alt="client">
 
@@ -240,7 +240,7 @@
                     @else
                         <div class="testimonial__item">
                             <div class="testimonial__item-img">
-                                <img src="{{asset('public/landing-page/assets/img/client/user.png')}}" alt="client">
+                                <img src="{{asset('landing-page/assets/img/client/user.png')}}" alt="client">
                             </div>
                             <div class="testimonial__item-cont">
                                 <p class="mb-2 name text-dark"><strong>{{ "Roofus K." }}</strong><p>
@@ -287,7 +287,7 @@
     <section class="cta-section py-60px-90px">
         <div class="container">
             <div class="cta--wrapper bg__img"
-                 data-img="{{ $ctaImage?->value['background_image'] ? asset('storage/app/public/business/landing-pages/cta/'.$ctaImage?->value['background_image']) : asset('public/landing-page/assets/img/cta-bg.png') }}">
+                 data-img="{{ $ctaImage?->value['background_image'] ? asset('storage/app/public/business/landing-pages/cta/'.$ctaImage?->value['background_image']) : asset('landing-page/assets/img/cta-bg.png') }}">
                 <div class="cta-inner">
                     <div class="content wow animate__fadeInDown">
                         <h2 class="title text-capitalize">{{ $cta?->value && $cta?->value['title'] ? translate($cta?->value['title']) : translate("Download Our App") }}</h2>
@@ -300,12 +300,12 @@
                                 <div class="d-flex gap-3 flex-column">
                                     <a target="_blank" class="no-gutter" type="button"
                                        href="{{ $cta?->value && $cta?->value['app_store']['user_download_link'] ? $cta?->value['app_store']['user_download_link'] : "" }}">
-                                        <img src="{{ asset('public/landing-page') }}/assets/img/app-store.png"
+                                        <img src="{{ asset('landing-page') }}/assets/img/app-store.png"
                                              class="w-125px" alt="">
                                     </a>
                                     <a target="_blank" class="no-gutter" type="button"
                                        href="{{ $cta?->value && $cta?->value['play_store']['user_download_link'] ? $cta?->value['play_store']['user_download_link'] : "" }}">
-                                        <img src="{{ asset('public/landing-page') }}/assets/img/play-store.png"
+                                        <img src="{{ asset('landing-page') }}/assets/img/play-store.png"
                                              class="w-125px" alt="">
                                     </a>
                                 </div>
@@ -315,12 +315,12 @@
                                 <div class="d-flex gap-3 flex-column">
                                     <a target="_blank" class="no-gutter" type="button"
                                        href="{{ $cta?->value && $cta?->value['app_store']['driver_download_link'] ? $cta?->value['app_store']['driver_download_link'] : "" }}">
-                                        <img src="{{ asset('public/landing-page') }}/assets/img/app-store.png"
+                                        <img src="{{ asset('landing-page') }}/assets/img/app-store.png"
                                              class="w-125px" alt="">
                                     </a>
                                     <a target="_blank" class="no-gutter" type="button"
                                        href="{{ $cta?->value && $cta?->value['play_store']['driver_download_link'] ? $cta?->value['play_store']['driver_download_link'] : "" }}">
-                                        <img src="{{ asset('public/landing-page') }}/assets/img/play-store.png"
+                                        <img src="{{ asset('landing-page') }}/assets/img/play-store.png"
                                              class="w-125px" alt="">
                                     </a>
                                 </div>
@@ -329,7 +329,7 @@
                     </div>
                     <div class="position-relative w-100 max-355 wow animate__fadeInUp">
                         <img class="mw-100"
-                             src="{{ $ctaImage?->value['image'] ? asset('storage/app/public/business/landing-pages/cta/'.$ctaImage?->value['image']) : asset('public/landing-page/assets/img/cta.png') }}"
+                             src="{{ $ctaImage?->value['image'] ? asset('storage/app/public/business/landing-pages/cta/'.$ctaImage?->value['image']) : asset('landing-page/assets/img/cta.png') }}"
                              alt="">
                     </div>
                 </div>
@@ -338,3 +338,4 @@
     </section>
     <!-- CTA Section End -->
 @endsection
+

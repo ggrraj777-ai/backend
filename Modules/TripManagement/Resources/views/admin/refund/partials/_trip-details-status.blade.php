@@ -16,7 +16,7 @@
                         type="button"
                         id="deniedButtonParcelRefund"
                         data-url="{{route('admin.trip.refund.denied', [$trip->parcelRefund->id])}}"
-                        data-icon="{{ asset('public/assets/admin-module/img/denied-icon.png') }}"
+                        data-icon="{{ asset('assets/admin-module/img/denied-icon.png') }}"
                         data-title="{{ translate('Are you sure to Deny the Refund Request')."?" }}"
                         data-sub-title="{{translate("Once you deny the request, the customer will not be refunded the amount he asked for.")}}"
                         data-confirm-btn="{{translate("Deny")}}"
@@ -29,7 +29,7 @@
                         type="button"
                         id="approvalButtonParcelRefund"
                         data-url="{{route('admin.trip.refund.approved', [$trip->parcelRefund->id])}}"
-                        data-icon="{{ asset('public/assets/admin-module/img/approval-icon.png') }}"
+                        data-icon="{{ asset('assets/admin-module/img/approval-icon.png') }}"
                         data-title="{{ translate('Are you sure to Approve the Refund Request')."?" }}"
                         data-sub-title="{{translate("The customer has requested a refund of")}}  <strong>{{set_currency_symbol($trip->parcelRefund->parcel_approximate_price)}}</strong> {{translate("for this parcel.")}}"
                         data-confirm-btn="{{translate("Approve")}}"
@@ -72,14 +72,14 @@
                 <ul class="list-icon">
                     <li>
                         <div class="media gap-2">
-                            <img width="18" src="{{asset('public/assets/admin-module/img/svg/gps.svg')}}" class="svg"
+                            <img width="18" src="{{asset('assets/admin-module/img/svg/gps.svg')}}" class="svg"
                                  alt="">
                             <div class="media-body">{{$trip->coordinate->pickup_address}}</div>
                         </div>
                     </li>
                     <li>
                         <div class="media gap-2">
-                            <img width="18" src="{{asset('public/assets/admin-module/img/svg/map-nav.svg')}}"
+                            <img width="18" src="{{asset('assets/admin-module/img/svg/map-nav.svg')}}"
                                  class="svg" alt="">
                             <div class="media-body">
                                 <div>{{$trip->coordinate->destination_address}}</div>
@@ -92,7 +92,7 @@
                     </li>
                     <li>
                         <div class="media gap-2">
-                            <img width="18" src="{{asset('public/assets/admin-module/img/svg/distance.svg')}}"
+                            <img width="18" src="{{asset('assets/admin-module/img/svg/distance.svg')}}"
                                  class="svg" alt="">
                             @if($trip->current_status == 'completed')
                                 <div class="media-body text-capitalize">{{translate('total_distance')}}
@@ -154,3 +154,4 @@
             src="https://maps.googleapis.com/maps/api/js?key={{businessConfig(GOOGLE_MAP_API)?->value['map_api_key'] ?? null}}&callback=initMap">
     </script>
 @endpush
+
